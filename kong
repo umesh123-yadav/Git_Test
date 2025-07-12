@@ -1,0 +1,31 @@
+==================================UAT ==================================
+
+[devops@DANDTBSVMXX0001 ~]$
+[devops@DANDTBSVMXX0001 ~]$ curl -k -X GET https://adminapi-uat.bankofbaroda.co.in/services -H "Kong-Admin-Token:devops"| jq '.data | length'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 13426  100 13426    0     0  41956      0 --:--:-- --:--:-- --:--:-- 41956
+33
+[devops@DANDTBSVMXX0001 ~]$ curl -k -X GET https://adminapi-uat.bankofbaroda.co.in/services/kyc-service/routes -H "Kong-Admin-Token:devops"| jq '.data | length'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7337  100  7337    0     0   117k      0 --:--:-- --:--:-- --:--:--  119k
+13
+[devops@DANDTBSVMXX0001 ~]$
+
+
+
+====================================Prod  ==============================================
+
+
+[devops@DAPDTNZBTXX0001 ~]$ curl -k -X GET https://adminapi.bankofbaroda.co.in/services -H "Kong-Admin-Token:devops"| jq '.data | length'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9402  100  9402    0     0  88698      0 --:--:-- --:--:-- --:--:-- 89542
+24
+[devops@DAPDTNZBTXX0001 ~]$ curl -k -X GET https://adminapi.bankofbaroda.co.in/services/kyc-service/routes -H "Kong-Admin-Token:devops"| jq '.data | length'
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  7337  100  7337    0     0  67935      0 --:--:-- --:--:-- --:--:-- 68570
+13
+[devops@DAPDTNZBTXX0001 ~]$
