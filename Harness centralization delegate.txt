@@ -1,0 +1,240 @@
+Step 1: Create Service Account and RBAC
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: chaos-sa
+  namespace: harness-delegate-chaos (our recommendation is to create a dedicated namespace in the target cluster for delegate)
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: chaos-sa-secret
+  namespace: harness-delegate-chaos
+  annotations:
+    kubernetes.io/service-account.name: chaos-sa
+type: kubernetes.io/service-account-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: harness-delegate-chaos
+  name: chaosrunner-pod-role
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  - daemonsets
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  - pods/exec
+  - secrets
+  - services
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  - cronjobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: chaosrunner-pod-rolebinding
+  namespace: harness-delegate-chaos
+subjects:
+- kind: ServiceAccount
+  name: chaos-sa
+  namespace: harness-delegate-chaos
+roleRef:
+  kind: Role
+  name: chaosrunner-pod-role
+  apiGroup: rbac.authorization.k8s.io
+
+
+==================
+
+Generate Service Account Token:
+
+kubectl -n harness-delegate-chaos get secret chaos-sa-secret -o jsonpath='{.data.token}' | base64 --decode
+
+
+Here, chaos-sa-secret is the actual name of the token secret and harness-delegate-chaos is the namespace of the token secret, so change it accordingly.
+
+
+Step 2. Create Kubernetes Connector
+
+
+
+Step 3. Create Cluster Role
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: chaos-clusterrole
+rules:
+# Discovery permissions
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  - daemonsets
+  - statefulsets
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - replicationcontrollers
+  - services
+  - statefulsets
+  - nodes
+  - namespaces     #(nodes and namespace permissions are required to autocreate network experiments)
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  - cronjobs
+  verbs:
+  - watch
+  - list
+  - get
+# Chaos permissions
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+- apiGroups:    #(Prerequisite: Metrics server should be installed on the cluster. This is required if you are running a custom script in command (CMD) source probe to get the CPU and memory metrics for pods and nodes.)
+  - metrics.k8s.io
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  - daemonsets
+  - statefulsets
+  verbs:
+  - list
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - replicationcontrollers
+  - services
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
+  verbs:
+  - list
+  - get
+- apiGroups:
+  - argoproj.io
+  resources:
+  - rollouts
+  verbs:
+  - list
+  - get
+
+
+Step 4: Onboard NamespacesapiVersion: 
+
+rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: chaos-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: chaos-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: chaos-sa
+  namespace: harness-delegate-chaos
+
+
+Access Specific Namespace
+To onboard a namespace, create a RoleBinding in the application namespace (for example, app1, app2, and so on.)
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: chaos-rolebinding
+  namespace: app1
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: chaos-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: chaos-sa
+  namespace: harness-delegate-chaos
