@@ -1,4 +1,89 @@
 
+
+[root@k8s-master01 ~]# imgpkg copy -b projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service:3.3.1 --to-tar tkg-service-v3.3.1.tar --cosign-signatures
+copy | exporting 30 images...
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:006fc810b8ef01675e0c95ffd82da8318fb36ed4383dd3c8e20c4174bdd05bdc
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:041d84376af97bdf7d87816f714ffd0331d275359057de3e7f107328eba893c6
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:05e6374af08e11b4f122dcd76162fe1b3cfac737511d105a83a528a545f89c8c
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:0ea46ce6f667d7c4991db1ee90559eecb5f4859676f5a5bb4705546966f9234b
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:13904a127debfbc21cc2cafd4f608cf836a8c60241c5d743037383f7a6660fe6
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:2239d98ddfe407b6f67920b35309a0b3775dd74b923138e994f5bd735d935c65
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:24dc75334b6f5a5358740a461f0af93269341d2b42e922c3e57ee37e328134c3
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:2559661cb2876538e7f504d8fc7a90e0073795a349b9a18267278a7cf79d0639
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:26e7a05610725d2d4ef19f35f973a74bf50f15b528bc988f494fef7115dababa
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:35e1674ff04ebffab458c0982f4100c3da8e9ef96ba9b95dfec733a61985aebe
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:360ee842d8fbc1a4658dd54419340914895616304930579431a7cb00a74ae331
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:4054a417bac1e2fc059dd852447f4ce4f8869733b97a180a5811abb788685d6a
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:4254f7f8513ff9502db73934da3d2c166d64174e8cb50c1606dc006bb827f71b
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:4f45c95d1cd29272664c08879e46bd0c09ab162463468b01dcc3e30671dec5e4
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:6363e9d79900291d55bfe31c9c42362eec3875f6c0968d074926b7dfacaa9402
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:67feb0120f9b00221d030ca5eb0f27a1568fe882a84df76cd0885c679012b288
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:6bae9c4571b98433f58cca5818ad6ef191259264da230e2efa5c753143927876
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:6d5e7ef63707a32c5f87c79463dfbc8bbec1a66929915d57405c8100f2cd4ee4
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:79ee4d61056e917df48e0eb250b48ed2641bea526408d8b43e7e74c6652cbeca
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:935891272ce7f807605431b3001c251acc7ccc602c83808f41c2131ac44a1e51
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:9f0932642335b8bd3f28ffcdebb194009c9963c767088d8c958feaeb14be561b
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:c7dc4ce5b6f1f9792fd7d5ce2b98366aebfd70399ce22b6cca9ce9b294180732
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:cbf81b3bb5d8f23d704e649cf4a38f99246780cf15f37ec551fcafe205497bbd
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:cd8040e885c07f7c3dc9cd5741d69cc5aa8e6dec4f6309a6d42066db257ec990
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:d8800072f9eb526d0dbe6b51cd2bf87679e76ebe02d2f92120db5b17984c1c98
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:e90a89be4cc0c4697c274f0a56783c09b6786ddc98d5118e7c30cd1a7557818e
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:ebcc0d527d908841a957401f5726419b00d702ed49ece0a59aa3cd3cdddbcf63
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:f423e994c4d422f527a9758d185412954b0caabdfd5477a2824642d5f3371718
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:fa9a7d0a5bfcb2d4e9bc806ac5ddaa70c64ff154d5016b64d100911b5d123be7
+copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.1/tkg-service@sha256:fc4acacb7d9d418b1174e22e543d4c151fe10378e2285e8b99169a83d8c570ea
+copy | exported 30 images
+copy | writing layers...
+copy | done: file 'manifest.json' (41.017µs)
+copy | done: file 'sha256-4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1.tar.gz' (82.058µs)
+copy | done: file 'sha256-5c8fa214da2a346e828e8a0f239d10287a49082774949b7f0f288e6622380c40.tar.gz' (4.267048746s)
+copy | done: file 'sha256-30156606c912e579979dbbc2623ecc4798a6c6d273a84e51a5192a3691364568.tar.gz' (7.143226876s)
+copy | done: file 'sha256-4f73beb315f6408f908454d87bff91361d53315d792dcc841d5d4eed4142abc9.tar.gz' (7.631913345s)
+copy | done: file 'sha256-bd1bd7c101a149f502d3aae55a49cf3fe1a4376beeb9962ea31eaf13914e8adf.tar.gz' (4.950666125s)
+copy | done: file 'sha256-fe0749128240ecd0525936458e379eda6e7d2fb66a4a7a551ab4d99e940e01bd.tar.gz' (243.791248ms)
+copy | done: file 'sha256-d35dbe9671ddddb57a9e91f5c90a2aeefa0d81f5ca1fe0c2b9d4cb9193ad9bb1.tar.gz' (5.123657748s)
+copy | done: file 'sha256-3b3ae8f911666e8959b8ad1ad95222e4523e97d4c1ef339a9b07458829cd7bd1.tar.gz' (4.801833762s)
+copy | done: file 'sha256-ed0a579098b4b13133e6d4ea6cd19d350898cf89cc4a3168dbcd32b6fe0664d3.tar.gz' (13.67718533s)
+copy | done: file 'sha256-fcb0b9d09ebeda0b1b29458d6a874b39802ca498a36e2d8e6b7a728a46d63ec3.tar.gz' (4.269580702s)
+copy | done: file 'sha256-29cab95bb03ff40176bd5c8ed60cebd166e0e9d65367a30c43e1d5fa74527fce.tar.gz' (16.248318122s)
+copy | done: file 'sha256-b7bdcd045837e5afac089f5d850f9fda12e89c3774338e50cecb9de89fb84722.tar.gz' (3.153959875s)
+copy | done: file 'sha256-dc56aa1bbad1ed11293228264d06a45cf7e90c56e1a2dff9d83c3e2fc12f23aa.tar.gz' (3.32468143s)
+copy | done: file 'sha256-a8563c9dc443ed2b6ea99c2edf336d1837c21a4f9d920440ba19fcaceb3dd52f.tar.gz' (5.111049025s)
+copy | done: file 'sha256-7c99a8bf5a8e558d83b9e95816b8abc690df2ba546996f2073228f0f734b37ca.tar.gz' (3.10525623s)
+copy | done: file 'sha256-a63be0ac4155a1333e4e9ef7aad6b753c2c231cda1bae287761a78c7d95e6413.tar.gz' (2.880831157s)
+copy | done: file 'sha256-12e639631ffbb4231af5aa4cf6dfb1c7662c02539f42a4508554b3420bdcca53.tar.gz' (2.452678804s)
+copy | done: file 'sha256-9cdcb2b62d0ef6c8ceea49436acabf0308ee89d0921e036ddada4d300ad17e50.tar.gz' (4.46928965s)
+copy | done: file 'sha256-680578d5be919d0224036ccf336b3294739a0096ac99d4926558e02b03a027ae.tar.gz' (712.514357ms)
+copy | done: file 'sha256-2d65f72a6408b75f497a0e3fc36af13bb32ed31df5a5bb09166e7ccf0dce4a2c.tar.gz' (3.900523865s)
+copy | done: file 'sha256-3589cfb60cb75230a6d0fef5486ff6d5b010804e1d355a9fed0e7dcdb90072ee.tar.gz' (11.156782ms)
+copy | done: file 'sha256-ac051fb00b3c4116e7b0dce0e336596dff650d2b42ef3b27cd8fad9dc7aee1f6.tar.gz' (2.127423796s)
+copy | done: file 'sha256-1c9b190f47165711d38801dc45f3dc74eec678c31f72a0da4b8d8e7b3d515fe6.tar.gz' (473.222735ms)
+copy | done: file 'sha256-a3684dd4ff2f5426734adc9882e0e847756d7dd3fdaeb891633878acf8b87e1e.tar.gz' (708.941251ms)
+copy | done: file 'sha256-2a3bd3c91f7c1018cad82acc3c6f3f19b9ac32ec3bf7441d6d869ed736808f79.tar.gz' (105.94µs)
+copy | done: file 'sha256-70fc3dedd2e6c0c5b824cf95b3f1c8d782548dd6287592d669bc766d044023dc.tar.gz' (217.455µs)
+copy | done: file 'sha256-da435933b7c26b3321895b3f1647d36057093caa7e6f1d2bddd8b5a4e422fb6e.tar.gz' (238.372972ms)
+copy | done: file 'sha256-d90202d70506a6f0f24a6730a69fe8ad23d1d94be203e44c803f72979178b01e.tar.gz' (143.727µs)
+copy | done: file 'sha256-41fcecef26580340af1be6886a18ce15cc5169fb7b28fe84586167cae179a15f.tar.gz' (184.231µs)
+copy | done: file 'sha256-5b457318bf3ac5016e0eb3741cf3369ba3222cda6499c3f1814f0ba5d4547108.tar.gz' (239.03209ms)
+copy | done: file 'sha256-534a2dd08adad0d8fa6efc74d429b105a7bd3464bdd9ba566f14970b45a0b283.tar.gz' (157.616µs)
+copy | done: file 'sha256-7ce765776a0ee1e9a55edda776d3ffae6d9cd98589c2d6bc7e9a66934c43c750.tar.gz' (152.442µs)
+copy | done: file 'sha256-3571767691a5d14e2526f59709cb89537065cf990318b1ddaa838a1ce268208c.tar.gz' (94.826µs)
+copy | done: file 'sha256-3c2ee50ed5e2646ddd27005f711ec6d77c08c7fb9aa7f9221513cd8a19046ff5.tar.gz' (3.401065545s)
+copy | done: file 'sha256-295665cf316d9ad28191643296fe4f04d05ae9db72237c5156e764dfabae6e66.tar.gz' (106.697µs)
+copy | done: file 'sha256-4a51ec9d33818cc22db0fc0ed70471402d2db55f91c387d642d48326c695bdee.tar.gz' (91.955µs)
+copy | done: file 'sha256-bde91b84acf2fa16c7efa881420d55db371b8b9a80fc26cb1c5f1d22391a9f38.tar.gz' (115.361µs)
+copy | done: file 'sha256-e8cb3ceb3738c027ff087559521776c2937809fe608f352b4ef31fdaebadbae8.tar.gz' (327.849µs)
+copy | done: file 'sha256-8d8b32df7b9f44cb0c09012896821723bcbe727e5a6710acccfd182c6cdc9277.tar.gz' (73.108µs)
+copy | done: file 'sha256-d19e1647642923f5ad758d36d54ba039083cae039d07a378fa25beab8f40b8ad.tar.gz' (161.172µs)
+copy | done: file 'sha256-75710a7a3f1128e79470a331990d283aad05194b74d253d1a34d517d4868e620.tar.gz' (178.696µs)
+copy | done: file 'sha256-68548517555d5d3b2b4de59e57dd07acfa4cabc986348c91d488d3462dfbbec9.tar.gz' (8.510227598s)
+
+Succeeded
+[root@k8s-master01 ~]# ls -lrth
+
+
+
+
 [root@k8s-master01 ~]# imgpkg copy -b projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.2/tkg-service:3.3.2 --to-tar tkg-service-v3.3.2.tar --cosign-signatures
 copy | exporting 30 images...
 copy | will export projects.packages.broadcom.com/vsphere/iaas/tkg-service/3.3.2/tkg-service@sha256:006fc810b8ef01675e0c95ffd82da8318fb36ed4383dd3c8e20c4174bdd05bdc
@@ -157,4 +242,12 @@ copy | done: file 'sha256-f91a8d2b9515fe6266376dcd57a4b4977186589b4f034f38b73e82
 copy | done: file 'sha256-a8bebf0daa51ad4a651389893c00f0e7ef2c60e955520b0c6334ce10d835e1e9.tar.gz' (66.279µs)
 
 Succeeded
+[root@k8s-master01 ~]#
+
+
+drwxr-xr-x. 2 root       root   54 Jul 13 21:04 prometheus-grafana
+-rw-r--r--. 1 root       root 4.6G Jul 15 00:46 vks.tar
+-rw-r--r--. 1 root       root 408M Jul 15 01:05 tkg-service-v3.3.1.tar
+-rw-r--r--. 1 root       root 408M Jul 15 01:26 tkg-service-v3.3.2.tar
+-rw-r--r--. 1 root       root 408M Jul 15 01:27 tkg-service-v3.3.3.tar
 [root@k8s-master01 ~]#
