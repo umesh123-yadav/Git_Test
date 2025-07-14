@@ -251,3 +251,33 @@ drwxr-xr-x. 2 root       root   54 Jul 13 21:04 prometheus-grafana
 -rw-r--r--. 1 root       root 408M Jul 15 01:26 tkg-service-v3.3.2.tar
 -rw-r--r--. 1 root       root 408M Jul 15 01:27 tkg-service-v3.3.3.tar
 [root@k8s-master01 ~]#
+
+
+
+devops@DAPMTNZBTXX0001 danmjfgwnxx0001.bankofbaroda.co.in:9443]$ imgpkg copy --tar /tmp/tkg-service-v3.3.0.tar --to-repo daregistry.bankofbaroda.co.in:9443/tkgs/tkg-service --cosign-signatures --registry-ca-cert-path jfrog.crt
+copy | importing 30 images...
+
+407.74 MiB / 407.74 MiB [----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00% 1.19 GiB p/s
+copy |
+copy | done uploading images
+copy | Tagging images
+
+Succeeded
+[devops@DAPMTNZB
+
+####################imgpkg copy --tar tkg-service-v3.3.1.tar --to-repo ${REGISTRY_URL}/tkg-service --cosign-signatures --registry-ca-cert-path ca.crt
+
+[devops@DAPMTNZBTXX0001 danmjfgwnxx0001.bankofbaroda.co.in:9443]$ imgpkg describe -b DANMJFGWNXX0001.bankofbaroda.co.in:9443/tkgs/tkg-service:3.3.0 --registry-username admin --registry-password Bobworldda@jfrog2025
+Bundle SHA: sha256:101c66005168f2c70bfd3128bf901282d5e78301c18e3c0e5168bf80fbf03d27
+
+Images:
+  - Image: DANMJFGWNXX0001.bankofbaroda.co.in:9443/tkgs/tkg-service@sha256:582a022a8b686ca9e048c6e0b6f8e6d817935126a6b2a7c71c7a434a4dba6b26
+    Type: Bundle
+    Origin: localhost:5000/tkg/packages/cliplugins@sha256:582a022a8b686ca9e048c6e0b6f8e6d817935126a6b2a7c71c7a434a4dba6b26
+    Annotations:
+      kbld.carvel.dev/id: localhost:5000/tkg/packages/cliplugins:3.3.0
+      kbld.carvel.dev/origins: - resolved:
+          tag: 3.3.0
+          url: localhost:5000/tkg/packages/cliplugins:3.3.0
+
+    Images:
