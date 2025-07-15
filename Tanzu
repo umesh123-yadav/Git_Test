@@ -1,3 +1,172 @@
+===============================Istio  ==================
+
+
+
+
+
+devops@DAPDTNZBTXX0001 istio-1.25.2]$ ls -lrth
+total 28K
+drwxr-x---  3 devops devops   57 Apr 11 20:27 tools
+drwxr-x--- 27 devops devops 4.0K Apr 11 20:27 samples
+-rw-r-----  1 devops devops 6.8K Apr 11 20:27 README.md
+-rw-r-----  1 devops devops  983 Apr 11 20:27 manifest.yaml
+drwxr-x---  4 devops devops   36 Apr 11 20:27 manifests
+-rw-r-----  1 devops devops  12K Apr 11 20:27 LICENSE
+drwxr-x---  2 devops devops   22 Apr 11 20:27 bin
+[devops@DAPDTNZBTXX0001 istio-1.25.2]$
+[devops@DAPDTNZBTXX0001 istio-1.25.2]$
+[devops@DAPDTNZBTXX0001 istio-1.25.2]$ cd manifests
+[devops@DAPDTNZBTXX0001 manifests]$
+[devops@DAPDTNZBTXX0001 manifests]$
+[devops@DAPDTNZBTXX0001 manifests]$ ls
+charts  profiles
+[devops@DAPDTNZBTXX0001 manifests]$ cd charts/
+[devops@DAPDTNZBTXX0001 charts]$
+[devops@DAPDTNZBTXX0001 charts]$
+[devops@DAPDTNZBTXX0001 charts]$
+[devops@DAPDTNZBTXX0001 charts]$ ls -lrth
+total 20K
+drwxr-x--- 4 devops devops   90 Apr 11 20:27 ztunnel
+-rw-r----- 1 devops devops 4.9K Apr 11 20:27 UPDATING-CHARTS.md
+-rw-r----- 1 devops devops 7.5K Apr 11 20:27 README.md
+drwxr-x--- 3 devops devops   29 Apr 11 20:27 istio-control
+drwxr-x--- 4 devops devops   90 Apr 11 20:27 istio-cni
+-rw-r----- 1 devops devops 1.9K Apr 11 20:27 install-OpenShift.md
+drwxr-x--- 4 devops devops   47 Apr 11 20:27 gateways
+drwxr-x--- 4 devops devops  116 Apr 11 20:27 gateway
+drwxr-x--- 4 devops devops   73 Apr 11 20:27 default
+drwxr-x--- 4 devops devops   90 Apr 11 20:27 base
+[devops@DAPDTNZBTXX0001 charts]$
+[devops@DAPDTNZBTXX0001 charts]$ cd base/
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$ ls -lrth
+total 20K
+-rw-r----- 1 devops devops 1.9K Apr 11 20:27 values.yaml
+drwxr-x--- 2 devops devops 4.0K Apr 11 20:27 templates
+-rw-r----- 1 devops devops 1.3K Apr 11 20:27 README.md
+drwxr-x--- 2 devops devops 4.0K Apr 11 20:27 files
+-rw-r----- 1 devops devops  251 Apr 11 20:27 Chart.yaml
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$ cd files
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$ ls -lrth
+total 856K
+-rw-r----- 1 devops devops  423 Apr 11 20:27 profile-stable.yaml
+-rw-r----- 1 devops devops  562 Apr 11 20:27 profile-remote.yaml
+-rw-r----- 1 devops devops  670 Apr 11 20:27 profile-preview.yaml
+-rw-r----- 1 devops devops  630 Apr 11 20:27 profile-platform-openshift.yaml
+-rw-r----- 1 devops devops  261 Apr 11 20:27 profile-platform-minikube.yaml
+-rw-r----- 1 devops devops  334 Apr 11 20:27 profile-platform-microk8s.yaml
+-rw-r----- 1 devops devops  322 Apr 11 20:27 profile-platform-k3s.yaml
+-rw-r----- 1 devops devops  297 Apr 11 20:27 profile-platform-k3d.yaml
+-rw-r----- 1 devops devops  316 Apr 11 20:27 profile-platform-gke.yaml
+-rw-r----- 1 devops devops 2.5K Apr 11 20:27 profile-demo.yaml
+-rw-r----- 1 devops devops  370 Apr 11 20:27 profile-compatibility-version-1.24.yaml
+-rw-r----- 1 devops devops  793 Apr 11 20:27 profile-compatibility-version-1.23.yaml
+-rw-r----- 1 devops devops 1.1K Apr 11 20:27 profile-compatibility-version-1.22.yaml
+-rw-r----- 1 devops devops  513 Apr 11 20:27 profile-ambient.yaml
+-rw-r----- 1 devops devops 799K Apr 11 20:27 crd-all.gen.yaml
+[devops@DAPDTNZBTXX0001 files]$ cd ..
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$ vi Chart.yaml
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$ istioctl version
+client version: 1.25.2
+control plane version: 1.25.2
+data plane version: 1.25.2 (2 proxies)
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$
+[devops@DAPDTNZBTXX0001 base]$ cd files/
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$ ls -lrth
+total 856K
+-rw-r----- 1 devops devops  423 Apr 11 20:27 profile-stable.yaml
+-rw-r----- 1 devops devops  562 Apr 11 20:27 profile-remote.yaml
+-rw-r----- 1 devops devops  670 Apr 11 20:27 profile-preview.yaml
+-rw-r----- 1 devops devops  630 Apr 11 20:27 profile-platform-openshift.yaml
+-rw-r----- 1 devops devops  261 Apr 11 20:27 profile-platform-minikube.yaml
+-rw-r----- 1 devops devops  334 Apr 11 20:27 profile-platform-microk8s.yaml
+-rw-r----- 1 devops devops  322 Apr 11 20:27 profile-platform-k3s.yaml
+-rw-r----- 1 devops devops  297 Apr 11 20:27 profile-platform-k3d.yaml
+-rw-r----- 1 devops devops  316 Apr 11 20:27 profile-platform-gke.yaml
+-rw-r----- 1 devops devops 2.5K Apr 11 20:27 profile-demo.yaml
+-rw-r----- 1 devops devops  370 Apr 11 20:27 profile-compatibility-version-1.24.yaml
+-rw-r----- 1 devops devops  793 Apr 11 20:27 profile-compatibility-version-1.23.yaml
+-rw-r----- 1 devops devops 1.1K Apr 11 20:27 profile-compatibility-version-1.22.yaml
+-rw-r----- 1 devops devops  513 Apr 11 20:27 profile-ambient.yaml
+-rw-r----- 1 devops devops 799K Apr 11 20:27 crd-all.gen.yaml
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$ kubectl apply -f crd-all.gen.yaml
+customresourcedefinition.apiextensions.k8s.io/wasmplugins.extensions.istio.io created
+customresourcedefinition.apiextensions.k8s.io/destinationrules.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/envoyfilters.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/gateways.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/proxyconfigs.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/serviceentries.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/sidecars.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/virtualservices.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/workloadentries.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/workloadgroups.networking.istio.io created
+customresourcedefinition.apiextensions.k8s.io/authorizationpolicies.security.istio.io created
+customresourcedefinition.apiextensions.k8s.io/peerauthentications.security.istio.io created
+customresourcedefinition.apiextensions.k8s.io/requestauthentications.security.istio.io created
+customresourcedefinition.apiextensions.k8s.io/telemetries.telemetry.istio.io created
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$ kubectl api-resources |grep -i istio
+wasmplugins                                                              extensions.istio.io/v1alpha1             true         WasmPlugin
+destinationrules                    dr                                   networking.istio.io/v1                   true         DestinationRule
+envoyfilters                                                             networking.istio.io/v1alpha3             true         EnvoyFilter
+gateways                            gw                                   networking.istio.io/v1                   true         Gateway
+proxyconfigs                                                             networking.istio.io/v1beta1              true         ProxyConfig
+serviceentries                      se                                   networking.istio.io/v1                   true         ServiceEntry
+sidecars                                                                 networking.istio.io/v1                   true         Sidecar
+virtualservices                     vs                                   networking.istio.io/v1                   true         VirtualService
+workloadentries                     we                                   networking.istio.io/v1                   true         WorkloadEntry
+workloadgroups                      wg                                   networking.istio.io/v1                   true         WorkloadGroup
+authorizationpolicies               ap                                   security.istio.io/v1                     true         AuthorizationPolicy
+peerauthentications                 pa                                   security.istio.io/v1                     true         PeerAuthentication
+requestauthentications              ra                                   security.istio.io/v1                     true         RequestAuthentication
+telemetries                         telemetry                            telemetry.istio.io/v1                    true         Telemetry
+[devops@DAPDTNZBTXX0001 files]$ kubectl api-resources |grep -i serviceentries
+serviceentries                      se                                   networking.istio.io/v1                   true         ServiceEntry
+[devops@DAPDTNZBTXX0001 files]$ kubectl get crd |grep -i service
+extensionservices.projectcontour.io                      2025-01-10T14:16:05Z
+serviceentries.networking.istio.io                       2025-07-15T12:25:13Z
+virtualservices.networking.istio.io                      2025-07-15T12:25:13Z
+[devops@DAPDTNZBTXX0001 files]$ kubectl get crd |grep -i serviceentries
+serviceentries.networking.istio.io                       2025-07-15T12:25:13Z
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$
+[devops@DAPDTNZBTXX0001 files]$ k get po -n istio-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+grafana-7485c97dd-qsqwl                 1/1     Running   0          74d
+istio-cni-node-55lqb                    1/1     Running   0          3h55m
+istio-cni-node-jdmrh                    1/1     Running   0          3h55m
+istio-cni-node-p57c2                    1/1     Running   0          3h55m
+istio-cni-node-q58hv                    1/1     Running   0          3h55m
+istio-cni-node-whwk2                    1/1     Running   0          3h55m
+istio-cni-node-x7q8c                    1/1     Running   0          3h55m
+istio-cni-node-xl6b6                    1/1     Running   0          3h55m
+istio-cni-node-xv6n7                    1/1     Running   0          3h55m
+istio-egressgateway-6d99c9fdfc-qlt64    1/1     Running   0          70d
+istio-ingressgateway-55d4fd8464-b65fc   1/1     Running   0          70d
+istiod-766c49447-gglr4                  1/1     Running   0          21h
+jaeger-7c5886dc5d-6bd2j                 1/1     Running   0          74d
+kiali-d749c6486-42ssf                   1/1     Running   0          74d
+prometheus-557fc5f6d4-fhz29             2/2     Running   0          21h
+[devops@DAPDTNZBTXX0001 files]$ cat
+
+
+
 
 
 Afeter upgradde we are facing issue on supervisor cluster.
