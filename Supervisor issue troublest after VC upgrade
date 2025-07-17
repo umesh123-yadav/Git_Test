@@ -1,0 +1,759 @@
+==========================================Supervisor Cluster 1 Troubelshoot wcp-Cluster wcp-storage wcp -vmop user  ===================================
+
+
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+Account: wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+UPN: wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c@VSPHERE.LOCAL
+Account disabled: FALSE
+Account locked: TRUE
+Password never expires: FALSE
+Password expired: FALSE
+Password expiry: 86 day(s) 21 hour(s) 8 minute(s) 26 second(s)
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+Account: wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+UPN: wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@VSPHERE.LOCAL
+Account disabled: FALSE
+Account locked: TRUE
+Password never expires: FALSE
+Password expired: FALSE
+Password expiry: 84 day(s) 45 minute(s) 19 second(s)
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]#
+
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+ 
+ 
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+root@DAPMVCNVM1001 [ /var/log/vmware/vmdird ]# /opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+> dn: CN=wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+> changetype: modify
+> replace: userAccountControl
+> userAccountControl: 0
+> EOF
+Enter LDAP Password:
+modifying entry "CN=wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local"
+
+ 
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+ 
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+ 
+cat /etc/vmware/wcp/.storageUser
+
+
+wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local
+Iu\\@1*E('|gP|0?JlkZ#
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+cd /usr/lib/vmware-wcp/py-modules
+
+
+vi roles.py
+ 
+cat <<EOF >>/usr/lib/vmware-wcp/py-modules/roles.py
+import featureState
+from roles_groups_users_utils import Authz
+if __name__ == "__main__":
+    authz_patch = Authz()
+authz_patch.ensure_roles_exist('/usr/lib/vmware-wcp/roles.xml')
+EOF
+ 
+ 
+ 
+ root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# kubectl get secrets wcp-vmop-sa-vc-auth -n vmware-system-vmop -o jsonpath='{.data.password}'|base64 -d
+z-yWdkAy2#F{Arq42ryuroot@423439e141add7d56c81cc7f8a3a2227 [ ~ ]#
+
+====================================================================================================================================================================================
+B0b@Hyd#123
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+
+root@DAPMVCNVM1001 [ ~ ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+Account: wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+UPN: wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c@VSPHERE.LOCAL
+Account disabled: FALSE
+Account locked: FALSE
+Password never expires: FALSE
+Password expired: FALSE
+Password expiry: 86 day(s) 2 hour(s) 27 minute(s) 44 second(s)
+root@DAPMVCNVM1001 [ ~ ]#
+root@DAPMVCNVM1001 [ ~ ]#
+root@DAPMVCNVM1001 [ ~ ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+Account: wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+UPN: wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c@VSPHERE.LOCAL
+Account disabled: FALSE
+Account locked: TRUE
+Password never expires: FALSE
+Password expired: FALSE
+Password expiry: 86 day(s) 2 hour(s) 26 minute(s) 13 second(s)
+root@DAPMVCNVM1001 [ ~ ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+dir-cli failed. Error 1326: Operation failed with error ERROR_LOGON_FAILURE (1326)
+root@DAPMVCNVM1001 [ ~ ]# /usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+Enter password for administrator@vsphere.local:
+Account: wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+UPN: wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@VSPHERE.LOCAL
+Account disabled: FALSE
+Account locked: TRUE
+Password never expires: FALSE
+Password expired: FALSE
+Password expiry: 83 day(s) 6 hour(s) 3 minute(s) 13 second(s)
+root@DAPMVCNVM1001 [ ~ ]#
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+
+Cluster: domain-c2253:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: +Y3rTWO52u'jQ1Sc}@ev
+wcp-vmop-user pwd: AEM+/[!=:zvn^+/8=ik{
+ 
+ 
+ root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# kubectl get secrets wcp-vmop-sa-vc-auth -n vmware-system-vmop -o jsonpath='{.data.password}'|base64 -d
+z-yWdkAy2#F{Arq42ryuroot@423439e141add7d56c81cc7f8a3a2227 [ ~ ]#
+
+root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# kubectl get secrets wcp-vmop-sa-vc-auth -n vmware-system-vmop -o jsonpath='{.data.password}'|base64 -d
+z-yWdkAy2#F{Arq42ryuroot@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# echo -n "AEM+/[!=:zvn^+/8=ik{" |base64
+QUVNKy9bIT06enZuXisvOD1pa3s=
+root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# echo -n "AEM+/[!=:zvn^+/8=ik{" |base64
+
+
+# k edit secret wcp-cluster-credentials -n kube-system
+
+# wcp-cluster-user pwd: +Y3rTWO52u'jQ1Sc}@ev
+
+root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# echo -n "+Y3rTWO52u'jQ1Sc}@ev" | base64
+K1kzclRXTzUydSdqUTFTY31AZXY=
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --new '+Y3rTWO52u'jQ1Sc}@ev'
+
+
+
+
+
+
+
++Y3rTWO52u'jQ1Sc}@ev
+
+
+root@DAPMVCNVM0001 [ /etc/vmware/wcp ]# cat .storageUser
+wcp-storage-user-8c53119e-d3ef-40bf-be7c-2422808c396c
+Iu\\@1*E('|gP|0?JlkZ#
+1723637306
+
+
+
+
+root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# kubectl get secrets vsphere-config-secret -n vmware-system-csi -o jsonpath='{.data.vsphere-cloud-provider\.conf}' | base64 -d
+[Global]
+insecure-flag = "false"
+ca-file = "/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2253"
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "Iu\\@1*E('|gP|0?JlkZ#"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+
+
+
+
+
+8c53119e-d3ef-40bf-be7c-2422808c396c
+
+
+
+"XbcD3fGh9KL@nXyTqWZ#"
+
+
+cat <<EOF | base64 -w 0
+
+[Global]
+
+insecure-flag = "false"
+
+ca-file = "/etc/vmware/wcp/tls/vmca.pem"
+
+cluster-id = "domain-c2253"
+
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+
+cnsregistervolumes-cleanup-intervalinmin = 720
+
+cluster-distribution = "SupervisorCluster"
+
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.i"]
+
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+
+password = "XbcD3fGh9KL@nXyTqWZ#"
+
+datacenters = "datacenter-3"
+
+port = "443"
+
+targetvSANFileShareClusters = ""
+
+EOF
+ 
+
+ 
+ [Global]
+insecure-flag = "false"
+ca-file = "/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2253"
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "Iu\\@1*E('|gP|0?JlkZ#"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+
+
+cat <<EOF | base64 -w 0
+[Global]
+insecure-flag = "false"
+ca-file = "/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2253"
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.i"]
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "+Y3rTWO52u'jQ1Sc}@ev"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+EOF
+
+CltHbG9iYWxdCgppbnNlY3VyZS1mbGFnID0gImZhbHNlIgoKY2EtZmlsZSA9ICIvZXRjL3Ztd2FyZS93Y3AvdGxzL3ZtY2EucGVtIgoKY2x1c3Rlci1pZCA9ICJkb21haW4tYzIyNTMiCgpzdXBlcnZpc29yLWlkID0gIjI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYSIKCmNuc3JlZ2lzdGVydm9sdW1lcy1jbGVhbnVwLWludGVydmFsaW5taW4gPSA3MjAKCmNsdXN0ZXItZGlzdHJpYnV0aW9uID0gIlN1cGVydmlzb3JDbHVzdGVyIgoKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmkiXQoKdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYS04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKCnBhc3N3b3JkID0gIlhiY0QzZkdoOUtMQG5YeVRxV1ojIgoKZGF0YWNlbnRlcnMgPSAiZGF0YWNlbnRlci0zIgoKcG9ydCA9ICI0NDMiCgp0YXJnZXR2U0FORmlsZVNoYXJlQ2x1c3RlcnMgPSAiIgoK
+
+
+
+kubectl edit secrets vsphere-config-secret -n vmware-system-csi
+
+
+Iu\\@1*E('|gP|0?JlkZ#
+
+
+
+
+
+root@DAPMVCNVM1001 [ /usr/lib/vmware-wcp ]# ./decryptSAPwd.py
+Read key from file
+
+Connected to PSQL
+
+Cluster: domain-c9:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: MpQP\->{v^\gz@C;Bq2l
+wcp-vmop-user pwd: 0!BDVDbco0`Tb!IFbF`X
+------------------------------------------------------------
+
+Cluster: domain-c2312:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: r4it2T8)7s!q`YM@GP:^
+wcp-vmop-user pwd: d/9<5p:_c,w/Iv6BxVom
+------------------------------------------------------------
+
+Cluster: domain-c2253:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: +Y3rTWO52u'jQ1Sc}@ev
+wcp-vmop-user pwd: AEM+/[!=:zvn^+/8=ik{
+------------------------------------------------------------
+
+Cluster: domain-c2308:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: ktPlP.uVh~H&/akvF#B1
+wcp-vmop-user pwd: hJs}{U0x/8Cwh hx2T<v
+------------------------------------------------------------
+
+root@DAPMVCNVM1001 [ /usr/lib/vmware-wcp ]#
+
+
+
+
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --new 'XbcD3fGh9KL@nXyTqWZ#'
+
+
+
++Y3rTWO52u'jQ1Sc}@ev
+
+
++Y3rTWO52u'jQ1Sc}@ev
+
+root@DAPMVCNVM1001 [ /etc/vmware/wcp ]# cat <<EOF | base64 -w 0
+port = "443"
+targetvSANFileShareClusters = ""
+EOF> [Global]
+> insecure-flag = "false"
+> ca-file = "/etc/vmware/wcp/tls/vmca.pem"
+> cluster-id = "domain-c2253"
+> supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+> cnsregistervolumes-cleanup-intervalinmin = 720
+> cluster-distribution = "SupervisorCluster"
+> [VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.i"]
+> user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+> password = "+Y3rTWO52u'jQ1Sc}@ev"
+> datacenters = "datacenter-3"
+> port = "443"
+> targetvSANFileShareClusters = ""
+> EOF
+W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9ICIvZXRjL3Ztd2FyZS93Y3AvdGxzL3ZtY2EucGVtIgpjbHVzdGVyLWlkID0gImRvbWFpbi1jMjI1MyIKc3VwZXJ2aXNvci1pZCA9ICIyNzlhMmVkMS0zMGRlLTQ1OTUtYmVjZC00ZmY0MmFhNTY4MWEiCmNuc3JlZ2lzdGVydm9sdW1lcy1jbGVhbnVwLWludGVydmFsaW5taW4gPSA3MjAKY2x1c3Rlci1kaXN0cmlidXRpb24gPSAiU3VwZXJ2aXNvckNsdXN0ZXIiCltWaXJ0dWFsQ2VudGVyICJEQVBNVkNOVk0xMDAxLmJhbmtvZmJhcm9kYS5jby5pIl0KdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYS04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAiK1kzclRXTzUydSdqUTFTY31AZXYiCmRhdGFjZW50ZXJzID0gImRhdGFjZW50ZXItMyIKcG9ydCA9ICI0NDMiCnRhcmdldHZTQU5GaWxlU2hhcmVDbHVzdGVycyA9ICIiCg==
+root@DAPMVCNVM1001 [ /etc/vmware/wcp ]#
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+
+
+
+
+
+================================================================16-7-2025
+
+
+W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9ICIvZXRjL3Ztd2FyZS93Y3AvdGxzL3ZtY2EucGVtIgpjbHVzdGVyLWlkID0gImRvbWFpbi1jMjI1MyIKc3VwZXJ2aXNvci1pZCA9ICJzdXBlcnZpc29yLTA4MmU2ZjIxLWFiNzctNDE4OC05MTg2LWYxMjlmYTYxY2UxNiIKY25zcmVnaXN0ZXJ2b2x1bWVzLWNsZWFudXAtaW50ZXJ2YWxpbm1pbiA9IDcyMApjbHVzdGVyLWRpc3RyaWJ1dGlvbiA9ICJTdXBlcnZpc29yQ2x1c3RlciIKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmluIl0KdXNlciA9ICJ3Y3AtY2x1c3Rlci11c2VyLTdmZmU1MmFlLTJhMmEtNGQzYS04ZjBjLWU0OGZmN2RiNWQyNC04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAifk1AY3BcTilGRSxfZls9aCk1IgpkYXRhY2VudGVycyA9ICJkYXRhY2VudGVyLTMiCnBvcnQgPSAiNDQzIgp0YXJnZXR2U0FORmlsZVNoYXJlQ2x1c3RlcnMgPSAiIgo=
+
+
+
+vi /etc/vmware/wcp/.storageUser
+ 
+t72M@cp#N)FE,_f[=h)5
+ 
+
+SupervisorModel:279a2ed1-30de-4595-becd-4ff42aa5681a:082e6f21-ab77-4188-9186-f129fa61ce16
+
+
+
+cat <<EOF | base64 -w 0
+[Global]
+insecure-flag = "false"
+ca-file ="/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2253"
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "t72M@cp#N)FE,_f[=h)5"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+EOF
+
+W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9Ii9ldGMvdm13YXJlL3djcC90bHMvdm1jYS5wZW0iCmNsdXN0ZXItaWQgPSAiZG9tYWluLWMyMjUzIgpzdXBlcnZpc29yLWlkID0gIjI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYSIKY25zcmVnaXN0ZXJ2b2x1bWVzLWNsZWFudXAtaW50ZXJ2YWxpbm1pbiA9IDcyMApjbHVzdGVyLWRpc3RyaWJ1dGlvbiA9ICJTdXBlcnZpc29yQ2x1c3RlciIKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmluIl0KdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYS04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAidDcyTUBjcCNOKUZFLF9mWz1oKTUiCmRhdGFjZW50ZXJzID0gImRhdGFjZW50ZXItMyIKcG9ydCA9ICI0NDMiCnRhcmdldHZTQU5GaWxlU2hhcmVDbHVzdGVycyA9ICIiCg==
+
+
+kubectl edit secrets vsphere-config-secret -n vmware-system-csi
+
+
+
+W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9Ii9ldGMvdm13YXJlL3djcC90bHMvdm1jYS5wZW0iCmNsdXN0ZXItaWQgPSAiZG9tYWluLWMyMjUzIgpzdXBlcnZpc29yLWlkID0gIjI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYSIKY25zcmVnaXN0ZXJ2b2x1bWVzLWNsZWFudXAtaW50ZXJ2YWxpbm1pbiA9IDcyMApjbHVzdGVyLWRpc3RyaWJ1dGlvbiA9ICJTdXBlcnZpc29yQ2x1c3RlciIKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmluIl0KdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYS04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAidDcyTUBjcCNOKUZFLF9mWz1oKTUiCmRhdGFjZW50ZXJzID0gImRhdGFjZW50ZXItMyIKcG9ydCA9ICI0NDMiCnRhcmdldHZTQU5GaWxlU2hhcmVDbHVzdGVycyA9ICIiCg==
+
+
+
+grep "failed to read config" 
+
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+
+B0b@Hyd#123
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --new '+Y3rTWO52u'jQ1Sc}@ev'
+
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli service list --login wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli service list --login wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli service list --login wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli service list --login wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+
+t72M@cp#N)FE,_f[=h)5
+
+------------------------------------------------------------
+
+Cluster: domain-c2253:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: +Y3rTWO52u'jQ1Sc}@ev
+wcp-vmop-user pwd: AEM+/[!=:zvn^+/8=ik{
+------------------------------------------------------------
+
+
+kubectl get secret wcp-vmop-sa-vc-auth -n vmware-system-vmop -o jsonpath='{.data.password}' | base64 -d> /root/wcp-cluster-credential_orig.bak
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+echo -n 'AEM+/[!=:zvn^+/8=ik{' | base64
+kubectl edit secret wcp-vmop-sa-vc-auth -n vmware-system-vmop
+
+-----base64 > QUVNKy9bIT06enZuXisvOD1pa3s=
+
+AEM+/[!=:zvn^+/8=ik{
+
+kubectl get secret wcp-vmop-sa-vc-auth -n vmware-system-vmop -o jsonpath='{.data.password}' | base64 -d
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+========================wcp-imgregop             ============
+
+vmware-system-imageregistry                 wcp-imgregop-sa-vc-auth
+
+
+kubectl get secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry -o jsonpath='{.data.password}' | base64 -d> /root/wcp-vmimageserviceop-user.bak
+
+
+|mT2Fl4[1NT_xUcAC8!1
+
+root@DAPMVCNVM1001 [ ~ ]# echo -n "|mT2Fl4[1NT_xUcAC8!1" | base64
+echo -n "|mT2Fl4[1NT_xUcAC8ssh 172.17.87.172" | base64
+fG1UMkZsNFsxTlRfeFVjQUM4c3NoIDE3Mi4xNy44Ny4xNzI=
+root@DAPMVCNVM1001 [ ~ ]#
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==========================================Supervisor Cluster 2 Troubelshoot wcp-Cluster wcp-storage wcp -vmop user  ===================================
+
+
+
+
+
+B0b@Hyd#123
+
+------------------------------------------------------------
+
+Cluster: domain-c2308:082e6f21-ab77-4188-9186-f129fa61ce16
+wcp-cluster-user pwd: ktPlP.uVh~H&/akvF#B1
+wcp-vmop-user pwd: hJs}{U0x/8Cwh hx2T<v
+------------------------------------------------------------
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account    wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account   wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-* --level 2
+
+
+082e6f21-ab77-4188-9186-f129fa61ce16
+
+082e6f21-ab77-4188-9186-f129fa61ce16
+
+082e6f21-ab77-4188-9186-f129fa61ce16
+
+/usr/lib/vmware-vmafd/bin/dir-cli service list
+
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-storage-user-<instance-id>-<Supervisor-cluster-ID>
+
+        "cluster": "domain-c2253:082e6f21-ab77-4188-9186-f129fa61ce16",
+
+        "instance_id": "279a2ed1-30de-4595-becd-4ff42aa5681a",
+ 
+        "cluster": "domain-c2308:082e6f21-ab77-4188-9186-f129fa61ce16",
+
+        "instance_id": "7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24",		
+ 
+ 
+=================================Cluster 1 =========================================== 
+
+Supervisor Cluster 1:
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-cluster-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-vmop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+
+
+
+wcp-cluster-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local
+
++Y3rTWO52u'jQ1Sc}@ev
+
+wcp-cluster-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+
+
+
+
+
+kubectl get secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry -o jsonpath='{.data.password}' | base64 -d> /root/wcp-vmimageserviceop-user.bak
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c
+|mT2Fl4[1NT_xUcAC876
+echo -n '|mT2Fl4[1NT_xUcAC876' | base64
+kubectl edit secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry
+
+fG1UMkZsNFsxTlRfeFVjQUM4NzY=
+
+root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]# echo "fG1UMkZsNFsxTlRfeFVjQUM4NzY=" | base64 -d
+|mT2Fl4[1NT_xUcAC876root@423439e141add7d56c81cc7f8a3a2227 [ ~ ]#
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmimageserviceop-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+
+============================================Cluster 2 ==========================
+B0b@Hyd#123
+Supervisor Cluster 2: 
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-cluster-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-vmimageserviceop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+/usr/lib/vmware-vmafd/bin/dir-cli user find-by-name --account wcp-vmop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c --level 2
+
+
+
+kubectl get secrets vsphere-config-secret -n vmware-system-csi -o jsonpath='{.data.vsphere-cloud-provider\.conf}' |base64 -d > /root/vsphere-config-secret_orig.bak
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+|mT2Fl4[1NT_xUcAC876
+echo -n '|mT2Fl4[1NT_xUcAC876' | base64
+fG1UMkZsNFsxTlRfeFVjQUM4NzY=
+
+kubectl edit secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry
+ 
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF 
+
+
+
+
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-vmimageserviceop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+
+
+kubectl get secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry -o jsonpath='{.data.password}' | base64 -d> /root/wcp-vmimageserviceop-user.bak
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-vmimageserviceop-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c 
+|mT2Fl4[1NT_xUcAC876
+echo -n '|mT2Fl4[1NT_xUcAC876' | base64
+kubectl edit secret wcp-imgregop-sa-vc-auth -n vmware-system-imageregistry
+
+fG1UMkZsNFsxTlRfeFVjQUM4NzY=
+
+
+MVVpbTdocTRBOjxJPl5IWHY5VA==
+
+
+
+
+echo -n "W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9Ii9ldGMvdm13YXJlL3djcC90bHMvdm1jYS5wZW0iCmNsdXN0ZXItaWQgPSAiZG9tYWluLWMyMjUzIgpzdXBlcnZpc29yLWlkID0gIjI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYSIKY25zcmVnaXN0ZXJ2b2x1bWVzLWNsZWFudXAtaW50ZXJ2YWxpbm1pbiA9IDcyMApjbHVzdGVyLWRpc3RyaWJ1dGlvbiA9ICJTdXBlcnZpc29yQ2x1c3RlciIKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmluIl0KdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTI3OWEyZWQxLTMwZGUtNDU5NS1iZWNkLTRmZjQyYWE1NjgxYS04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAidDcyTUBjcCNOKUZFLF9mWz1oKTUiCmRhdGFjZW50ZXJzID0gImRhdGFjZW50ZXItMyIKcG9ydCA9ICI0NDMiCnRhcmdldHZTQU5GaWxlU2hhcmVDbHVzdGVycyA9ICIiCg==" |base64 -d
+
+
+
+[Global]
+insecure-flag = "false"
+ca-file ="/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2253"
+supervisor-id = "279a2ed1-30de-4595-becd-4ff42aa5681a"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-279a2ed1-30de-4595-becd-4ff42aa5681a-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "t72M@cp#N)FE,_f[=h)5"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+
+
+[Global]
+insecure-flag = "false"
+ca-file ="/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2308"
+supervisor-id = "7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "t72M@cp#N)FE,_f[=h)5"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+
+
+
+cat <<EOF | base64 -w 0
+[Global]
+insecure-flag = "false"
+ca-file ="/etc/vmware/wcp/tls/vmca.pem"
+cluster-id = "domain-c2308"
+supervisor-id = "7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24"
+cnsregistervolumes-cleanup-intervalinmin = 720
+cluster-distribution = "SupervisorCluster"
+[VirtualCenter "DAPMVCNVM1001.bankofbaroda.co.in"]
+user = "wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c@vsphere.local"
+password = "t72M@cp#N)FE,_f[=h)5"
+datacenters = "datacenter-3"
+port = "443"
+targetvSANFileShareClusters = ""
+EOF
+
+B0b@Hyd#123
+
+
+
+W0dsb2JhbF0KaW5zZWN1cmUtZmxhZyA9ICJmYWxzZSIKY2EtZmlsZSA9Ii9ldGMvdm13YXJlL3djcC90bHMvdm1jYS5wZW0iCmNsdXN0ZXItaWQgPSAiZG9tYWluLWMyMzA4IgpzdXBlcnZpc29yLWlkID0gIjdmZmU1MmFlLTJhMmEtNGQzYS04ZjBjLWU0OGZmN2RiNWQyNCIKY25zcmVnaXN0ZXJ2b2x1bWVzLWNsZWFudXAtaW50ZXJ2YWxpbm1pbiA9IDcyMApjbHVzdGVyLWRpc3RyaWJ1dGlvbiA9ICJTdXBlcnZpc29yQ2x1c3RlciIKW1ZpcnR1YWxDZW50ZXIgIkRBUE1WQ05WTTEwMDEuYmFua29mYmFyb2RhLmNvLmluIl0KdXNlciA9ICJ3Y3Atc3RvcmFnZS11c2VyLTdmZmU1MmFlLTJhMmEtNGQzYS04ZjBjLWU0OGZmN2RiNWQyNC04YzUzMTE5ZS1kM2VmLTQwYmYtYmU3Yy0yNDIyODA4YzM5NmNAdnNwaGVyZS5sb2NhbCIKcGFzc3dvcmQgPSAidDcyTUBjcCNOKUZFLF9mWz1oKTUiCmRhdGFjZW50ZXJzID0gImRhdGFjZW50ZXItMyIKcG9ydCA9ICI0NDMiCnRhcmdldHZTQU5GaWxlU2hhcmVDbHVzdGVycyA9ICIiCg==
+
+
+kubectl get secret vsphere-config-secret -n vmware-system-csi -o jsonpath='{.data.password}' | base64 -d> /root/wcp-vsphere-config-secret-1.bak
+
+
+/opt/likewise/bin/ldapmodify -x -D cn=Administrator,cn=Users,dc=vsphere,dc=local -W <<EOF
+dn: CN=wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c,CN=ServicePrincipals,dc=vsphere,dc=local
+changetype: modify
+replace: userAccountControl
+userAccountControl: 0
+EOF
+
+/usr/lib/vmware-vmafd/bin/dir-cli password reset --account wcp-storage-user-7ffe52ae-2a2a-4d3a-8f0c-e48ff7db5d24-8c53119e-d3ef-40bf-be7c-2422808c396c
+
+
+less vmdird.log | grep -i "VdirPasswordFailEvent from user"  | awk {'print $ 4'} | awk -F= {'print $ 2'} | sort | uniq -c
+
+
+
+
+
+
+vim /usr/lib/vmware-wcp/update-controller/sync.py
+
+
+
+
+687b436a-279a2ed1-30de-4595-becd-4ff42aa5681a
+
+grep -ir 687b7558-279a2ed1-30de-4595-becd-4ff42aa5681a /var/log/vmware/wcp/wcpsvc.log
+
+# cd /var/log/pods/kube-system_kube-apiserver-423439e141add7d56c81cc7f8a3a2227_e73b7ce63c8c7a09bede5f23ecc85b99/
+
+
+687b7558-279a2ed1-30de-4595-becd-4ff42aa5681a
+
+
+
+http://localhost:1080/external-cert/http1/172.17.142.84/6443/apis/netoperator.vmware.com/v1alpha1/vspheredistributednetworks?timeout=2m0s"
