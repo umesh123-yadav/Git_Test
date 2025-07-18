@@ -1,3 +1,79 @@
+=================================ETCD BACKUP ==========================================================================
+
+Login on Control plane of guest cluster and set alias.
+
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]# alias etcdctl="/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/37/fs/usr/local/bin/etcdctl --cert /etc/kubernetes/pki/etcd/peer.crt --key /etc/kubernetes/pki/etcd/peer.key --cacert /etc/kubernetes/pki/etcd/ca.crt"
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]#
+
+
+]# ETCDCTL_API=3 etcdctl snapshot save /tmp/etcd_sanpshot_mzset1-1.db --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key  --endpoints=https://127.0.0.1:2379
+{"level":"info","ts":"2025-07-18T10:41:00.714699Z","caller":"snapshot/v3_snapshot.go:65","msg":"created temporary db file","path":"/tmp/etcd_sanpshot_mzset1-1.db.part"}
+{"level":"info","ts":"2025-07-18T10:41:00.720205Z","logger":"client","caller":"v3@v3.5.16/maintenance.go:212","msg":"opened snapshot stream; downloading"}
+{"level":"info","ts":"2025-07-18T10:41:00.720257Z","caller":"snapshot/v3_snapshot.go:73","msg":"fetching snapshot","endpoint":"https://127.0.0.1:2379"}
+{"level":"info","ts":"2025-07-18T10:41:01.540290Z","logger":"client","caller":"v3@v3.5.16/maintenance.go:220","msg":"completed snapshot read; closing"}
+{"level":"info","ts":"2025-07-18T10:41:01.540364Z","caller":"snapshot/v3_snapshot.go:88","msg":"fetched snapshot","endpoint":"https://127.0.0.1:2379","size":"176 MB","took":"now"}
+{"level":"info","ts":"2025-07-18T10:41:01.540400Z","caller":"snapshot/v3_snapshot.go:97","msg":"saved","path":"/tmp/etcd_sanpshot_mzset1-1.db"}
+Snapshot saved at /tmp/etcd_sanpshot_mzset1-1.db
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]#
+
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]# ETCDCTL_API=3 etcdctl snapshot status /tmp/etcd_snapshot_mzset1.db --write-out=table
+Deprecated: Use `etcdutl snapshot status` instead.
+
++---------+----------+------------+------------+
+|  HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++---------+----------+------------+------------+
+| c30a63a | 73485217 |       7636 |     176 MB |
++---------+----------+------------+------------+
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]#
+
+
+
+
+save backup from control plane node to remote host 
+
+
+root@423429734068aceaca7f5124036b8146 [ ~ ]# sudo scp vmware-system-user@172.17.153.24:/home/vmware-system-user/tmp/etcd_sanpshot_mzset1-1.db .
+(vmware-system-user@172.17.153.24) Password:
+scp: /home/vmware-system-user/tmp/etcd_sanpshot_mzset1-1.db: Permission denied
+root@423429734068aceaca7f5124036b8146 [ ~ ]# ssh vmware-system-user@172.17.153.24
+(vmware-system-user@172.17.153.24) Password:
+Last login: Fri Jul 18 11:49:42 2025 from 172.17.153.26
+cat: /var/run/motdgen/motd: Permission denied
+vmware-system-user@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]$ sudo -i
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]# cd /home/vmware-system-user/
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ /home/vmware-system-user ]# ls -ld /home/vmware-system-user/
+drwx------ 5 vmware-system-user users 4096 Jul 18 11:39 /home/vmware-system-user/
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ /home/vmware-system-user ]# ls -l
+total 172060
+-rwxrwxrwx 1 root               root  176177184 Jul 18 11:36 etcd_sanpshot_mzset1-1.db
+drwxr-x--- 2 vmware-system-user users      4096 Jul 18 11:40 tmp
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ /home/vmware-system-user ]# cp etcd_sanpshot_mzset1-1.db /tmp/
+root@dapmtnzwcxx1001-jq8wb-kn2hg [ /home/vmware-system-user ]# exit
+logout
+vmware-system-user@dapmtnzwcxx1001-jq8wb-kn2hg [ ~ ]$ exit
+logout
+Connection to 172.17.153.24 closed.
+root@423429734068aceaca7f5124036b8146 [ ~ ]#
+root@423429734068aceaca7f5124036b8146 [ ~ ]#
+root@423429734068aceaca7f5124036b8146 [ ~ ]#
+root@423429734068aceaca7f5124036b8146 [ ~ ]# sudo scp vmware-system-user@172.17.153.24:/tmp/etcd_sanpshot_mzset1-1.db .
+(vmware-system-user@172.17.153.24) Password:
+etcd_sanpshot_mzset1-1.db                                                                                                                                                                                  100%  168MB 707.8MB/s   00:00
+root@423429734068aceaca7f5124036b8146 [ ~ ]#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ===============================Istio  ==================
 
 https://istio.io/latest/search/?q=istio-base&site=docs
