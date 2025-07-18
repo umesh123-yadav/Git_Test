@@ -1,3 +1,1462 @@
+================================minio replication ==============================================================
+
+
+=======================mc rp  minio ===================================
+
+
+
+
+velero-backup-mz-set1
+velero-backup-mz-set2
+
+velero-backup-dmzset1
+velero-backup-dmzset2
+
+
+dc-velero-backup-mz-set1
+dc-velero-backup-mz-set2
+dc-velero-backup-dmzset1
+dc-velero-backup-dmzset2
+
+dr-velero-backup-mz-set1
+dr-velero-backup-mz-set2
+
+dr-velero-backup-dmzset1
+dr-velero-backup-dmzset2
+
+openssl s_client --connect 172.16.85.19:9010 --showcerts
+
+vi dcminio.cert
+
+sudo cp dcminio.cert /etc/pki/ca-trust/source/anchors/
+
+sudo update-ca-trust
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set dcminio https://172.16.85.19:9010 minioadmin minioadmin123
+Added `dcminio` successfully.
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set drminio https://172.17.85.19:9010 minioadmin minioadmin123
+Added `drminio` successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$
+
+mc alias set drminio https://172.17.85.19:9010 replicationuser minio123
+mc alias set dcminio https://172.16.85.19:9010 replicationuser minio123 --insecure
+
+
+mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+
+
+mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects"
+replication-test
+
+
+dr-velero-backup-mz-set1
+
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-mz-set1 successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc version info drminio/velero-backup-mz-set1
+drminio/velero-backup-mz-set1 versioning is enabled
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc version info dcminio/dr-velero-backup-mz-set1
+dcminio/dr-velero-backup-mz-set1 versioning is enabled
+[appadmin@DAPMMIOWNXX1001 ~]$
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 21 hours
+  172.16.85.19:9010
+  Replicated:                   26,260 objects (2.0 GiB)
+  Queued:                       ● 0 objects, 0 B (avg: 2 objects, 306 KiB ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 9.9 MB/s; max: 48 MB/s
+  Latency:                      0s (avg: 0s; max: 2ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 ~]$
+
+
+mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication' --replicate "existing-objects,delete,delete-marker" --priority 1
+
+
+
+
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication-test' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/replication-test successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 11 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+
+  Summary:
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Received:                     0 objects (0 B)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+
+
+
+
+mc replicate add drminio/velero-backup-mz-set2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set2' --replicate "existing-objects,delete,delete-marker" --priority 1
+
+mc replicate add drminio/velero-backup-dmzset1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-dmzset1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc replicate add drminio/velero-backup-dmzset2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-dmzset2' --replicate "existing-objects,delete,delete-marker" --priority 1
+
+=============================================================================
+DC Configuration
+
+
+[appadmin@DAPMMIOWNXX0001 ~]$ mc alias set dcminio https://172.16.85.19:9010 minioadmin minioadmin123
+Added `dcminio` successfully.
+[appadmin@DAPMMIOWNXX0001 ~]$ mc alias set drminio https://172.17.85.19:9010 minioadmin minioadmin123
+Added `drminio` successfully.
+[appadmin@DAPMMIOWNXX0001 ~]$
+
+
+mc replicate add dcminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.17.85.19:9010/dc-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc replicate add dcminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.17.85.19:9010/dc-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+
+mc replicate add dcminio/velero-backup-dmzset1 --remote-bucket 'https://minioadmin:minioadmin123@172.17.85.19:9010/dc-velero-backup-dmzset1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc replicate add dcminio/velero-backup-dmzset2 --remote-bucket 'https://minioadmin:minioadmin123@172.17.85.19:9010/dc-velero-backup-dmzset2' --replicate "existing-objects,delete,delete-marker" --priority 1
+
+
+
+
+mc replicate status dcminio/velero-backup-mz-set1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+==============================================
+
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-velero-backup-mz-set1 or remote service credentials: minioadmin invalid
+        Get "https://172.16.85.19:9010/dr-velero-backup-mz-set1/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ ip r l
+default via 172.17.85.1 dev bond0 proto static metric 300
+172.17.85.0/24 dev bond0 proto kernel scope link src 172.17.85.19 metric 300
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9020/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-velero-backup-mz-set1 or remote service credentials: minioadmin invalid
+        Get "https://172.16.85.19:9020/dr-velero-backup-mz-set1/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$ cd minio/
+[appadmin@DAPMMIOWNXX1001 minio]$ ls -ltrh
+total 32K
+-rw-r----- 1 appadmin appadmin  749 Jun 11 12:57 minio.conf
+-rw-r----- 1 appadmin appadmin  842 Jun 11 13:42 minioo.conf
+-rw------- 1 appadmin appadmin 3.2K Jun 11 13:42 DAPMMIOWNXX1003.key
+-rw-r----- 1 appadmin appadmin 2.1K Jun 11 13:43 DAPMMIOWNXX1003.csr
+-rw------- 1 appadmin appadmin 3.2K Jun 11 13:43 DAPMMIOWNXX1002.key
+-rw------- 1 appadmin appadmin 3.2K Jun 11 14:02 DAPMMIOWNXX1001.key
+-rw-r----- 1 appadmin appadmin 2.1K Jun 11 14:02 DAPMMIOWNXX1001.csr
+-rw-r----- 1 appadmin appadmin 1.1K Jul 10 13:01 ca.pem
+[appadmin@DAPMMIOWNXX1001 minio]$ cat minio.conf
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+
+[req_distinguished_name]
+countryName = Country Name (2 letter code)
+stateOrProvinceName = State or Province Name (full name)
+localityName = Locality Name (eg, city)
+organizationName = Organization Name (eg, company)
+organizationalUnitName = Organizational Unit Name (eg, section)
+commonName = commonName
+
+[ v3_req ]
+# Extensions to add to a certificate request
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName=DNS:DAPMMIOWNXX1001.bankofbaroda.co.in,DAPMMIOWNXX1002.bankofbaroda.co.in,DAPMMIOWNXX1003.bankofbaroda.co.in,DAPMMIOWNXX1004.bankofbaroda.co.in,IP:172.17.85.19,IP:172.17.85.20,IP:172.17.85.21,IP:172.17.85.22
+
+[appadmin@DAPMMIOWNXX1001 minio]$ pwd
+/home/appadmin/minio
+[appadmin@DAPMMIOWNXX1001 minio]$ ip r l
+default via 172.17.85.1 dev bond0 proto static metric 300
+172.17.85.0/24 dev bond0 proto kernel scope link src 172.17.85.19 metric 300
+[appadmin@DAPMMIOWNXX1001 minio]$ cd ..
+[appadmin@DAPMMIOWNXX1001 ~]$ ls -ltrh
+total 3.0M
+-rw-r----- 1 appadmin appadmin  235 Jun  9 18:09 inventory.yml
+drwxr-x--- 3 appadmin appadmin   27 Jun  9 20:23 ansible
+-rw-r----- 1 appadmin appadmin 3.0M Jun 11 12:08 certgen
+-rw-r----- 1 appadmin appadmin 1.1K Jun 17 15:09 public.crt
+-rw------- 1 appadmin appadmin  241 Jun 17 15:09 private.key
+drwxr-xr-x 2 appadmin appadmin 4.0K Jul 10 13:01 minio
+-rw-r----- 1 appadmin appadmin  908 Jul 18 15:48 dcminio.cert
+-rw-r----- 1 appadmin appadmin 1.1K Jul 18 16:07 drminio.cert
+[appadmin@DAPMMIOWNXX1001 ~]$ cat dcminio.cert
+-----BEGIN CERTIFICATE-----
+MIICcTCCAhagAwIBAgIQU4J6urv5r+iUc1pFA4YI8DAKBggqhkjOPQQDAjA9MRww
+GgYDVQQKExNDZXJ0Z2VuIERldmVsb3BtZW50MR0wGwYDVQQLDBRyb290QERBUE1N
+SU9XTlhYMDAwMTAeFw0yNTAzMTcxMDQ3MjVaFw0yNjAzMTcxMDQ3MjVaMD0xHDAa
+BgNVBAoTE0NlcnRnZW4gRGV2ZWxvcG1lbnQxHTAbBgNVBAsMFHJvb3RAREFQTU1J
+T1dOWFgwMDAxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgOJvl1mK6T5T7cHx
+dTTjRRRVTTigTeucCFcGfeouLZhdRT1pRG6s1Tc0/nx9oEWYc27UfsT+rq/k/Iv8
+6GZVdqOB9zCB9DAOBgNVHQ8BAf8EBAMCAqQwEwYDVR0lBAwwCgYIKwYBBQUHAwEw
+DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUzpriDPL7NdjBzIb09OfKqyaiWyQw
+gZwGA1UdEQSBlDCBkYIPREFQTU1JT1dOWFgwMDAxgiJEQVBNTUlPV05YWDAwMCou
+YmFua29mYmFyb2RhLmNvLmlugg9EQVBNTUlPV05YWDAwMDGCD0RBUE1NSU9XTlhY
+MDAwMoIPREFQTU1JT1dOWFgwMDAzgg9EQVBNTUlPV05YWDAwMDSHBKwQVROHBKwQ
+VRSHBKwQVRWHBKwQVRYwCgYIKoZIzj0EAwIDSQAwRgIhAKPQ7nOwa60TTtZ+ndHX
+kQdRrd4UwCsQoRV9kJ3Rqkk5AiEAvi3a5ch5DpIV85r+Us9P+kiSvKPWf/P9GRHt
+30vtmK0=
+-----END CERTIFICATE-----
+[appadmin@DAPMMIOWNXX1001 ~]$ cat drminio.cert
+-----BEGIN CERTIFICATE-----
+MIIC1jCCAnygAwIBAgIRANbjWWjG1TQUned6MXVQRh8wCgYIKoZIzj0EAwIwQTEc
+MBoGA1UEChMTQ2VydGdlbiBEZXZlbG9wbWVudDEhMB8GA1UECwwYYXBwYWRtaW5A
+REFQTU1JT1dOWFgxMDAxMB4XDTI1MDYxMTA3MTcxMFoXDTI2MDYxMTA3MTcxMFow
+QTEcMBoGA1UEChMTQ2VydGdlbiBEZXZlbG9wbWVudDEhMB8GA1UECwwYYXBwYWRt
+aW5AREFQTU1JT1dOWFgxMDAxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsUo0
+ioT7Ro+nwOy66WAEZ6ZJB83cHTaMgz8z1j+DD2wJxBOPXsw3lRd0qXT4yA8QDVBg
+RyeGaYGCKY/PzMnmy6OCAVMwggFPMA4GA1UdDwEB/wQEAwICpDATBgNVHSUEDDAK
+BggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSpSYmmRE7s8LOT
+Ip+Qew/XQOMUBzCB9wYDVR0RBIHvMIHsgg9EQVBNTUlPV05YWDEwMDGCIkRBUE1N
+SU9XTlhYMTAwMS5iYW5rb2ZiYXJvZGEuY28uaW6CD0RBUE1NSU9XTlhYMTAwMoIi
+REFQTU1JT1dOWFgxMDAyLmJhbmtvZmJhcm9kYS5jby5pboIPREFQTU1JT1dOWFgx
+MDAzgiJEQVBNTUlPV05YWDEwMDMuYmFua29mYmFyb2RhLmNvLmlugg9EQVBNTUlP
+V05YWDEwMDSCIkRBUE1NSU9XTlhYMTAwNC5iYW5rb2ZiYXJvZGEuY28uaW6HBKwR
+VROHBKwRVRSHBKwRVRWHBKwRVRYwCgYIKoZIzj0EAwIDSAAwRQIhAM1TBDeCsc8R
+BDFS2PpssSYnKkDZir9y3yU+59MrM5NfAiA0KTI2cMRpO7aLHI8fr6LwFGkwh2uo
+VCBcSAC/zU91dg==
+-----END CERTIFICATE-----
+[appadmin@DAPMMIOWNXX1001 ~]$ openssl s_client --connect 172.16.85.19:9010
+Connecting to 172.16.85.19
+CONNECTED(00000003)
+Can't use SSL_get_servername
+depth=0 O=Certgen Development, OU=root@DAPMMIOWNXX0001
+verify return:1
+---
+Certificate chain
+ 0 s:O=Certgen Development, OU=root@DAPMMIOWNXX0001
+   i:O=Certgen Development, OU=root@DAPMMIOWNXX0001
+   a:PKEY: id-ecPublicKey, 256 (bit); sigalg: ecdsa-with-SHA256
+   v:NotBefore: Mar 17 10:47:25 2025 GMT; NotAfter: Mar 17 10:47:25 2026 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIICcTCCAhagAwIBAgIQU4J6urv5r+iUc1pFA4YI8DAKBggqhkjOPQQDAjA9MRww
+GgYDVQQKExNDZXJ0Z2VuIERldmVsb3BtZW50MR0wGwYDVQQLDBRyb290QERBUE1N
+SU9XTlhYMDAwMTAeFw0yNTAzMTcxMDQ3MjVaFw0yNjAzMTcxMDQ3MjVaMD0xHDAa
+BgNVBAoTE0NlcnRnZW4gRGV2ZWxvcG1lbnQxHTAbBgNVBAsMFHJvb3RAREFQTU1J
+T1dOWFgwMDAxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgOJvl1mK6T5T7cHx
+dTTjRRRVTTigTeucCFcGfeouLZhdRT1pRG6s1Tc0/nx9oEWYc27UfsT+rq/k/Iv8
+6GZVdqOB9zCB9DAOBgNVHQ8BAf8EBAMCAqQwEwYDVR0lBAwwCgYIKwYBBQUHAwEw
+DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUzpriDPL7NdjBzIb09OfKqyaiWyQw
+gZwGA1UdEQSBlDCBkYIPREFQTU1JT1dOWFgwMDAxgiJEQVBNTUlPV05YWDAwMCou
+YmFua29mYmFyb2RhLmNvLmlugg9EQVBNTUlPV05YWDAwMDGCD0RBUE1NSU9XTlhY
+MDAwMoIPREFQTU1JT1dOWFgwMDAzgg9EQVBNTUlPV05YWDAwMDSHBKwQVROHBKwQ
+VRSHBKwQVRWHBKwQVRYwCgYIKoZIzj0EAwIDSQAwRgIhAKPQ7nOwa60TTtZ+ndHX
+kQdRrd4UwCsQoRV9kJ3Rqkk5AiEAvi3a5ch5DpIV85r+Us9P+kiSvKPWf/P9GRHt
+30vtmK0=
+-----END CERTIFICATE-----
+subject=O=Certgen Development, OU=root@DAPMMIOWNXX0001
+issuer=O=Certgen Development, OU=root@DAPMMIOWNXX0001
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ECDSA
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 984 bytes and written 366 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_128_GCM_SHA256
+Server public key is 256 bit
+This TLS version forbids renegotiation.
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_128_GCM_SHA256
+    Session-ID: D94D6ED752EC4AC89765A2F6066AE1516B2678D0B439236940CB64D232FF67EF
+    Session-ID-ctx:
+    Resumption PSK: 991ED655E2BFC7CA94195F3F91D63197456D9F921839318A29F09C40A29EB871
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 604800 (seconds)
+    TLS session ticket:
+    0000 - 38 fc 3b 88 3e 35 91 8b-57 84 e1 9b 50 b2 18 07   8.;.>5..W...P...
+    0010 - 0d 22 55 2e 16 0d 48 74-b3 7a a6 24 90 a3 cb 2c   ."U...Ht.z.$...,
+    0020 - fa fb 50 1e 1b 6d 03 ed-37 df bd 85 85 ea ea 0c   ..P..m..7.......
+    0030 - df 39 f0 22 7b a3 87 63-29 7f ca f4 b6 2d f9 fd   .9."{..c)....-..
+    0040 - e5 67 50 e1 23 40 82 64-52 80 99 d0 2b 1d b6 d2   .gP.#@.dR...+...
+    0050 - 72 0e d6 79 83 53 6d 41-2c 19 ef cf 75 ac b6 4c   r..y.SmA,...u..L
+    0060 - ad ff c9 24 31 c6 a7 ad-a7                        ...$1....
+
+    Start Time: 1752836266
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK
+^C
+[appadmin@DAPMMIOWNXX1001 ~]$ sudo -i
+/etc/sudoers:135:1: syntax error
+====================================sudo Implementation=====================================
+^
+/etc/sudoers:136:221: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_LINUX = /usr/bin/passwd root, /usr/sbin/su root, /usr/bin/su, /usr/bin/sudo su, /usr/bin/passwd DLadmin, /usr/bin/passwd appadmin, /bin/sudo -i, /usr/bin/sudo -i, /usr/bin/sudo -s, /bin/sh, /bin/bash 
+                                                                                                                                                                                                                            ^
+/etc/sudoers:137:391: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_APP = /usr/bin/passwd root, /usr/bin/passwd, /usr/sbin/su, /usr/sbin/su root, /usr/sbin/visudo, /usr/bin/vi /etc/sudoers, /usr/bin/vi /etc/passwd, /usr/bin/vi /etc/group, /usr/bin/su, /usr/bin/sudo su, /usr/sbin/groupadd, /usr/sbin/useradd, /bin/chown, /usr/sbin/usermod, /usr/bin/sudo -i, /usr/bin/passwd DLadmin, /usr/bin/passwd adladm, /bin/sudo -i, /bin/sh, /bin/bash
+                                                                                                                                                                                                                                                                                                                                                                                                      ^
+/etc/sudoers:140:1: syntax error
+==============================================================================================
+^
+[root@DAPMMIOWNXX1001 ~]# cd /etc/pki/ca-trust/source/anchors/
+[root@DAPMMIOWNXX1001 anchors]# ll
+total 12
+-rw-r----- 1 root root  908 Jul 18 15:48 dcminio.cert
+-rw-r----- 1 root root 1046 Jul 18 16:07 drminio.cert
+-rw-r----- 1 root root 2504 Jun 13 17:31 katello-server-ca.pem
+[root@DAPMMIOWNXX1001 anchors]# mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+ --insecure
+-bash: mc: command not found
+-bash: --insecure: command not found
+[root@DAPMMIOWNXX1001 anchors]#
+[root@DAPMMIOWNXX1001 anchors]#
+[root@DAPMMIOWNXX1001 anchors]#
+[root@DAPMMIOWNXX1001 anchors]# mc replicate --help
+-bash: mc: command not found
+[root@DAPMMIOWNXX1001 anchors]# exit
+logout
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate --help
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc replicate - configure server side bucket replication
+
+USAGE:
+  mc replicate COMMAND [COMMAND FLAGS | -h] [ARGUMENTS...]
+
+COMMANDS:
+  add         add a server side replication configuration rule
+  update      modify an existing server side replication configuration rule
+  list, ls    list server side replication configuration rules
+  status      show server side replication status
+  resync      re-replicate all previously replicated objects
+  export      export server side replication configuration
+  import      import server side replication configuration in JSON format
+  remove, rm  remove a server side replication configuration rule
+  backlog     show unreplicated object versions
+
+FLAGS:
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+  --limit-upload value          limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+  --limit-download value        limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+  --help, -h                    show help
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-velero-backup-mz-set1 or remote service credentials: minioadmin invalid
+        Get "https://172.16.85.19:9010/dr-velero-backup-mz-set1/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set drminio https://172.17.85.19:9010 replicationuser minio123
+Added `drminio` successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set drminio https://172.16.85.19:9010 replicationuser minio123
+Added `drminio` successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete,delete-market,existing-objects"
+mc: <ERROR> --replicate flag takes one or more comma separated string with values "delete", "delete-marker", "metadata-sync", "existing-objects" or "" to disable these settings: invalid value for --replicate flag delete,delete-market,existing-objects.
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete, delete-market, existing-objects"
+mc: <ERROR> --replicate flag takes one or more comma separated string with values "delete", "delete-marker", "metadata-sync", "existing-objects" or "" to disable these settings: invalid value for --replicate flag delete, delete-market, existing-objects.
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate '"delete", "delete-market", "existing-objects"'
+mc: <ERROR> --replicate flag takes one or more comma separated string with values "delete", "delete-marker", "metadata-sync", "existing-objects" or "" to disable these settings: invalid value for --replicate flag "delete", "delete-market", "existing-objects".
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "delete", "delete-market", "existing-objects"
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc replicate add - add a server side replication configuration rule
+
+USAGE:
+  mc replicate add TARGET
+
+FLAGS:
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+  --limit-upload value          limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+  --limit-download value        limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+  --id value                    id for the rule, should be a unique value
+  --tags value                  format '<key1>=<value1>&<key2>=<value2>&<key3>=<value3>', multiple values allowed for multiple key/value pairs
+  --storage-class value         storage class for destination, valid values are either "STANDARD" or "REDUCED_REDUNDANCY"
+  --disable                     disable the rule
+  --priority value              priority of the rule, should be unique and is a required field (default: 0)
+  --remote-bucket value         remote bucket, should be a unique value for the configuration
+  --replicate value             comma separated list to enable replication of soft deletes, permanent deletes, existing objects and metadata sync (default: "delete-marker,delete,existing-objects,metadata-sync")
+  --path value                  bucket path lookup supported by the server. Valid options are ['auto', 'on', 'off']' (default: "auto")
+  --region value                region of the destination bucket (optional)
+  --bandwidth value             set bandwidth limit in bytes per second (K,B,G,T for metric and Ki,Bi,Gi,Ti for IEC units)
+  --sync                        enable synchronous replication for this target. default is async
+  --healthcheck-seconds value   health check interval in seconds (default: 60)
+  --disable-proxy               disable proxying in active-active replication. If unset, default behavior is to proxy
+  --help, -h                    show help
+
+EXAMPLES:
+  1. Add replication configuration rule on bucket "sourcebucket" for alias "sourceminio" with alias "targetminio" to replicate all operations in an active-active replication setup.
+     $ mc replicate add sourceminio/sourcebucket --remote-bucket targetminio/targetbucket \
+         --priority 1
+
+  2. Add replication configuration rule on bucket "mybucket" for alias "myminio" to replicate all operations in an active-active replication setup.
+     $ mc replicate add myminio/mybucket --remote-bucket https://foobar:foo12345@minio.siteb.example.com/targetbucket \
+         --priority 1
+
+  3. Add replication configuration rule on bucket "mybucket" for alias "myminio" to replicate all objects with tags
+     "key1=value1, key2=value2" to targetbucket synchronously with bandwidth set to 2 gigabits per second.
+     $ mc replicate add myminio/mybucket --remote-bucket https://foobar:foo12345@minio.siteb.example.com/targetbucket  \
+         --tags "key1=value1&key2=value2" --bandwidth "2G" --sync \
+         --priority 1
+
+  4. Disable a replication configuration rule on bucket "mybucket" for alias "myminio".
+     $ mc replicate add myminio/mybucket --remote-bucket https://foobar:foo12345@minio.siteb.example.com/targetbucket  \
+         --tags "key1=value1&key2=value2" \
+         --priority 1 --disable
+
+  5. Add replication configuration rule with existing object replication, delete marker replication and versioned deletes
+     enabled on bucket "mybucket" for alias "myminio".
+     $ mc replicate add myminio/mybucket --remote-bucket https://foobar:foo12345@minio.siteb.example.com/targetbucket  \
+         --replicate "existing-objects,delete,delete-marker" \
+         --priority 1
+
+
+
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-mz-set1 successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc version info drminio/velero-backup-mz-set1
+drminio/velero-backup-mz-set1 versioning is enabled
+[appadmin@DAPMMIOWNXX1001 ~]$ mc version info dcminio/dc-velero-backup-mz-set1
+mc: <ERROR> Unable to get versioning info. The specified bucket does not exist.
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc version info dcminio/dr-velero-backup-mz-set1
+dcminio/dr-velero-backup-mz-set1 versioning is enabled
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 21 hours
+  172.16.85.19:9010
+  Replicated:                   26,260 objects (2.0 GiB)
+  Queued:                       ● 0 objects, 0 B (avg: 2 objects, 306 KiB ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 9.9 MB/s; max: 48 MB/s
+  Latency:                      0s (avg: 0s; max: 2ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 21 hours
+  172.16.85.19:9010
+  Replicated:                   26,260 objects (2.0 GiB)
+  Queued:                       ● 0 objects, 0 B (avg: 2 objects, 226 KiB ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 9.9 MB/s; max: 48 MB/s
+  Latency:                      0s (avg: 0s; max: 2ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set drminio https://172.17.85.19:9010 replicationuser minio123
+Added `drminio` successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$ mc alias set dcminio https://172.16.85.19:9010 replicationuser minio123
+Added `dcminio` successfully.
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects"
+
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: minioadmin invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects" --insecure
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: minioadmin invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects"
+
+
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: replicationuser invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$
+[appadmin@DAPMMIOWNXX1001 ~]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects" --insecure
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: replicationuser invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 ~]$ ls -ltrh
+total 3.0M
+-rw-r----- 1 appadmin appadmin  235 Jun  9 18:09 inventory.yml
+drwxr-x--- 3 appadmin appadmin   27 Jun  9 20:23 ansible
+-rw-r----- 1 appadmin appadmin 3.0M Jun 11 12:08 certgen
+-rw-r----- 1 appadmin appadmin 1.1K Jun 17 15:09 public.crt
+-rw------- 1 appadmin appadmin  241 Jun 17 15:09 private.key
+drwxr-xr-x 2 appadmin appadmin 4.0K Jul 10 13:01 minio
+-rw-r----- 1 appadmin appadmin  908 Jul 18 15:48 dcminio.cert
+-rw-r----- 1 appadmin appadmin 1.1K Jul 18 16:07 drminio.cert
+[appadmin@DAPMMIOWNXX1001 ~]$ cd /etc/ssl/certs/
+[appadmin@DAPMMIOWNXX1001 certs]$ ls
+ca-bundle.crt  ca-bundle.trust.crt  postfix.pem
+[appadmin@DAPMMIOWNXX1001 certs]$ cd -
+/home/appadmin
+[appadmin@DAPMMIOWNXX1001 ~]$ sudo cp dcminio.cert /etc/ssl/certs/
+/etc/sudoers:135:1: syntax error
+====================================sudo Implementation=====================================
+^
+/etc/sudoers:136:221: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_LINUX = /usr/bin/passwd root, /usr/sbin/su root, /usr/bin/su, /usr/bin/sudo su, /usr/bin/passwd DLadmin, /usr/bin/passwd appadmin, /bin/sudo -i, /usr/bin/sudo -i, /usr/bin/sudo -s, /bin/sh, /bin/bash 
+                                                                                                                                                                                                                            ^
+/etc/sudoers:137:391: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_APP = /usr/bin/passwd root, /usr/bin/passwd, /usr/sbin/su, /usr/sbin/su root, /usr/sbin/visudo, /usr/bin/vi /etc/sudoers, /usr/bin/vi /etc/passwd, /usr/bin/vi /etc/group, /usr/bin/su, /usr/bin/sudo su, /usr/sbin/groupadd, /usr/sbin/useradd, /bin/chown, /usr/sbin/usermod, /usr/bin/sudo -i, /usr/bin/passwd DLadmin, /usr/bin/passwd adladm, /bin/sudo -i, /bin/sh, /bin/bash
+                                                                                                                                                                                                                                                                                                                                                                                                      ^
+/etc/sudoers:140:1: syntax error
+==============================================================================================
+^
+[appadmin@DAPMMIOWNXX1001 ~]$ pwd
+/home/appadmin
+[appadmin@DAPMMIOWNXX1001 ~]$ cd /etc/ssl/certs/
+[appadmin@DAPMMIOWNXX1001 certs]$ ls -l
+total 8
+lrwxrwxrwx  1 root root   49 Aug 19  2024 ca-bundle.crt -> /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+lrwxrwxrwx  1 root root   55 Aug 19  2024 ca-bundle.trust.crt -> /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
+-rw-r-----  1 root root  908 Jul 18 17:57 dcminio.cert
+-rw-r--r--. 1 root root 2171 May 10  2024 postfix.pem
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects"
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: replicationuser invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 certs]$ mc
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc - MinIO Client for object storage and filesystems.
+
+USAGE:
+  mc [FLAGS] COMMAND [COMMAND FLAGS | -h] [ARGUMENTS...]
+
+COMMANDS:
+  alias      manage server credentials in configuration file
+  admin      manage MinIO servers
+  anonymous  manage anonymous access to buckets and objects
+  batch      manage batch jobs
+  cp         copy objects
+  cat        display object contents
+  cors       manage bucket CORS configuration
+  diff       list differences in object name, size, and date between two buckets
+  du         summarize disk usage recursively
+  encrypt    manage bucket encryption config
+  event      manage object notifications
+  find       search for objects
+  get        get s3 object to local
+  head       display first 'n' lines of an object
+  ilm        manage bucket lifecycle
+  idp        manage MinIO IDentity Provider server configuration
+  license    license related commands
+  legalhold  manage legal hold for object(s)
+  ls         list buckets and objects
+  mb         make a bucket
+  mv         move objects
+  mirror     synchronize object(s) to a remote site
+  od         measure single stream upload and download
+  ping       perform liveness check
+  pipe       stream STDIN to an object
+  put        upload an object to a bucket
+  quota      manage bucket quota
+  rm         remove object(s)
+  retention  set retention for object(s)
+  rb         remove a bucket
+  replicate  configure server side bucket replication
+  ready      checks if the cluster is ready or not
+  sql        run sql queries on objects
+  stat       show object metadata
+  support    support related commands
+  share      generate URL for temporary access to an object
+  tree       list buckets and objects in a tree format
+  tag        manage tags for bucket and object(s)
+  undo       undo PUT/DELETE operations
+  update     update mc to latest release
+  version    manage bucket versioning
+  watch      listen for object notification events
+
+GLOBAL FLAGS:
+  --autocompletion              install auto-completion for your shell
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+[appadmin@DAPMMIOWNXX1001 certs]$ mc alias set dcminio https://172.16.85.19:9010 replicationuser minio123 --insecure
+Added `dcminio` successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects" --insecure
+mc: <ERROR> unable to configure remote target. Remote service connection error (Remote service endpoint offline, target bucket: dr-replication-test or remote service credentials: replicationuser invalid
+        Get "https://172.16.85.19:9010/dr-replication-test/?location=": tls: failed to verify certificate: x509: certificate signed by unknown authority).
+[appadmin@DAPMMIOWNXX1001 certs]$ pwd
+/etc/ssl/certs
+[appadmin@DAPMMIOWNXX1001 certs]$ ls -ltrh
+total 8.0K
+-rw-r--r--. 1 root root 2.2K May 10  2024 postfix.pem
+lrwxrwxrwx  1 root root   55 Aug 19  2024 ca-bundle.trust.crt -> /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
+lrwxrwxrwx  1 root root   49 Aug 19  2024 ca-bundle.crt -> /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+-rw-r-----  1 root root  908 Jul 18 17:57 dcminio.cert
+[appadmin@DAPMMIOWNXX1001 certs]$ sudo -i
+/etc/sudoers:135:1: syntax error
+====================================sudo Implementation=====================================
+^
+/etc/sudoers:136:221: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_LINUX = /usr/bin/passwd root, /usr/sbin/su root, /usr/bin/su, /usr/bin/sudo su, /usr/bin/passwd DLadmin, /usr/bin/passwd appadmin, /bin/sudo -i, /usr/bin/sudo -i, /usr/bin/sudo -s, /bin/sh, /bin/bash 
+                                                                                                                                                                                                                            ^
+/etc/sudoers:137:391: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_APP = /usr/bin/passwd root, /usr/bin/passwd, /usr/sbin/su, /usr/sbin/su root, /usr/sbin/visudo, /usr/bin/vi /etc/sudoers, /usr/bin/vi /etc/passwd, /usr/bin/vi /etc/group, /usr/bin/su, /usr/bin/sudo su, /usr/sbin/groupadd, /usr/sbin/useradd, /bin/chown, /usr/sbin/usermod, /usr/bin/sudo -i, /usr/bin/passwd DLadmin, /usr/bin/passwd adladm, /bin/sudo -i, /bin/sh, /bin/bash
+                                                                                                                                                                                                                                                                                                                                                                                                      ^
+/etc/sudoers:140:1: syntax error
+==============================================================================================
+^
+c[root@DAPMMIOWNXX1001 ~]# cd /home/minio-user/
+[root@DAPMMIOWNXX1001 minio-user]# ls -la
+total 0
+drwxr-x---   3 minio-user minio-user  20 Jun 10 18:09 .
+drwxr-xr-x. 11 root       root       147 Jun 10 18:09 ..
+drwxr-x---   3 minio-user minio-user  19 Jun 10 18:09 .minio
+[root@DAPMMIOWNXX1001 minio-user]# cd .minio/
+[root@DAPMMIOWNXX1001 .minio]# ll
+total 4
+drwxr-x--- 3 minio-user minio-user 4096 Jun 11 12:49 certs
+[root@DAPMMIOWNXX1001 .minio]# cd certs/
+[root@DAPMMIOWNXX1001 certs]# ls -ltrh
+total 5.9M
+drwxr-x--- 2 minio-user minio-user   41 Mar 17 13:58 CAs
+-rwxr-x--- 1 minio-user minio-user 2.8K Mar 17 13:59 star_bankofbaroda_co_in.cer
+-rwxr-x--- 1 minio-user minio-user 3.2K Mar 17 13:59 bankofbaroda.co.in.key
+-rw-r----- 1 root       root        778 Mar 17 15:04 file.conf
+-rw-r----- 1 root       root       1.3K Mar 17 15:28 cert.pem
+-rw------- 1 root       root       1.7K Mar 17 16:01 key.pem
+-rw-r----- 1 root       root       3.0M Mar 17 16:09 certgen-linux-amd64
+-rw-r----- 1 root       root       3.0M Jun 10 18:10 certs.tar
+-rwxr-x--- 1 minio-user minio-user 2.8K Jun 10 19:00 public.crt_old
+-rwxr-x--- 1 minio-user minio-user 3.2K Jun 10 19:00 private.key_old
+-rw-r----- 1 minio-user minio-user 1.1K Jun 11 12:49 public.crt
+-rw------- 1 minio-user minio-user  241 Jun 11 12:49 private.key
+[root@DAPMMIOWNXX1001 certs]# cd CAs/
+[root@DAPMMIOWNXX1001 CAs]# ls -ltrh
+total 4.0K
+-rwxr-x--- 1 minio-user minio-user 2.8K Mar 17 13:58 star_bankofbaroda_co_in.cer
+[root@DAPMMIOWNXX1001 CAs]# cp /home/appadmin/dcminio.cert .
+[root@DAPMMIOWNXX1001 CAs]# cp /home/appadmin/drminio.cert .
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]# ls -l
+total 12
+-rw-r----- 1 root       root        908 Jul 18 18:04 dcminio.cert
+-rw-r----- 1 root       root       1046 Jul 18 18:04 drminio.cert
+-rwxr-x--- 1 minio-user minio-user 2822 Mar 17 13:58 star_bankofbaroda_co_in.cer
+[root@DAPMMIOWNXX1001 CAs]# chown minio-user:minio-user dcminio.cert drminio.cert
+[root@DAPMMIOWNXX1001 CAs]# ls -ltrh
+total 12K
+-rwxr-x--- 1 minio-user minio-user 2.8K Mar 17 13:58 star_bankofbaroda_co_in.cer
+-rw-r----- 1 minio-user minio-user  908 Jul 18 18:04 dcminio.cert
+-rw-r----- 1 minio-user minio-user 1.1K Jul 18 18:04 drminio.cert
+[root@DAPMMIOWNXX1001 CAs]# systemctl status minio.service
+● minio.service - MinIO
+     Loaded: loaded (/usr/lib/systemd/system/minio.service; enabled; preset: disabled)
+     Active: active (running) since Thu 2025-07-17 18:42:19 IST; 23h ago
+       Docs: https://min.io/docs/minio/linux/index.html
+   Main PID: 53593 (minio)
+      Tasks: 30
+     Memory: 1.8G
+        CPU: 24min 53.892s
+     CGroup: /system.slice/minio.service
+             └─53593 /usr/local/bin/minio server --certs-dir /home/minio-user/.minio/certs --address :9010 --console-address :9020 https://172.17.85.19:9010/minio/minio{1...4} https://172.17.85.20:9010/minio/minio{1...4} https://172.17.>
+
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: INFO: IAM load(startup) finished. (duration: 14.779416ms)
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: ---------------------------
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: MinIO Object Storage Server
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: Copyright: 2015-2025 MinIO, Inc.
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: License: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: Version: RELEASE.2025-02-18T16-25-55Z (go1.23.6 linux/amd64)
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: API: https://172.17.85.19:9010  https://127.0.0.1:9010
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: WebUI: https://172.17.85.19:9020 https://127.0.0.1:9020
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: Docs: https://docs.min.io
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: ---------------------------
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]# systemctl stop minio.service
+[root@DAPMMIOWNXX1001 CAs]# systemctl status minio.service
+○ minio.service - MinIO
+     Loaded: loaded (/usr/lib/systemd/system/minio.service; enabled; preset: disabled)
+     Active: inactive (dead) since Fri 2025-07-18 18:05:00 IST; 1s ago
+   Duration: 23h 22min 41.029s
+       Docs: https://min.io/docs/minio/linux/index.html
+    Process: 53593 ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES (code=exited, status=0/SUCCESS)
+   Main PID: 53593 (code=exited, status=0/SUCCESS)
+        CPU: 24min 53.936s
+
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: Version: RELEASE.2025-02-18T16-25-55Z (go1.23.6 linux/amd64)
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: API: https://172.17.85.19:9010  https://127.0.0.1:9010
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: WebUI: https://172.17.85.19:9020 https://127.0.0.1:9020
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: Docs: https://docs.min.io
+Jul 17 19:28:31 DAPMMIOWNXX1001 minio[53593]: ---------------------------
+Jul 18 18:05:00 DAPMMIOWNXX1001 systemd[1]: Stopping MinIO...
+Jul 18 18:05:00 DAPMMIOWNXX1001 minio[53593]: INFO: Exiting on signal: TERMINATED
+Jul 18 18:05:00 DAPMMIOWNXX1001 systemd[1]: minio.service: Deactivated successfully.
+Jul 18 18:05:00 DAPMMIOWNXX1001 systemd[1]: Stopped MinIO.
+Jul 18 18:05:00 DAPMMIOWNXX1001 systemd[1]: minio.service: Consumed 24min 53.936s CPU time.
+[root@DAPMMIOWNXX1001 CAs]# systemctl start minio.service
+[root@DAPMMIOWNXX1001 CAs]# systemctl status minio.service
+● minio.service - MinIO
+     Loaded: loaded (/usr/lib/systemd/system/minio.service; enabled; preset: disabled)
+     Active: active (running) since Fri 2025-07-18 18:05:05 IST; 1s ago
+       Docs: https://min.io/docs/minio/linux/index.html
+    Process: 170619 ExecStartPre=/bin/bash -c if [ -z "${MINIO_VOLUMES}" ]; then echo "Variable MINIO_VOLUMES not set in /etc/default/minio"; exit 1; fi (code=exited, status=0/SUCCESS)
+   Main PID: 170620 (minio)
+      Tasks: 12
+     Memory: 64.8M
+        CPU: 1.413s
+     CGroup: /system.slice/minio.service
+             └─170620 /usr/local/bin/minio server --certs-dir /home/minio-user/.minio/certs --address :9010 --console-address :9020 https://172.17.85.19:9010/minio/minio{1...4} https://172.17.85.20:9010/minio/minio{1...4} https://172.17>
+
+Jul 18 18:05:05 DAPMMIOWNXX1001 systemd[1]: Started MinIO.
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio1: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio2: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio3: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio4: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio1: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio2: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio3: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Unable to use the drive https://172.17.85.20:9010/minio/minio4: drive not found, will be retried
+Jul 18 18:05:06 DAPMMIOWNXX1001 minio[170620]: INFO: Waiting for a minimum of 2 drives to come online (elapsed 0s)
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]# systemctl status minio.service
+● minio.service - MinIO
+     Loaded: loaded (/usr/lib/systemd/system/minio.service; enabled; preset: disabled)
+     Active: active (running) since Fri 2025-07-18 18:05:05 IST; 7s ago
+       Docs: https://min.io/docs/minio/linux/index.html
+    Process: 170619 ExecStartPre=/bin/bash -c if [ -z "${MINIO_VOLUMES}" ]; then echo "Variable MINIO_VOLUMES not set in /etc/default/minio"; exit 1; fi (code=exited, status=0/SUCCESS)
+   Main PID: 170620 (minio)
+      Tasks: 12
+     Memory: 115.8M
+        CPU: 1.723s
+     CGroup: /system.slice/minio.service
+             └─170620 /usr/local/bin/minio server --certs-dir /home/minio-user/.minio/certs --address :9010 --console-address :9020 https://172.17.85.19:9010/minio/minio{1...4} https://172.17.85.20:9010/minio/minio{1...4} https://172.17>
+
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: INFO: IAM load(startup) finished. (duration: 22.1583ms)
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: ---------------------------
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: MinIO Object Storage Server
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: Copyright: 2015-2025 MinIO, Inc.
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: License: GNU AGPLv3 - https://www.gnu.org/licenses/agpl-3.0.html
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: Version: RELEASE.2025-02-18T16-25-55Z (go1.23.6 linux/amd64)
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: API: https://172.17.85.19:9010  https://127.0.0.1:9010
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: WebUI: https://172.17.85.19:9020 https://127.0.0.1:9020
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: Docs: https://docs.min.io
+Jul 18 18:05:07 DAPMMIOWNXX1001 minio[170620]: ---------------------------
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]# exit
+logout
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "delete,delete-market,existing-objects" --insecure
+mc: <ERROR> --replicate flag takes one or more comma separated string with values "delete", "delete-marker", "metadata-sync", "existing-objects" or "" to disable these settings: invalid value for --replicate flag delete,delete-market,existing-objects.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/replication-test successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 4 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 423 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 1)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       2 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 4 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 314 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 1)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://replicationuser:minio123@172.16.85.19:9010/dr-replication-test' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to add replication rule: priority must be unique. Replication configuration already has a rule with this priority.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 4 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 250 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 1)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      13ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 5 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 183 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      13ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc replicate - configure server side bucket replication
+
+USAGE:
+  mc replicate COMMAND [COMMAND FLAGS | -h] [ARGUMENTS...]
+
+COMMANDS:
+  add         add a server side replication configuration rule
+  update      modify an existing server side replication configuration rule
+  list, ls    list server side replication configuration rules
+  status      show server side replication status
+  resync      re-replicate all previously replicated objects
+  export      export server side replication configuration
+  import      import server side replication configuration in JSON format
+  remove, rm  remove a server side replication configuration rule
+  backlog     show unreplicated object versions
+
+FLAGS:
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+  --limit-upload value          limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+  --limit-download value        limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+  --help, -h                    show help
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove drminio/replication-test
+mc: <ERROR> rule ID cannot be empty. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc replicate list - list server side replication configuration rules
+
+USAGE:
+  mc replicate list TARGET
+
+FLAGS:
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+  --limit-upload value          limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+  --limit-download value        limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+  --status value                show rules by status. Valid options are [enabled,disabled]
+  --help, -h                    show help
+
+EXAMPLES:
+  1. List server side replication configuration rules on bucket "mybucket" for alias "myminio".
+     $ mc replicate list myminio/mybucket
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove drminio/replication-test
+mc: <ERROR> rule ID cannot be empty. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list drminio/replication-test
+Rules:
+Remote Bucket: 172.16.85.19:9010/dr-replication-test
+  Rule ID: d1t3vhprej0lijg5je1g
+  Priority: 1
+
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 6 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 117 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove d1t3vhprej0lijg5je1g
+mc: <ERROR> rule ID cannot be empty. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --help
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── (q)uit/esc
+NAME:
+  mc replicate remove - remove a server side replication configuration rule
+
+USAGE:
+  mc replicate remove TARGET
+
+FLAGS:
+  --config-dir value, -C value  path to configuration folder (default: "/home/appadmin/.mc") [$MC_CONFIG_DIR]
+  --quiet, -q                   disable progress bar display [$MC_QUIET]
+  --disable-pager, --dp         disable mc internal pager and print to raw stdout [$MC_DISABLE_PAGER]
+  --no-color                    disable color theme [$MC_NO_COLOR]
+  --json                        enable JSON lines formatted output [$MC_JSON]
+  --debug                       enable debug output [$MC_DEBUG]
+  --resolve value               resolves HOST[:PORT] to an IP address. Example: minio.local:9000=10.10.75.1 [$MC_RESOLVE]
+  --insecure                    disable SSL certificate verification [$MC_INSECURE]
+  --limit-upload value          limits uploads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_UPLOAD]
+  --limit-download value        limits downloads to a maximum rate in KiB/s, MiB/s, GiB/s. (default: unlimited) [$MC_LIMIT_DOWNLOAD]
+  --id value                    id for the rule, should be a unique value
+  --force                       force remove all the replication configuration rules on the bucket
+  --all                         remove all replication configuration rules of the bucket, force flag enforced
+  --help, -h                    show help
+
+EXAMPLES:
+  1. Remove replication configuration rule on bucket "mybucket" for alias "myminio" with rule id "bsib5mgt874bi56l0fmg".
+     $ mc replicate remove --id "bsib5mgt874bi56l0fmg" myminio/mybucket
+
+  2. Remove all the replication configuration rules on bucket "mybucket" for alias "myminio". --force flag is required.
+     $ mc replicate remove --all --force myminio/mybucket
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list drminio/replication-test
+Rules:
+Remote Bucket: 172.16.85.19:9010/dr-replication-test
+  Rule ID: d1t3vhprej0lijg5je1g
+  Priority: 1
+
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --id d1t3vhprej0lijg5je1g drminio/replication-test
+mc: <ERROR> Could not remove replication rule: replication configuration should have at least one rule.
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --id d1t3vhprej0lijg5je1g drminio/replication-test --force
+mc: <ERROR> It is mandatory to specify --all and --force flag together for mc replicate remove. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list drminio/replication-test
+Rules:
+Remote Bucket: 172.16.85.19:9010/dr-replication-test
+  Rule ID: d1t3vhprej0lijg5je1g
+  Priority: 1
+
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --id d1t3vhprej0lijg5je1g drminio/replication-test --force
+mc: <ERROR> It is mandatory to specify --all and --force flag together for mc replicate remove. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --id d1t3vhprej0lijg5je1g drminio/replication-test --force
+mc: <ERROR> It is mandatory to specify --all and --force flag together for mc replicate remove. Invalid arguments provided, please refer `mc <command> -h` for relevant documentation.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate remove --all --force drminio/replication-test
+Replication configuration removed from drminio/replication-test successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list drminio/replication-test
+mc: <ERROR> Unable to list replication configuration: replication configuration not set.
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate list drminio
+mc: <ERROR> Unable to get replication configuration. Bucket name cannot be empty.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The remote target does not exist.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/replication-test --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-replication-test' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/replication-test successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$  mc replicate status drminio/replication-test
+  Replication status since 11 minutes
+  172.16.85.19:9010
+  Replicated:                   0 objects (0 B)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 15ms)
+  Link:                         ● online (total downtime: 0 milliseconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+
+  Summary:
+  Replicated:                   0 objects (0 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Received:                     0 objects (0 B)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s)
+  Errors:                       0 in last 1 minute; 2 in last 1hr; 2 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$ pwd
+/etc/ssl/certs
+[appadmin@DAPMMIOWNXX1001 certs]$ ls -ltrh
+total 8.0K
+-rw-r--r--. 1 root root 2.2K May 10  2024 postfix.pem
+lrwxrwxrwx  1 root root   55 Aug 19  2024 ca-bundle.trust.crt -> /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
+lrwxrwxrwx  1 root root   49 Aug 19  2024 ca-bundle.crt -> /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+-rw-r-----  1 root root  908 Jul 18 17:57 dcminio.cert
+[appadmin@DAPMMIOWNXX1001 certs]$ sudo c^Cminio.cert /etc/ssl/certs/
+[appadmin@DAPMMIOWNXX1001 certs]$ pwd
+/etc/ssl/certs
+[appadmin@DAPMMIOWNXX1001 certs]$ ll
+total 8
+lrwxrwxrwx  1 root root   49 Aug 19  2024 ca-bundle.crt -> /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem
+lrwxrwxrwx  1 root root   55 Aug 19  2024 ca-bundle.trust.crt -> /etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt
+-rw-r-----  1 root root  908 Jul 18 17:57 dcminio.cert
+-rw-r--r--. 1 root root 2171 May 10  2024 postfix.pem
+[appadmin@DAPMMIOWNXX1001 certs]$ cd /home/minio-user/
+-bash: cd: /home/minio-user/: Permission denied
+[appadmin@DAPMMIOWNXX1001 certs]$ ip r l
+default via 172.17.85.1 dev bond0 proto static metric 300
+172.17.85.0/24 dev bond0 proto kernel scope link src 172.17.85.19 metric 300
+[appadmin@DAPMMIOWNXX1001 certs]$ sudo -i
+/etc/sudoers:135:1: syntax error
+====================================sudo Implementation=====================================
+^
+/etc/sudoers:136:221: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_LINUX = /usr/bin/passwd root, /usr/sbin/su root, /usr/bin/su, /usr/bin/sudo su, /usr/bin/passwd DLadmin, /usr/bin/passwd appadmin, /bin/sudo -i, /usr/bin/sudo -i, /usr/bin/sudo -s, /bin/sh, /bin/bash 
+                                                                                                                                                                                                                            ^
+/etc/sudoers:137:391: Alias "en_US.UTF-8" already defined
+Cmnd_Alias MYADMIN_APP = /usr/bin/passwd root, /usr/bin/passwd, /usr/sbin/su, /usr/sbin/su root, /usr/sbin/visudo, /usr/bin/vi /etc/sudoers, /usr/bin/vi /etc/passwd, /usr/bin/vi /etc/group, /usr/bin/su, /usr/bin/sudo su, /usr/sbin/groupadd, /usr/sbin/useradd, /bin/chown, /usr/sbin/usermod, /usr/bin/sudo -i, /usr/bin/passwd DLadmin, /usr/bin/passwd adladm, /bin/sudo -i, /bin/sh, /bin/bash
+                                                                                                                                                                                                                                                                                                                                                                                                      ^
+/etc/sudoers:140:1: syntax error
+==============================================================================================
+^
+[root@DAPMMIOWNXX1001 ~]# cd /home/minio-user/.minio/
+[root@DAPMMIOWNXX1001 .minio]# ll
+total 4
+drwxr-x--- 3 minio-user minio-user 4096 Jun 11 12:49 certs
+[root@DAPMMIOWNXX1001 .minio]# cd certs/CAs/
+[root@DAPMMIOWNXX1001 CAs]# ll
+total 12
+-rw-r----- 1 minio-user minio-user  908 Jul 18 18:04 dcminio.cert
+-rw-r----- 1 minio-user minio-user 1046 Jul 18 18:04 drminio.cert
+-rwxr-x--- 1 minio-user minio-user 2822 Mar 17 13:58 star_bankofbaroda_co_in.cer
+[root@DAPMMIOWNXX1001 CAs]# cat dcminio.cert
+-----BEGIN CERTIFICATE-----
+MIICcTCCAhagAwIBAgIQU4J6urv5r+iUc1pFA4YI8DAKBggqhkjOPQQDAjA9MRww
+GgYDVQQKExNDZXJ0Z2VuIERldmVsb3BtZW50MR0wGwYDVQQLDBRyb290QERBUE1N
+SU9XTlhYMDAwMTAeFw0yNTAzMTcxMDQ3MjVaFw0yNjAzMTcxMDQ3MjVaMD0xHDAa
+BgNVBAoTE0NlcnRnZW4gRGV2ZWxvcG1lbnQxHTAbBgNVBAsMFHJvb3RAREFQTU1J
+T1dOWFgwMDAxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEgOJvl1mK6T5T7cHx
+dTTjRRRVTTigTeucCFcGfeouLZhdRT1pRG6s1Tc0/nx9oEWYc27UfsT+rq/k/Iv8
+6GZVdqOB9zCB9DAOBgNVHQ8BAf8EBAMCAqQwEwYDVR0lBAwwCgYIKwYBBQUHAwEw
+DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUzpriDPL7NdjBzIb09OfKqyaiWyQw
+gZwGA1UdEQSBlDCBkYIPREFQTU1JT1dOWFgwMDAxgiJEQVBNTUlPV05YWDAwMCou
+YmFua29mYmFyb2RhLmNvLmlugg9EQVBNTUlPV05YWDAwMDGCD0RBUE1NSU9XTlhY
+MDAwMoIPREFQTU1JT1dOWFgwMDAzgg9EQVBNTUlPV05YWDAwMDSHBKwQVROHBKwQ
+VRSHBKwQVRWHBKwQVRYwCgYIKoZIzj0EAwIDSQAwRgIhAKPQ7nOwa60TTtZ+ndHX
+kQdRrd4UwCsQoRV9kJ3Rqkk5AiEAvi3a5ch5DpIV85r+Us9P+kiSvKPWf/P9GRHt
+30vtmK0=
+-----END CERTIFICATE-----
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]#
+[root@DAPMMIOWNXX1001 CAs]# cat drminio.cert
+-----BEGIN CERTIFICATE-----
+MIIC1jCCAnygAwIBAgIRANbjWWjG1TQUned6MXVQRh8wCgYIKoZIzj0EAwIwQTEc
+MBoGA1UEChMTQ2VydGdlbiBEZXZlbG9wbWVudDEhMB8GA1UECwwYYXBwYWRtaW5A
+REFQTU1JT1dOWFgxMDAxMB4XDTI1MDYxMTA3MTcxMFoXDTI2MDYxMTA3MTcxMFow
+QTEcMBoGA1UEChMTQ2VydGdlbiBEZXZlbG9wbWVudDEhMB8GA1UECwwYYXBwYWRt
+aW5AREFQTU1JT1dOWFgxMDAxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsUo0
+ioT7Ro+nwOy66WAEZ6ZJB83cHTaMgz8z1j+DD2wJxBOPXsw3lRd0qXT4yA8QDVBg
+RyeGaYGCKY/PzMnmy6OCAVMwggFPMA4GA1UdDwEB/wQEAwICpDATBgNVHSUEDDAK
+BggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSpSYmmRE7s8LOT
+Ip+Qew/XQOMUBzCB9wYDVR0RBIHvMIHsgg9EQVBNTUlPV05YWDEwMDGCIkRBUE1N
+SU9XTlhYMTAwMS5iYW5rb2ZiYXJvZGEuY28uaW6CD0RBUE1NSU9XTlhYMTAwMoIi
+REFQTU1JT1dOWFgxMDAyLmJhbmtvZmJhcm9kYS5jby5pboIPREFQTU1JT1dOWFgx
+MDAzgiJEQVBNTUlPV05YWDEwMDMuYmFua29mYmFyb2RhLmNvLmlugg9EQVBNTUlP
+V05YWDEwMDSCIkRBUE1NSU9XTlhYMTAwNC5iYW5rb2ZiYXJvZGEuY28uaW6HBKwR
+VROHBKwRVRSHBKwRVRWHBKwRVRYwCgYIKoZIzj0EAwIDSAAwRQIhAM1TBDeCsc8R
+BDFS2PpssSYnKkDZir9y3yU+59MrM5NfAiA0KTI2cMRpO7aLHI8fr6LwFGkwh2uo
+VCBcSAC/zU91dg==
+-----END CERTIFICATE-----
+[root@DAPMMIOWNXX1001 CAs]# EXIT
+-bash: EXIT: command not found
+[root@DAPMMIOWNXX1001 CAs]# exit
+logout
+[appadmin@DAPMMIOWNXX1001 certs]$ ip r l
+default via 172.17.85.1 dev bond0 proto static metric 300
+172.17.85.0/24 dev bond0 proto kernel scope link src 172.17.85.19 metric 300
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The replication source does not have versioning enabled.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-mz-set1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set1' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-mz-set1 successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 28 minutes
+  172.16.85.19:9010
+  Replicated:                   1 objects (747 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 28 minutes
+  172.16.85.19:9010
+  Replicated:                   1 objects (747 B)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 30 minutes
+  172.16.85.19:9010
+  Replicated:                   48 objects (335 KiB)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 30 minutes
+  172.16.85.19:9010
+  Replicated:                   48 objects (335 KiB)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 34 minutes
+  172.16.85.19:9010
+  Replicated:                   72 objects (24 MiB)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      13ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 34 minutes
+  172.16.85.19:9010
+  Replicated:                   72 objects (24 MiB)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 0 B ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 0 B/s; max: 0 B/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate status drminio/velero-backup-mz-set1
+  Replication status since 38 minutes
+  172.16.85.19:9010
+  Replicated:                   1,030 objects (40 MiB)
+  Queued:                       ● 0 objects, 0 B (avg: 0 objects, 5.6 KiB ; max: 0 objects, 0 B)
+  Workers:                      0 (avg: 0; max: 0)
+  Transfer Rate:                0 B/s (avg: 2.3 MB/s; max: 2.3 MB/s
+  Latency:                      14ms (avg: 14ms; max: 44ms)
+  Link:                         ● online (total downtime: 15 seconds)
+  Errors:                       0 in last 1 minute; 0 in last 1hr; 0 since uptime
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-dmzset1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/velero-backup-dmzset1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The specified bucket does not exist.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-mz-set2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set2' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The replication source does not have versioning enabled.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-mz-set2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set2' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The replication source does not have versioning enabled.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-mz-set2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-mz-set2' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-mz-set2 successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-dmzset1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-dmzset1' --replicate "existing-objects,delete,delete-marker" --priority 1
+mc: <ERROR> unable to configure remote target. The specified bucket does not exist.
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-dmzset1 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-dmzset1' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-dmzset1 successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$ mc replicate add drminio/velero-backup-dmzset2 --remote-bucket 'https://minioadmin:minioadmin123@172.16.85.19:9010/dr-velero-backup-dmzset2' --replicate "existing-objects,delete,delete-marker" --priority 1
+Replication configuration rule applied to drminio/velero-backup-dmzset2 successfully.
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+[appadmin@DAPMMIOWNXX1001 certs]$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 =================================ETCD BACKUP ==========================================================================
 
 Login on Control plane of guest cluster and set alias.
