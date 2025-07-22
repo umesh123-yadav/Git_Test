@@ -1107,3 +1107,248 @@ $ kubectl label namespace digital-ns istio-injection=enabled ct-enforcement=enab
 ##Restart the deployments in target namespace for sidecar injection
 
 $ kubectl rollout restart deploy -n digital-ns
+
+
+
+
+
+
+
+
+
+=========================================DC MZ Integration CT ===========================================
+
+
+
+helm -n ct-system uninstall ct-contsec --no-hooks
+
+
+==========================================================colortokens ==============
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get ns  | grep ct-system
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ kubectl create namespace ct-system
+namespace/ct-system created
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k label ns ct-system --overwrite pod-security.kubernetes.io/enforce=privileged
+namespace/ct-system labeled
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ export HELM_EXPERIMENTAL_OCI=1
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ #helm -n ct-system install ct-contsec oci://daregistry.bankofbaroda.co.in:9443/colortokens/helm/ct-contsec --version 24.9.2 --set global.colortokensDomainSuffix=https://colortokensdr.bankofbaroda.co.in --set global.clusterIdentifier=dapmtnzwcxx0001 --set global.colortokensAuthKey=4y4vyfbdejteq --set global.service.classicMode="false" --set global.registryAccount=daregistry.bankofbaroda.co.in:9443/colortokens
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ helm registry login daregistry.bankofbaroda.co.in:9443 -u admin
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/devops/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/devops/.kube/config
+Password:
+Login Succeeded
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ helm -n ct-system install ct-contsec oci://daregistry.bankofbaroda.co.in:9443/colortokens/helm/ct-contsec --version 24.9.2 --set global.colortokensDomainSuffix=https://colortokens.bankofbaroda.co.in --set global.clusterIdentifier=dapmtnzwcxx0002 --set global.colortokensAuthKey=akc99x4w2ak7s --set global.service.classicMode="false" --set global.registryAccount=daregistry.bankofbaroda.co.in:9443/colortokens
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/devops/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/devops/.kube/config
+Pulled: daregistry.bankofbaroda.co.in:9443/colortokens/helm/ct-contsec:24.9.2
+Digest: sha256:b1b25cac5838aee756b8f1d2b51131cd5a65d00c5c8e7d4921f84934c5cbfde1
+NAME: ct-contsec
+LAST DEPLOYED: Tue Jul 22 19:25:52 2025
+NAMESPACE: ct-system
+STATUS: deployed
+REVISION: 1
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ kubectl edit configmap istio -n istio-system
+
+Edit cancelled, no changes made.
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n istio-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+grafana-7485c97dd-hqlbm                 1/1     Running   0          91d
+istio-cni-node-4skmk                    1/1     Running   0          7d6h
+istio-cni-node-7mfng                    1/1     Running   0          7d6h
+istio-cni-node-8fnz9                    1/1     Running   0          7d6h
+istio-cni-node-98wq7                    1/1     Running   0          40h
+istio-cni-node-9gjhw                    1/1     Running   0          7d6h
+istio-cni-node-d4tcl                    1/1     Running   0          7d6h
+istio-cni-node-dnfsx                    1/1     Running   0          7d6h
+istio-cni-node-jf5nh                    1/1     Running   0          7d6h
+istio-cni-node-kvhrf                    1/1     Running   0          2d10h
+istio-cni-node-ps8jk                    1/1     Running   0          7d6h
+istio-cni-node-qfhfw                    1/1     Running   0          7d6h
+istio-cni-node-wxdrf                    1/1     Running   0          7d6h
+istio-cni-node-x5xnm                    1/1     Running   0          7d6h
+istio-egressgateway-6d99c9fdfc-tb9x9    1/1     Running   0          77d
+istio-ingressgateway-55d4fd8464-79kmb   1/1     Running   0          77d
+istiod-766c49447-94wqn                  1/1     Running   0          112s
+istiod-766c49447-bl6t6                  1/1     Running   0          112s
+istiod-766c49447-d9p27                  1/1     Running   0          97s
+istiod-766c49447-lm8lx                  1/1     Running   0          77d
+istiod-766c49447-q769j                  1/1     Running   0          112s
+jaeger-7c5886dc5d-nr74d                 1/1     Running   0          91d
+kiali-d749c6486-c498x                   1/1     Running   0          91d
+prometheus-557fc5f6d4-trshv             2/2     Running   0          91d
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ kubectl -n istio-system rollout restart deploy
+deployment.apps/grafana restarted
+deployment.apps/istio-egressgateway restarted
+deployment.apps/istio-ingressgateway restarted
+deployment.apps/istiod restarted
+deployment.apps/jaeger restarted
+deployment.apps/kiali restarted
+deployment.apps/prometheus restarted
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n istio-system
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n istio-system
+NAME                                    READY   STATUS             RESTARTS     AGE
+grafana-6788c7fc98-ggbzx                1/1     Running            0            22s
+istio-cni-node-4skmk                    1/1     Running            0            7d6h
+istio-cni-node-7mfng                    1/1     Running            0            7d6h
+istio-cni-node-8fnz9                    1/1     Running            0            7d6h
+istio-cni-node-98wq7                    1/1     Running            0            40h
+istio-cni-node-9gjhw                    1/1     Running            0            7d6h
+istio-cni-node-d4tcl                    1/1     Running            0            7d6h
+istio-cni-node-dnfsx                    1/1     Running            0            7d6h
+istio-cni-node-jf5nh                    1/1     Running            0            7d6h
+istio-cni-node-kvhrf                    1/1     Running            0            2d10h
+istio-cni-node-ps8jk                    1/1     Running            0            7d6h
+istio-cni-node-qfhfw                    1/1     Running            0            7d6h
+istio-cni-node-wxdrf                    1/1     Running            0            7d6h
+istio-cni-node-x5xnm                    1/1     Running            0            7d6h
+istio-egressgateway-6b8b65b5d-2xk65     0/1     CrashLoopBackOff   2 (7s ago)   22s
+istio-egressgateway-6d99c9fdfc-tb9x9    1/1     Running            0            77d
+istio-ingressgateway-55d4fd8464-79kmb   1/1     Running            0            77d
+istio-ingressgateway-8fcdfd9-r6h8v      0/1     CrashLoopBackOff   2 (4s ago)   22s
+istiod-655fd8c596-fbrsl                 1/1     Running            0            22s
+istiod-655fd8c596-htnj2                 1/1     Running            0            22s
+istiod-655fd8c596-tvq52                 1/1     Running            0            22s
+istiod-655fd8c596-x4w78                 1/1     Running            0            22s
+istiod-655fd8c596-xhgsc                 1/1     Running            0            22s
+jaeger-84d454c7d5-g9xcz                 1/1     Running            0            22s
+kiali-db46f699b-kjgwv                   0/1     Running            0            22s
+prometheus-56c55874fd-lskdd             2/2     Running            0            21s
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ helm upgrade istio -n istio-system -f values.yaml /home/devops/istio-1.25.2/manifests/charts/istio-control/istio-discovery
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/devops/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/devops/.kube/config
+Release "istio" has been upgraded. Happy Helming!
+NAME: istio
+LAST DEPLOYED: Tue Jul 22 19:31:42 2025
+NAMESPACE: istio-system
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+NOTES:
+"istiod" successfully installed!
+
+To learn more about the release, try:
+  $ helm status istio -n istio-system
+  $ helm get all istio -n istio-system
+
+Next steps:
+  * Deploy a Gateway: https://istio.io/latest/docs/setup/additional-setup/gateway/
+  * Try out our tasks to get started on common configurations:
+    * https://istio.io/latest/docs/tasks/traffic-management
+    * https://istio.io/latest/docs/tasks/security/
+    * https://istio.io/latest/docs/tasks/policy-enforcement/
+  * Review the list of actively supported releases, CVE publications and our hardening guide:
+    * https://istio.io/latest/docs/releases/supported-releases/
+    * https://istio.io/latest/news/security/
+    * https://istio.io/latest/docs/ops/best-practices/security/
+
+For further documentation see https://istio.io website
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n istio-system
+NAME                                    READY   STATUS             RESTARTS      AGE
+grafana-6788c7fc98-ggbzx                1/1     Running            0             77s
+istio-cni-node-4skmk                    1/1     Running            0             7d6h
+istio-cni-node-7mfng                    1/1     Running            0             7d6h
+istio-cni-node-8fnz9                    1/1     Running            0             7d6h
+istio-cni-node-98wq7                    1/1     Running            0             40h
+istio-cni-node-9gjhw                    1/1     Running            0             7d6h
+istio-cni-node-d4tcl                    1/1     Running            0             7d6h
+istio-cni-node-dnfsx                    1/1     Running            0             7d6h
+istio-cni-node-jf5nh                    1/1     Running            0             7d6h
+istio-cni-node-kvhrf                    1/1     Running            0             2d10h
+istio-cni-node-ps8jk                    1/1     Running            0             7d6h
+istio-cni-node-qfhfw                    1/1     Running            0             7d6h
+istio-cni-node-wxdrf                    1/1     Running            0             7d6h
+istio-cni-node-x5xnm                    1/1     Running            0             7d6h
+istio-egressgateway-6b8b65b5d-2xk65     0/1     CrashLoopBackOff   3 (36s ago)   77s
+istio-egressgateway-6d99c9fdfc-tb9x9    1/1     Running            0             77d
+istio-ingressgateway-55d4fd8464-79kmb   1/1     Running            0             77d
+istio-ingressgateway-8fcdfd9-r6h8v      0/1     CrashLoopBackOff   3 (31s ago)   77s
+istiod-655fd8c596-fbrsl                 1/1     Running            0             77s
+istiod-655fd8c596-htnj2                 1/1     Running            0             77s
+istiod-655fd8c596-tvq52                 1/1     Running            0             77s
+istiod-655fd8c596-x4w78                 1/1     Running            0             77s
+istiod-655fd8c596-xhgsc                 1/1     Running            0             77s
+jaeger-84d454c7d5-g9xcz                 1/1     Running            0             77s
+kiali-db46f699b-kjgwv                   1/1     Running            0             77s
+prometheus-56c55874fd-lskdd             2/2     Running            0             76s
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k delete po istio-egressgateway-6b8b65b5d-2xk65 istio-ingressgateway-8fcdfd9-r6h8v -n istio-system
+pod "istio-egressgateway-6b8b65b5d-2xk65" deleted
+pod "istio-ingressgateway-8fcdfd9-r6h8v" deleted
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n ct-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+admission-controller-7d44d4f746-f5n8k   1/1     Running   0          6m51s
+collector-77556c69d6-ds7cx              1/1     Running   0          6m36s
+collector-77556c69d6-fp5xt              1/1     Running   0          6m36s
+collector-77556c69d6-h5rrz              1/1     Running   0          6m51s
+policy-7795f6f5df-lsgm7                 1/1     Running   0          6m51s
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+
+
+
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ kubectl label namespace app istio-injection=enabled ct-enforcement=enabled
+
+namespace/app labeled
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$ kubectl rollout restart deploy -n app
+
+deployment.apps/application-cpu restarted
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+[devops@DAPMTNZBTXX0001 istio-discovery]$
+
+[devops@DAPMTNZBTXX0001 istio-discovery]$ k get po -n app
+NAME                               READY   STATUS    RESTARTS   AGE
+application-cpu-57675799c9-gh42z   3/3     Running   0          13s
+[devops@DAPMTNZBTXX0001 istio-discovery]$
