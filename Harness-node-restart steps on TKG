@@ -1,0 +1,844 @@
+
+
+https://developer.harness.io/docs/chaos-engineering/faults/chaos-faults/kubernetes/node/node-restart/#ssh-user
+
+
+
+
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: hce
+  name: node-restart
+spec:
+  definition:
+    scope: Cluster
+permissions:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "delete", "get", "list", "patch", "deletecollection", "update"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["chaosEngines", "chaosExperiments", "chaosResults"]
+    verbs: ["create", "delete", "get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "delete", "get", "list", "deletecollection"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+
+
+
+
+
+    apiVersion: v1
+        kind: Secret
+        metadata:
+          name: id-rsa
+        type: kubernetes.io/ssh-auth
+        stringData:
+          ssh-privatekey: |-
+            # SSH private key for ssh contained here
+
+
+
+
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: id-rsa
+type: kubernetes.io/ssh-auth
+stringData:
+  ssh-privatekey: |-
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    [your-private-key-content-here]
+    -----END OPENSSH PRIVATE KEY-----
+
+
+ssh-keygen -t rsa -b 4096 -f my-id-rsa-key
+
+
+
+# provide the reboot command
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # command used for the reboot
+        - name: REBOOT_COMMAND
+          value: 'sudo systemctl reboot'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'node01'
+        - name: TOTAL_CHAOS_DURATION
+          VALUE: '60'
+
+
+
+          
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.8.yaml
+
+
+# internal ip of the targeted node
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # internal ip of the targeted node
+        - name: TARGET_NODE_IP
+          value: '10.0.170.92'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'node01'
+        - name: TOTAL_CHAOS_DURATION
+          VALUE: '60'
+
+          
+          
+dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb
+
+apiVersion: v1
+        kind: Secret
+        metadata:
+          name: id-rsa
+        type: kubernetes.io/ssh-auth
+        stringData:
+          ssh-privatekey: |-
+            # SSH private key for ssh contained here
+
+
+
+node restart:
+
+# name of the ssh user used to ssh into targeted node
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # name of the ssh user
+        - name: SSH_USER
+          value: 'root'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'node01'
+        - name: TOTAL_CHAOS_DURATION
+          VALUE: '60'
+
+
+
+ Target node internal IP:
+
+
+ # internal ip of the targeted node
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # internal ip of the targeted node
+        - name: TARGET_NODE_IP
+          value: '10.0.170.92'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'node01'
+        - name: TOTAL_CHAOS_DURATION
+          VALUE: '60'         
+
+
+
+
+=======================================harness -23-07-2025  =================================
+
+
+
+
+kubectl drain <worker-node-name> --ignore-daemonsets --delete-local-data --force
+
+
+
+2. Shutdown the Node
+- SSH into the node and run:
+
+
+sudo shutdown -h now
+
+3.. Restart the Node
+sudo reboot
+
+
+4.
+kubectl uncordon <worker-node-name>
+
+
+dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2
+
+
+
+
+
+
+=============================================
+
+
+
+
+kubectl apply --dry-run=client -f chaos-secret.yaml
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: hce
+  name: node-restart
+spec:
+  definition:
+    scope: Cluster
+permissions:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "delete", "get", "list", "patch", "deletecollection", "update"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["chaosEngines", "chaosExperiments", "chaosResults"]
+    verbs: ["create", "delete", "get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get", "list", "create"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "delete", "get", "list", "deletecollection"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	root@42325b770475ae410fdc533b8cdf1c10 [ ~ ]# ssh vmware-system-user@172.16.184.20
+(vmware-system-user@172.16.184.20) Password:
+Last login: Wed Jul 23 09:02:47 2025 from 172.16.184.29
+cat: /var/run/motdgen/motd: Permission denied
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-keygen -t rsa -b 4096 -f my-id-rsa-key
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in my-id-rsa-key
+Your public key has been saved in my-id-rsa-key.pub
+The key fingerprint is:
+SHA256:ZrMO1X69Kdd89z8a1WG3JHNtFBpnhCSHtPls0ZlxxUA vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb
+The key's randomart image is:
++---[RSA 4096]----+
+|          .oo=EO*|
+|           .=.*.B|
+|           o = O+|
+|         .  o B.=|
+|        S .  + o.|
+|       + +  ...  |
+|      . . . ...o |
+|       o   .. o+=|
+|        .    ++ O|
++----[SHA256]-----+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ls -la
+total 36
+drwx------ 3 vmware-system-user users 4096 Jul 23 10:02 .
+drwxr-xr-x 3 root               root  4096 Jul 23 06:41 ..
+-rw------- 1 vmware-system-user users   80 Jul 23 09:03 .bash_history
+-rw-r--r-- 1 vmware-system-user users  178 Jan 27 07:38 .bash_logout
+-rw-r--r-- 1 vmware-system-user users  643 Jan 27 07:38 .bash_profile
+-rw-r--r-- 1 vmware-system-user users  451 Jan 27 07:38 .bashrc
+-rw------- 1 vmware-system-user users 3446 Jul 23 10:02 my-id-rsa-key
+-rw-r----- 1 vmware-system-user users  790 Jul 23 10:02 my-id-rsa-key.pub
+drwx------ 2 vmware-system-user users 4096 Jul 23 06:41 .ssh
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ cd .ssh/
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$ ls
+authorized_keys
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$ ls -la
+total 12
+drwx------ 2 vmware-system-user users 4096 Jul 23 06:41 .
+drwx------ 3 vmware-system-user users 4096 Jul 23 10:02 ..
+-rw------- 1 vmware-system-user users  725 Jul 23 06:42 authorized_keys
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$ date
+Wed Jul 23 10:03:22 AM UTC 2025
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~/.ssh ]$ cd ..
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ls -la
+total 36
+drwx------ 3 vmware-system-user users 4096 Jul 23 10:02 .
+drwxr-xr-x 3 root               root  4096 Jul 23 06:41 ..
+-rw------- 1 vmware-system-user users   80 Jul 23 09:03 .bash_history
+-rw-r--r-- 1 vmware-system-user users  178 Jan 27 07:38 .bash_logout
+-rw-r--r-- 1 vmware-system-user users  643 Jan 27 07:38 .bash_profile
+-rw-r--r-- 1 vmware-system-user users  451 Jan 27 07:38 .bashrc
+-rw------- 1 vmware-system-user users 3446 Jul 23 10:02 my-id-rsa-key
+-rw-r----- 1 vmware-system-user users  790 Jul 23 10:02 my-id-rsa-key.pub
+drwx------ 2 vmware-system-user users 4096 Jul 23 06:41 .ssh
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ cat my-id-rsa-key
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+1wb29sLTEtOXBqcXEtY3pzNTUtenduc2IBAg==
+-----END OPENSSH PRIVATE KEY-----
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.30
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.30 (172.16.184.30)' can't be established.
+ED25519 key fingerprint is SHA256:jb2Hkfgk17jMTJuztMDfs4xTNIYwEfpqONgkEghk4ZQ.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.30) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.30'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.18
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.18 (172.16.184.18)' can't be established.
+ED25519 key fingerprint is SHA256:7eXW5m2pI1ZIM13rTrUk/d2ZZhWbW7N+XQmY5LgYD74.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.18) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.18'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh 172.16.184.18
+(vmware-system-user@172.16.184.18) Password:
+(vmware-system-user@172.16.184.18) Password:
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.7
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.7 (172.16.184.7)' can't be established.
+ED25519 key fingerprint is SHA256:po9JTvaUeh+W1K+WTn0bNmv/nLLWnXLj+ksF6mb+ExU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.7) Password:
+(vmware-system-user@172.16.184.7) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.7'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.27
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.27 (172.16.184.27)' can't be established.
+ED25519 key fingerprint is SHA256:LHQ/3tEMe+zgpoRo78BYW2ruwbMLMI1ZHCNMsrCqo6o.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.27) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.27'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.24
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.24 (172.16.184.24)' can't be established.
+ED25519 key fingerprint is SHA256:NRjrI7KwNdYl3irT3GaAFY29A1B0bmNqXQq3NqDYLvg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.24) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.24'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.16
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.16 (172.16.184.16)' can't be established.
+ED25519 key fingerprint is SHA256:1lqd7kMpb/KnjXXaG2fAxP2RBa5lIBWH6zO/8EzgRog.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.16) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.16'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.21
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.21 (172.16.184.21)' can't be established.
+ED25519 key fingerprint is SHA256:TTl9v3ANELIUg7iKp1+O8/FR1TmWaCCnluN9wL5XC3o.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.21) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.21'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.26
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.26 (172.16.184.26)' can't be established.
+ED25519 key fingerprint is SHA256:gcI4tP7PNZgK8jm44FrH3fcl+PBAkN41iQ5F8Uydhbg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.26) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.26'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.28
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.28 (172.16.184.28)' can't be established.
+ED25519 key fingerprint is SHA256:TVvF//26KafodDHTcqWVApk3dsK6mcfxu//O0TUoMyc.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.28) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.28'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.22
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.22 (172.16.184.22)' can't be established.
+ED25519 key fingerprint is SHA256:L9Gmolzf/e4ftsfIB8MeLsKAb451MvzYdxNKJInvRAc.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.22) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.22'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.17
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.17 (172.16.184.17)' can't be established.
+ED25519 key fingerprint is SHA256:onL6+ZnnEUxCv3te8MgukUmv+2WUSKQAbxWHgRBBf70.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.17) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.17'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh-copy-id -i my-id-rsa-key vmware-system-user@172.16.184.25
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "my-id-rsa-key.pub"
+The authenticity of host '172.16.184.25 (172.16.184.25)' can't be established.
+ED25519 key fingerprint is SHA256:1rn+IxJtELWTAdwvIWFYQth8yV68nW4TNQ24Dy9NIkI.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+(vmware-system-user@172.16.184.25) Password:
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'vmware-system-user@172.16.184.25'"
+and check to make sure that only the key(s) you wanted were added.
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh vmware-system-user@172.16.184.28
+(vmware-system-user@172.16.184.28) Password:
+Connection closed by 172.16.184.28 port 22
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ssh vmware-system-user@172.16.184.28
+(vmware-system-user@172.16.184.28) Password:
+cat: /var/run/motdgen/motd: Permission denied
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~ ]$ exit
+logout
+Connection to 172.16.184.28 closed.
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ exit
+logout
+Connection to 172.16.184.20 closed.
+root@42325b770475ae410fdc533b8cdf1c10 [ ~ ]#
+root@42325b770475ae410fdc533b8cdf1c10 [ ~ ]#
+root@42325b770475ae410fdc533b8cdf1c10 [ ~ ]# ssh vmware-system-user@172.16.184.28
+The authenticity of host '172.16.184.28 (172.16.184.28)' can't be established.
+ED25519 key fingerprint is SHA256:TVvF//26KafodDHTcqWVApk3dsK6mcfxu//O0TUoMyc.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '172.16.184.28' (ED25519) to the list of known hosts.
+(vmware-system-user@172.16.184.28) Password:
+(vmware-system-user@172.16.184.28) Password:
+Last login: Wed Jul 23 10:13:10 2025 from 172.16.184.20
+cat: /var/run/motdgen/motd: Permission denied
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~ ]$ ls -la
+total 24
+drwx------ 3 vmware-system-user users 4096 Jul 23 06:49 .
+drwxr-xr-x 3 root               root  4096 Jul 23 06:49 ..
+-rw-r--r-- 1 vmware-system-user users  178 Jan 27 07:38 .bash_logout
+-rw-r--r-- 1 vmware-system-user users  643 Jan 27 07:38 .bash_profile
+-rw-r--r-- 1 vmware-system-user users  451 Jan 27 07:38 .bashrc
+drwx------ 2 vmware-system-user users 4096 Jul 23 06:49 .ssh
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~ ]$ cd .ssh
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~/.ssh ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~/.ssh ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~/.ssh ]$
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~/.ssh ]$ ls -la
+total 12
+drwx------ 2 vmware-system-user users 4096 Jul 23 06:49 .
+drwx------ 3 vmware-system-user users 4096 Jul 23 06:49 ..
+-rw------- 1 vmware-system-user users 1515 Jul 23 10:11 authorized_keys
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~/.ssh ]$ cd ..
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~ ]$ cat ~/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHIWMXAsBk+wTfJe4FFE9P+Qn0xAAP2WlwWompwZ9Ijltd7+s475+AzqarUl1hJaPiSGiYUwZ+Q5nJZ1ifcgqKWaTVRdaIha+slylxqRqzn5+ivboGCw+xBO7FbeIP3I5ztMElZP2Au3A1kEouFiKWbwOhCQdwFvIcmtG1ZG2k8FCquyr3tDfgA5eFRgct9N1NdQvwvEc1opq+LH74SMsh+DVJHkRZZ9ewp+Lg/Xa20Ey9xBgXGzTrG6w27sWp4yLZcWPwpa1maVVMwVVMfbZsmBhTVTSTLEcGMJl217KZOvi0/j6fSZipT9cvz+NQkRnIxmfH7ZB538GPgXtRSWXsmMga/IOgwIAzOpia41uAL+5RWdzvFOBmVeiK4AFctpTX5MNI6pfsLoGLCRRXaGS8ATrsdXgjEVQxzw4INxF1fdDkJIgMO2JsgNJUsEltDUZVkqxXNzUpS0AUbaDwmGh/z5Vm20yFv/QAQc5US+hALofS8Opq3uT4jFAr713LI+nEksN/mh/+xEtDoI1C5RJzBdlMX00mDgrnTvplSxOT2hlPiZ1c4dHfoKUCJYK6XyRDz1r00dH5Mv5l0A5YId05iaL1fWFLwwRfRSiq4Lfypi9FHkr3ZofQMfEG30jGhoKhGrwIABoCYmYfQcP2HPa8qilaHpzje8CrXzl1UcAvxw==
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBTwVwwOfJ7ZI3Y9CY0pTCKdn+w54rke+BTzOkOOb64dc2eqiawK3BZHpfbnixZ8zzR/+ndZ48WQpJTFV/liTahrOy2wcTS5WU0Oa2zBip2mAZwQcMXiwZ61Q3VC5sedt2wr8Dl2VSMxjcMJIo4rOBPP15SwacWKjT5TFPlhhaMDIBhbDwIgzC3IkJDMsRW9LDZVV2hamiTdDL9QcvahiMDX0w4Oz0lVQEnuEm/XiUyQHhY/m1P9bHkbkrxEgm8B+j6gUgFJuva/np0ZuP3sSGP9L4UHlyBjmR3iIvaX85vE67vBoc+eKtFr3SKKo7MAQfcIlVaOOEQ4Zhr2iVJUutwGShakVLVm23MLQfwFVOcYktOPyCHZXR8g3TGVvt9Wiar3m5O4mCzzfoZF2sfDQ4WHcIRr8dXpCNAr/adqtMw3DjKJIHT1Gb50Mx+0L4smd47mSl50BzX2GDXW4G+8CkptQu5wdHx9XUSMLSVRttuEZFARJdtelYJdN2MSbssnrihb8gtgc5DHpb0iymKWUrYoUBv85uoJ3kA1cQOJpG35Ot7IQTySzHehV6bxY0mK00DCSsiWu2O/arFwHZBZGOlTGrjYiYlX3DWfQ2hXI6WlfAp5a4wSAcoy4ZC/kwMZQpnG/mJnOgGRNDxy8w82wT21KXCPqWJ7pTzOE38clYoQ== vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-4bfw2 [ ~ ]$
+
+
+
+
+
+
+
+
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ ls -ls
+total 8
+4 -rw------- 1 vmware-system-user users 3446 Jul 23 10:02 my-id-rsa-key
+4 -rw-r----- 1 vmware-system-user users  790 Jul 23 10:02 my-id-rsa-key.pub
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ cat my-id-rsa-key
+-----BEGIN OPENSSH PRIVATE KEY-----
+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
+1wb29sLTEtOXBqcXEtY3pzNTUtenduc2IBAg==
+-----END OPENSSH PRIVATE KEY-----
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$ cat my-id-rsa-key.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBTwVwwOfJ7ZI3Y9CY0pTCKdn+w54rke+BTzOkOOb64dc2eqiawK3BZHpfbnixZ8zzR/+ndZ48WQpJTFV/liTahrOy2wcTS5WU0Oa2zBip2mAZwQcMXiwZ61Q3VC5sedt2wr8Dl2VSMxjcMJIo4rOBPP15SwacWKjT5TFPlhhaMDIBhbDwIgzC3IkJDMsRW9LDZVV2hamiTdDL9QcvahiMDX0w4Oz0lVQEnuEm/XiUyQHhY/m1P9bHkbkrxEgm8B+j6gUgFJuva/np0ZuP3sSGP9L4UHlyBjmR3iIvaX85vE67vBoc+eKtFr3SKKo7MAQfcIlVaOOEQ4Zhr2iVJUutwGShakVLVm23MLQfwFVOcYktOPyCHZXR8g3TGVvt9Wiar3m5O4mCzzfoZF2sfDQ4WHcIRr8dXpCNAr/adqtMw3DjKJIHT1Gb50Mx+0L4smd47mSl50BzX2GDXW4G+8CkptQu5wdHx9XUSMLSVRttuEZFARJdtelYJdN2MSbssnrihb8gtgc5DHpb0iymKWUrYoUBv85uoJ3kA1cQOJpG35Ot7IQTySzHehV6bxY0mK00DCSsiWu2O/arFwHZBZGOlTGrjYiYlX3DWfQ2hXI6WlfAp5a4wSAcoy4ZC/kwMZQpnG/mJnOgGRNDxy8w82wT21KXCPqWJ7pTzOE38clYoQ== vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb
+vmware-system-user@dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb [ ~ ]$
+
+
+- create secret name id-rsa
+
+-rwx--x--- 1 devops    devops    3.4K Jul 23 17:06 my-id-rsa-key
+-rwxr-x--- 1 devops    devops     790 Jul 23 17:06 my-id-rsa-key.pub
+[devops@DAPMTNZBTXX0001 tmp]$
+[devops@DAPMTNZBTXX0001 tmp]$ kubectl create secret generic id-rsa \
+  --from-file=id_rsa=my-id-rsa-key \
+  --from-file=id_rsa.pub=my-id-rsa-key.pub
+secret/id-rsa created
+[devops@DAPMTNZBTXX0001 tmp]$
+
+
+
+
+
+kubectl apply -f https://litmuschaos.github.io/litmus/litmus-operator-v1.13.8.yaml
+
+
+-rw-r----- 1 devops    devops     36K Jul 23 16:05 litmus-operator-v1.13.8.yaml
+[devops@DAPMTNZBTXX0001 tmp]$ chmod +x litmus-operator-v1.13.8.yaml
+[devops@DAPMTNZBTXX0001 tmp]$
+[devops@DAPMTNZBTXX0001 tmp]$
+[devops@DAPMTNZBTXX0001 tmp]$
+[devops@DAPMTNZBTXX0001 tmp]$ kubectl apply -f litmus-operator-v1.13.8.yaml
+namespace/litmus created
+serviceaccount/litmus created
+clusterrole.rbac.authorization.k8s.io/litmus configured
+clusterrolebinding.rbac.authorization.k8s.io/litmus configured
+deployment.apps/chaos-operator-ce created
+customresourcedefinition.apiextensions.k8s.io/chaosengines.litmuschaos.io created
+customresourcedefinition.apiextensions.k8s.io/chaosexperiments.litmuschaos.io created
+customresourcedefinition.apiextensions.k8s.io/chaosresults.litmuschaos.io created
+[devops@DAPMTNZBTXX0001 tmp]$
+
+
+
+[devops@DAPMTNZBTXX0001 ~]$ cat chaos-envirment.yaml
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # command used for the reboot
+        - name: REBOOT_COMMAND
+          value: 'sudo systemctl reboot'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb'
+        - name: TOTAL_CHAOS_DURATION
+          value: '60'
+[devops@DAPMTNZBTXX0001 ~]$
+[devops@DAPMTNZBTXX0001 ~]$ k apply -f chaos-envirment.yaml
+chaosengine.litmuschaos.io/engine-nginx created
+[devops@DAPMTNZBTXX0001 ~]$
+
+
+
+[devops@DAPMTNZBTXX0001 ~]$ cat chaos-targetnode-internalip.yaml
+# internal ip of the targeted node
+apiVersion: litmuschaos.io/v1alpha1
+kind: ChaosEngine
+metadata:
+  name: engine-nginx
+spec:
+  engineState: "active"
+  annotationCheck: "false"
+  chaosServiceAccount: litmus-admin
+  experiments:
+  - name: node-restart
+    spec:
+      components:
+        env:
+        # internal ip of the targeted node
+        - name: TARGET_NODE_IP
+          value: '172.16.184.20'
+        # name of the target node
+        - name: TARGET_NODE
+          value: 'dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-zwnsb'
+        - name: TOTAL_CHAOS_DURATION
+          value: '60'
+
+
+
+[devops@DAPMTNZBTXX0001 ~]$ k apply -f chaos-targetnode-internalip.yaml
+chaosengine.litmuschaos.io/engine-nginx configured
+[devops@DAPMTNZBTXX0001 ~]$
+
+
+
+===============================Again reapplied ============================
+
+
+dapmtnzwcxx0002-node-pool-1-9pjqq-czs55-cf2w5
+
+
+[devops@DAPMTNZBTXX0001 harness]$ kubectl apply -f chaos-node-permission.yaml
+role.rbac.authorization.k8s.io/node-restart unchanged
+[devops@DAPMTNZBTXX0001 harness]$ kubectl create secret generic id-rsa \
+  --from-file=id_rsa=my-id-rsa-key \
+  --from-file=id_rsa.pub=my-id-rsa-key.pub
+error: failed to create secret secrets "id-rsa" already exists
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$ k apply -f reboot-command.yaml
+chaosengine.litmuschaos.io/engine-nginx configured
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$ k apply -f node-restart.yaml
+error: error validating "node-restart.yaml": error validating data: apiVersion not set; if you choose to ignore these errors, turn validation off with --validate=false
+[devops@DAPMTNZBTXX0001 harness]$ vi node-restart.yaml
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$ vi node-restart.yaml
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$ k apply -f node-restart.yaml
+chaosengine.litmuschaos.io/engine-nginx configured
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$ k apply -f chaos-targetnode-internalip.yaml
+chaosengine.litmuschaos.io/engine-nginx configured
+[devops@DAPMTNZBTXX0001 harness]$
+[devops@DAPMTNZBTXX0001 harness]$
+
+
+
+
