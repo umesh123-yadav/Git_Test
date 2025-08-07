@@ -1,0 +1,1231 @@
+*************** Cluster: dapdtnzwcxx0001 ***************
+
+Timestamp: Thu Aug  7 12:37:23 PM IST 2025
+
+
+===================== Nodes =====================
+NAME                                            STATUS   ROLES           AGE   VERSION                 INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                 KERNEL-VERSION   CONTAINER-RUNTIME
+dapdtnzwcxx0001-8n6dw-4ch2p                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.141   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-8n6dw-8fhj7                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.135   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-8n6dw-nkfnf                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.139   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.143   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.137   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.142   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.140   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.157   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.138   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.152   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+
+
+===================== Nodes CPU and Memory Utilization =====================
+NAME                                            CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+dapdtnzwcxx0001-8n6dw-4ch2p                     199m         2%     3147Mi          5%
+dapdtnzwcxx0001-8n6dw-8fhj7                     237m         2%     4022Mi          6%
+dapdtnzwcxx0001-8n6dw-nkfnf                     228m         2%     3422Mi          5%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq   303m         1%     7864Mi          18%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95   1185m        4%     16104Mi         37%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm   499m         2%     17762Mi         40%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km   396m         1%     16166Mi         37%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq   462m         1%     12758Mi         29%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7   623m         2%     14251Mi         32%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc   408m         1%     13823Mi         31%
+
+
+===================== Pods in All Namespaces =====================
+NAMESPACE                      NAME                                                              READY   STATUS      RESTARTS        AGE
+app                            application-cpu-65cf978dc5-hj2gx                                  3/3     Running     0               14d
+cert-manager                   cert-manager-6b495f797d-9pxvb                                     1/1     Running     0               15d
+cert-manager                   cert-manager-cainjector-6d9fdcfddd-stzkb                          1/1     Running     0               15d
+cert-manager                   cert-manager-webhook-5c76ddc664-fqfrn                             1/1     Running     0               15d
+ct-system                      admission-controller-875744b9-c4q99                               1/1     Running     0               15d
+ct-system                      collector-5877869c6b-488bm                                        1/1     Running     0               15d
+ct-system                      collector-5877869c6b-4brnb                                        1/1     Running     0               15d
+ct-system                      collector-5877869c6b-7r2nl                                        1/1     Running     0               15d
+ct-system                      policy-6dd5bfb46f-527gq                                           1/1     Running     0               15d
+digital-ns                     admin-portal-ui-7b5f6f548b-ft6js                                  3/3     Running     0               10d
+digital-ns                     admin-portal-ui-7b5f6f548b-pscg9                                  3/3     Running     0               10d
+digital-ns                     admin-portal-ui-7b5f6f548b-w9dlj                                  3/3     Running     0               11d
+digital-ns                     nginx-test-5f9894584d-zhxhs                                       3/3     Running     0               15d
+harness                        access-control-cc7c57b-5mlsz                                      1/1     Running     0               15d
+harness                        access-control-cc7c57b-sjlbp                                      1/1     Running     0               15d
+harness                        audit-event-streaming-0                                           1/1     Running     0               15d
+harness                        bg-processor-every-24h-29242080-wkvz2                             0/1     Completed   0               7h7m
+harness                        bg-processor-every-2h-29242440-rvwr5                              0/1     Completed   0               67m
+harness                        change-data-capture-f69764bfc-b7gkq                               1/1     Running     0               15d
+harness                        chaos-k8s-ifs-6dc9c6d698-dnsd4                                    1/1     Running     3 (15d ago)     15d
+harness                        chaos-k8s-ifs-6dc9c6d698-mjmnn                                    1/1     Running     3 (15d ago)     15d
+harness                        chaos-linux-ifc-689d7ddc5f-7drrh                                  1/1     Running     190 (15d ago)   15d
+harness                        chaos-linux-ifc-689d7ddc5f-842zh                                  1/1     Running     188 (15d ago)   15d
+harness                        chaos-linux-ifs-6f4444ddfc-2825q                                  1/1     Running     4 (15d ago)     15d
+harness                        chaos-linux-ifs-6f4444ddfc-cwwzs                                  1/1     Running     4 (15d ago)     15d
+harness                        chaos-machine-ifc-666dfdc486-gddmt                                1/1     Running     189 (15d ago)   15d
+harness                        chaos-machine-ifc-666dfdc486-t7h9v                                1/1     Running     188 (15d ago)   15d
+harness                        chaos-machine-ifs-8544bd54d4-b4kp9                                1/1     Running     4 (15d ago)     15d
+harness                        chaos-machine-ifs-8544bd54d4-zm4sl                                1/1     Running     4 (15d ago)     15d
+harness                        chaos-manager-559474bff4-jwldj                                    1/1     Running     0               15d
+harness                        chaos-manager-559474bff4-kz6pm                                    1/1     Running     0               15d
+harness                        chaos-web-676598947-5rfvm                                         1/1     Running     0               15d
+harness                        chaos-web-676598947-c4qv5                                         1/1     Running     0               15d
+harness                        default-backend-77bb8dc94f-s9nr9                                  1/1     Running     0               15d
+harness                        delegate-proxy-76d9495c96-4l7jv                                   1/1     Running     0               15d
+harness                        gateway-56d669bdcb-tdj8h                                          1/1     Running     0               15d
+harness                        gateway-56d669bdcb-txdsk                                          1/1     Running     0               15d
+harness                        harness-ingress-controller-578f564667-khr6q                       1/1     Running     0               15d
+harness                        harness-manager-9965fc96-6bphq                                    1/1     Running     0               15d
+harness                        harness-manager-9965fc96-brcrj                                    1/1     Running     0               15d
+harness                        harness-timescaledb-0                                             1/1     Running     0               15d
+harness                        harness-timescaledb-1                                             1/1     Running     0               15d
+harness                        harness-timescaledb-2                                             1/1     Running     0               15d
+harness                        harness-timescaledb-archive-cleanup-29241720-vqmfb                0/1     Completed   0               13h
+harness                        harness-timescaledb-archive-cleanup-29242080-lcvkg                0/1     Completed   0               7h7m
+harness                        harness-timescaledb-archive-cleanup-29242440-n47kn                0/1     Completed   0               67m
+harness                        log-service-cfb5d975f-j58rp                                       1/1     Running     0               15d
+harness                        log-service-cfb5d975f-tv6tf                                       1/1     Running     0               15d
+harness                        minio-597c778f6c-r65wt                                            1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-0                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-1                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-2                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-arbiter-0                                1/1     Running     0               15d
+harness                        next-gen-ui-559cd55bdd-fk4sq                                      1/1     Running     0               15d
+harness                        next-gen-ui-559cd55bdd-pftdm                                      1/1     Running     0               15d
+harness                        ng-auth-ui-c6ff96d7c-8m72f                                        1/1     Running     0               15d
+harness                        ng-auth-ui-c6ff96d7c-l2c8m                                        1/1     Running     0               15d
+harness                        ng-dashboard-aggregator-579756b589-cjkll                          1/1     Running     0               15d
+harness                        ng-dashboard-aggregator-579756b589-fcq6f                          1/1     Running     0               15d
+harness                        ng-manager-769f8f5f9c-d9l4z                                       1/1     Running     0               15d
+harness                        ng-manager-769f8f5f9c-kvm6x                                       1/1     Running     0               15d
+harness                        pipeline-service-bc8b88686-jt9wd                                  1/1     Running     1 (15d ago)     15d
+harness                        pipeline-service-bc8b88686-qwnk4                                  1/1     Running     1 (15d ago)     15d
+harness                        platform-service-54845f8f89-cc8wm                                 1/1     Running     2 (15d ago)     15d
+harness                        platform-service-54845f8f89-z4jbk                                 1/1     Running     0               15d
+harness                        policy-mgmt-6b87d4645b-vz8t5                                      1/1     Running     1 (15d ago)     15d
+harness                        policy-mgmt-6b87d4645b-wl4fl                                      1/1     Running     1 (15d ago)     15d
+harness                        postgres-0                                                        1/1     Running     0               15d
+harness                        queue-service-6b9cbccd5c-g8vz7                                    1/1     Running     0               15d
+harness                        queue-service-6b9cbccd5c-qx5hc                                    1/1     Running     0               15d
+harness                        redis-sentinel-harness-server-0                                   2/2     Running     0               15d
+harness                        redis-sentinel-harness-server-1                                   2/2     Running     0               15d
+harness                        redis-sentinel-harness-server-2                                   2/2     Running     0               15d
+harness                        scm-785c8cd979-4496b                                              1/1     Running     0               15d
+harness                        scm-785c8cd979-w2klx                                              1/1     Running     0               15d
+harness                        service-discovery-manager-68d758f89c-84fnx                        1/1     Running     4 (15d ago)     15d
+harness                        service-discovery-manager-68d758f89c-wsvmk                        1/1     Running     3 (15d ago)     15d
+harness                        template-service-579dd4b6ff-gv6lm                                 1/1     Running     0               15d
+harness                        template-service-579dd4b6ff-s85hj                                 1/1     Running     0               8d
+harness                        timescaledb-backup-minio-84dfbfc59-t8fjw                          1/1     Running     0               15d
+istio-system                   grafana-677f56cd49-46rvj                                          1/1     Running     0               15d
+istio-system                   istio-cni-node-27szq                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-4722s                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-b4cs2                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-kpxcl                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-kzpd5                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-l4dk8                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-nprvd                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-q7696                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-qp2zq                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-xlcqm                                              1/1     Running     0               15d
+istio-system                   istio-egressgateway-85b5468cd5-cm6vn                              1/1     Running     0               15d
+istio-system                   istio-ingressgateway-fc5745c76-j7c7p                              1/1     Running     0               15d
+istio-system                   istiod-7646dc4bd7-qpv98                                           1/1     Running     0               15d
+istio-system                   jaeger-6485965cbb-5mvql                                           1/1     Running     0               15d
+istio-system                   kiali-77f885b79-4r7xm                                             1/1     Running     0               15d
+istio-system                   prometheus-69d6b589b5-gmqsw                                       2/2     Running     0               15d
+kong-cp                        kong-cp-kong-post-upgrade-migrations-db8fn                        0/1     Completed   0               10d
+kong-cp                        kong-cp-kong-pre-upgrade-migrations-mbdd9                         0/1     Completed   0               10d
+kong-dp                        redis-server-6bf785df77-xg6m8                                     1/1     Running     0               8d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-cvkmc                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-gkbzv                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-qfwsg                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-post-upgrade-migrations-txbxk                        0/1     Completed   0               14d
+kong-eg-cp                     kong-cp-kong-pre-upgrade-migrations-mjfvd                         0/1     Completed   0               14d
+kong-eg-dp                     kong-dp-kong-7ff866445c-httdg                                     1/1     Running     0               15d
+kong-eg-dp                     kong-dp-kong-7ff866445c-thzdm                                     1/1     Running     0               15d
+kong-eg-dp                     kong-dp-kong-7ff866445c-w997z                                     1/1     Running     0               15d
+kube-system                    antrea-agent-9m24m                                                2/2     Running     0               15d
+kube-system                    antrea-agent-c9fqd                                                2/2     Running     0               15d
+kube-system                    antrea-agent-gk8t2                                                2/2     Running     0               15d
+kube-system                    antrea-agent-m8lvp                                                2/2     Running     0               15d
+kube-system                    antrea-agent-nxxmn                                                2/2     Running     0               15d
+kube-system                    antrea-agent-phksb                                                2/2     Running     0               15d
+kube-system                    antrea-agent-pnxmw                                                2/2     Running     0               15d
+kube-system                    antrea-agent-t2njh                                                2/2     Running     1 (15d ago)     15d
+kube-system                    antrea-agent-tjr67                                                2/2     Running     0               15d
+kube-system                    antrea-agent-v62p9                                                2/2     Running     0               15d
+kube-system                    antrea-controller-d45d66994-ttdd6                                 1/1     Running     2 (15d ago)     15d
+kube-system                    cluster-autoscaler-7895ddb8cc-fbhc8                               1/1     Running     0               15d
+kube-system                    coredns-6c86fb9b9c-78bsb                                          1/1     Running     0               15d
+kube-system                    coredns-6c86fb9b9c-vklrr                                          1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-4ch2p                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-8fhj7                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-nkfnf                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc     1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-4ch2p                                  1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-8fhj7                                  1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-nkfnf                                  1/1     Running     0               15d
+kube-system                    f5-ipam-controller-5bffdd6c99-lx4cs                               1/1     Running     0               14d
+kube-system                    filebeat-94w2p                                                    1/1     Running     0               15d
+kube-system                    filebeat-hvgkm                                                    1/1     Running     0               15d
+kube-system                    filebeat-lx4mc                                                    1/1     Running     0               15d
+kube-system                    filebeat-lzvjr                                                    1/1     Running     0               15d
+kube-system                    filebeat-mfd5d                                                    1/1     Running     0               15d
+kube-system                    filebeat-q2rxj                                                    1/1     Running     0               15d
+kube-system                    filebeat-q59d5                                                    1/1     Running     0               15d
+kube-system                    filebeat-sxbnm                                                    1/1     Running     0               15d
+kube-system                    filebeat-tlhtc                                                    1/1     Running     0               15d
+kube-system                    filebeat-zptmw                                                    1/1     Running     0               15d
+kube-system                    k8s-bigip-ctlr-deployment-6c4cb4b84-2shbj                         1/1     Running     0               14d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-4ch2p                        1/1     Running     0               15d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-8fhj7                        1/1     Running     0               15d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-nkfnf                        1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-4ch2p               1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-8fhj7               1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-nkfnf               1/1     Running     0               15d
+kube-system                    kube-proxy-2qb7k                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-2vshw                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-b5896                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-f7k5s                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-h5xp8                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-h7r9v                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-hdgpx                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-qdvn6                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-sw7xv                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-xll6x                                                  1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-4ch2p                        1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-8fhj7                        1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-nkfnf                        1/1     Running     0               15d
+kube-system                    kubestate-metrics-5b9fd5864c-74xbx                                1/1     Running     0               15d
+kube-system                    metrics-server-745cc569b8-r8frk                                   1/1     Running     0               15d
+kube-system                    prometheus-deployment-758c595d8-4zh7b                             1/1     Running     0               15d
+kube-system                    snapshot-controller-564949bd49-68sqf                              1/1     Running     0               15d
+monitoring-np                  cadvisor-4xlzt                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-5vds8                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-8qc8d                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-b625s                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-jwqg8                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-k8c2h                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-kjmlm                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-kjsn5                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-rm2kb                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-x7dvn                                                    1/1     Running     0               15d
+monitoring-np                  node-exporter-2qnhf                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-4xsdf                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-9qx7k                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-9vdpk                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-bhvl5                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-c6rqt                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-fq2c6                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-g7hlv                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-p84wr                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-vjs6k                                               1/1     Running     0               15d
+monitoring-np                  prometheus-deployment-cadvisor-57b8b67c54-pvkkm                   1/1     Running     0               15d
+nginx-image-store              nginx-deployment-77bcddf7df-nmdbq                                 1/1     Running     0               15d
+nginxplus                      nginx-plus-8bbbb5c44-lw6dg                                        1/1     Running     0               15d
+nginxplus                      nginx-plus-8bbbb5c44-n9v8v                                        1/1     Running     0               15d
+prometheus                     prometheus-deployment-67c74d45ff-2rb4t                            0/1     Completed   0               6d20h
+prometheus                     prometheus-deployment-67c74d45ff-4kj42                            0/1     Completed   0               3d22h
+prometheus                     prometheus-deployment-67c74d45ff-n7rf7                            0/1     Completed   0               9d
+prometheus                     prometheus-deployment-67c74d45ff-nxfps                            1/1     Running     0               20h
+protecttai                     appbind-portal-fe-dc-6658c694db-kbpnf                             1/1     Running     0               15d
+protecttai                     appprotectt-portal-fe-dc-67cd9b46df-g7b8p                         1/1     Running     0               15d
+secretgen-controller           secretgen-controller-75d486fd6f-kgv2c                             1/1     Running     0               15d
+tanzu-system-ingress           contour-6f95875758-8c2r7                                          1/1     Running     0               15d
+tanzu-system-ingress           contour-6f95875758-lvxhs                                          1/1     Running     0               15d
+tanzu-system-ingress           envoy-2kxlw                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-kwhhq                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-m7psc                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-r9ms7                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-xdtmk                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-zgz87                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-zv92t                                                       2/2     Running     0               15d
+tkg-system                     kapp-controller-5c44748b4f-gztbn                                  2/2     Running     1 (15d ago)     15d
+velero                         app-default-kopia-x2hfw-maintain-job-1754540017622-pcmch          0/1     Completed   0               173m
+velero                         app-default-kopia-x2hfw-maintain-job-1754543617221-mtt4g          0/1     Completed   0               113m
+velero                         app-default-kopia-x2hfw-maintain-job-1754547517321-ztms4          0/1     Completed   0               48m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754542717421-8f68b    0/1     Completed   0               128m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754546616954-6nhzq    0/1     Completed   0               63m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754550217344-cqbzj    0/1     Completed   0               3m46s
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754539413015-qxcl5   0/1     Completed   0               3h3m
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754543013023-pgvz2   0/1     Completed   0               123m
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754546621720-z2g8b   0/1     Completed   0               63m
+velero                         harness-default-kopia-cpsjx-maintain-job-1754540913018-qtt8k      0/1     Completed   0               158m
+velero                         harness-default-kopia-cpsjx-maintain-job-1754544513027-9lvtk      0/1     Completed   0               98m
+velero                         harness-default-kopia-cpsjx-maintain-job-1754548113036-2lxtz      0/1     Completed   0               38m
+velero                         istio-system-default-kopia-5247q-maintain-job-1754541213014drns   0/1     Completed   0               153m
+velero                         istio-system-default-kopia-5247q-maintain-job-1754544813029df2l   0/1     Completed   0               93m
+velero                         istio-system-default-kopia-5247q-maintain-job-175454841715lbvvd   0/1     Completed   0               33m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754541813020-qh2md      0/1     Completed   0               143m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754545413029-w8kq5      0/1     Completed   0               83m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754549013038-qdnxr      0/1     Completed   0               23m
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-1754540018vstl   0/1     Completed   0               173m
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-175454361x5srf   0/1     Completed   0               113m
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-175454721khwbb   0/1     Completed   0               53m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754542117635-bmchz      0/1     Completed   0               138m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754546013031-cb6w9      0/1     Completed   0               73m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754549613039-nmdfd      0/1     Completed   0               13m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754540613017-z46fg   0/1     Completed   0               163m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754544213026-5thbl   0/1     Completed   0               103m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754547813035-nzzb2   0/1     Completed   0               43m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754542113020-7h2gk   0/1     Completed   0               138m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754545713030-qzt29   0/1     Completed   0               78m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754549313038-tm6cf   0/1     Completed   0               18m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-1754540313017znddw   0/1     Completed   0               168m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-175454391302544g67   0/1     Completed   0               108m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-1754547513034xp5ls   0/1     Completed   0               48m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-175454272172nztc   0/1     Completed   0               128m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-175454661308nz4x   0/1     Completed   0               63m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-1754550213056492   0/1     Completed   0               3m50s
+velero                         node-agent-54zcj                                                  1/1     Running     0               6d21h
+velero                         node-agent-94rcl                                                  1/1     Running     0               6d21h
+velero                         node-agent-d94hj                                                  1/1     Running     0               6d21h
+velero                         node-agent-gf85x                                                  1/1     Running     0               6d21h
+velero                         node-agent-j7xhb                                                  1/1     Running     0               6d21h
+velero                         node-agent-ncgzv                                                  1/1     Running     0               6d21h
+velero                         node-agent-nj6sz                                                  1/1     Running     0               6d21h
+velero                         node-agent-q6pwp                                                  1/1     Running     0               6d21h
+velero                         node-agent-qs7tn                                                  1/1     Running     0               6d21h
+velero                         node-agent-r2hw8                                                  1/1     Running     0               6d21h
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754542713022-qf6vk   0/1     Completed   0               128m
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754546313031-zvnh6   0/1     Completed   0               68m
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754549913040-kzx7w   0/1     Completed   0               8m50s
+velero                         repo-maintain-job-1754539417126-z84mt                             0/1     Completed   0               3h3m
+velero                         repo-maintain-job-1754540617336-htvcb                             0/1     Completed   0               163m
+velero                         repo-maintain-job-1754541513019-4jlg5                             0/1     Completed   0               148m
+velero                         repo-maintain-job-1754543313024-wpcj6                             0/1     Completed   0               118m
+velero                         repo-maintain-job-1754544517621-jxctm                             0/1     Completed   0               98m
+velero                         repo-maintain-job-1754545113028-5kqph                             0/1     Completed   0               88m
+velero                         repo-maintain-job-1754546913033-nvgdw                             0/1     Completed   0               58m
+velero                         repo-maintain-job-1754548413037-hl2n6                             0/1     Completed   0               33m
+velero                         repo-maintain-job-1754548713037-plhkg                             0/1     Completed   0               28m
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754542413021-g5jct   0/1     Completed   0               133m
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754546017221-g7bjt   0/1     Completed   0               73m
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754549617343-jkb67   0/1     Completed   0               13m
+velero                         velero-66bb9ccc8-6qhq5                                            1/1     Running     0               6d21h
+velero                         velero-default-kopia-tgrvz-maintain-job-1754539713016-jdkkj       0/1     Completed   0               178m
+velero                         velero-default-kopia-tgrvz-maintain-job-1754543317122-xjx9t       0/1     Completed   0               118m
+velero                         velero-default-kopia-tgrvz-maintain-job-1754547213034-gkpcg       0/1     Completed   0               53m
+vmware-system-antrea           antrea-pre-upgrade-job-fscnd                                      0/1     Completed   0               15d
+vmware-system-auth             guest-cluster-auth-svc-7dmnb                                      1/1     Running     0               15d
+vmware-system-auth             guest-cluster-auth-svc-b8kjn                                      1/1     Running     0               15d
+vmware-system-auth             guest-cluster-auth-svc-zpthk                                      1/1     Running     0               15d
+vmware-system-cloud-provider   guest-cluster-cloud-provider-58f644469d-rcbjg                     1/1     Running     0               15d
+vmware-system-csi              vsphere-csi-controller-79f54c46b7-cvrqk                           7/7     Running     0               15d
+vmware-system-csi              vsphere-csi-node-88962                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-k6k7v                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-mw7r4                                            3/3     Running     1 (15d ago)     15d
+vmware-system-csi              vsphere-csi-node-nchwj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-nwtsx                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-p8mgj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-qbvxh                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-s7csj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-tmrvp                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-x2f47                                            3/3     Running     0               15d
+
+
+===================== Failed or Pending Pods =====================
+No resources found
+No failed or pending pods.
+
+
+===================== NotReady Nodes =====================
+All nodes are Ready.
+
+
+===================== Services in All Namespaces =====================
+NAMESPACE              NAME                                        TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                                          AGE
+app                    application-cpu                             ClusterIP      198.62.164.125   <none>           80/TCP                                           117d
+cert-manager           cert-manager                                ClusterIP      198.59.56.174    <none>           9402/TCP                                         98d
+cert-manager           cert-manager-webhook                        ClusterIP      198.57.165.116   <none>           443/TCP                                          98d
+ct-system              admission-controller                        ClusterIP      198.58.121.85    <none>           443/TCP                                          20d
+ct-system              collector                                   ClusterIP      198.60.32.200    <none>           9898/TCP,9999/TCP                                20d
+ct-system              policy                                      ClusterIP      198.59.56.84     <none>           9898/TCP,9999/TCP                                20d
+default                kubernetes                                  ClusterIP      198.48.0.1       <none>           443/TCP                                          250d
+default                supervisor                                  ClusterIP      None             <none>           6443/TCP                                         250d
+digital-ns             admin-portal-ui                             ClusterIP      198.48.184.72    <none>           9031/TCP                                         30d
+digital-ns             nginx-service                               LoadBalancer   198.48.158.200   172.16.137.141   8090:32475/TCP                                   226d
+harness                access-control                              ClusterIP      198.62.201.15    <none>           9006/TCP                                         35d
+harness                change-data-capture                         ClusterIP      198.58.197.251   <none>           8190/TCP                                         35d
+harness                chaos-k8s-ifs-service                       ClusterIP      198.56.105.244   <none>           6000/TCP                                         34d
+harness                chaos-linux-ifc-service                     ClusterIP      198.55.67.141    <none>           8091/TCP                                         34d
+harness                chaos-linux-ifs-service                     ClusterIP      198.56.128.38    <none>           4000/TCP                                         34d
+harness                chaos-machine-ifc-service                   ClusterIP      198.54.64.75     <none>           5000/TCP                                         34d
+harness                chaos-machine-ifs-service                   ClusterIP      198.59.36.45     <none>           4000/TCP                                         34d
+harness                chaos-manager-service                       ClusterIP      198.55.80.133    <none>           8080/TCP                                         34d
+harness                chaos-web-service                           ClusterIP      198.58.47.34     <none>           8184/TCP                                         34d
+harness                default-backend                             ClusterIP      198.52.173.66    <none>           80/TCP                                           35d
+harness                delegate-proxy                              ClusterIP      198.49.132.238   <none>           80/TCP                                           35d
+harness                gateway                                     ClusterIP      198.55.67.206    <none>           80/TCP                                           35d
+harness                harness-ingress-controller                  LoadBalancer   198.62.127.151   172.16.137.150   10254:31309/TCP,80:30725/TCP,443:32138/TCP       35d
+harness                harness-manager                             ClusterIP      198.57.0.109     <none>           9090/TCP,9879/TCP                                35d
+harness                harness-manager-headless                    ClusterIP      None             <none>           9090/TCP,9879/TCP                                35d
+harness                log-service                                 ClusterIP      198.60.18.91     <none>           8079/TCP                                         35d
+harness                minio                                       ClusterIP      198.50.147.164   <none>           9000/TCP,9001/TCP                                35d
+harness                mongodb-replicaset-chart                    ClusterIP      None             <none>           27017/TCP                                        35d
+harness                mongodb-replicaset-chart-arbiter-headless   ClusterIP      None             <none>           27017/TCP                                        35d
+harness                next-gen-ui                                 ClusterIP      198.53.99.199    <none>           80/TCP                                           35d
+harness                ng-auth-ui                                  ClusterIP      198.54.57.131    <none>           80/TCP                                           35d
+harness                ng-dashboard-aggregator                     ClusterIP      198.53.96.61     <none>           7100/TCP                                         35d
+harness                ng-manager                                  ClusterIP      198.57.157.0     <none>           7090/TCP,9979/TCP,13002/TCP                      35d
+harness                ng-manager-headless                         ClusterIP      None             <none>           9979/TCP,13002/TCP                               35d
+harness                pipeline-service                            ClusterIP      198.58.244.175   <none>           12011/TCP,12001/TCP,14002/TCP,15302/TCP          35d
+harness                pipeline-service-headless                   ClusterIP      None             <none>           12011/TCP,14002/TCP,15302/TCP                    35d
+harness                platform-service                            ClusterIP      198.50.68.187    <none>           9005/TCP                                         35d
+harness                policy-mgmt                                 ClusterIP      198.53.55.153    <none>           3000/TCP,3535/TCP                                35d
+harness                postgres                                    ClusterIP      198.54.173.145   <none>           5432/TCP                                         35d
+harness                postgres-hl                                 ClusterIP      None             <none>           5432/TCP                                         35d
+harness                queue-service                               ClusterIP      198.49.53.20     <none>           9091/TCP                                         35d
+harness                redis-sentinel-harness                      ClusterIP      None             <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-0           ClusterIP      198.63.236.52    <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-1           ClusterIP      198.51.123.208   <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-2           ClusterIP      198.48.194.82    <none>           6379/TCP,26379/TCP                               35d
+harness                scm-service                                 ClusterIP      198.52.105.170   <none>           8091/TCP                                         35d
+harness                service-discovery-manager                   ClusterIP      198.55.253.140   <none>           8080/TCP                                         33d
+harness                template-service                            ClusterIP      198.60.196.217   <none>           15011/TCP,15002/TCP,16002/TCP                    35d
+harness                timescaledb-backup-minio                    ClusterIP      198.50.233.190   <none>           9000/TCP,9001/TCP                                35d
+harness                timescaledb-single-chart                    ClusterIP      198.57.51.107    <none>           5432/TCP                                         35d
+harness                timescaledb-single-chart-config             ClusterIP      None             <none>           8008/TCP                                         35d
+harness                timescaledb-single-chart-replica            ClusterIP      198.55.89.81     <none>           5432/TCP                                         35d
+istio-system           grafana                                     ClusterIP      198.54.140.153   <none>           3000/TCP                                         246d
+istio-system           istio-egressgateway                         ClusterIP      198.62.40.155    <none>           80/TCP,443/TCP                                   246d
+istio-system           istio-ingressgateway                        LoadBalancer   198.56.74.216    172.16.137.137   15021:32731/TCP,80:31557/TCP,443:30962/TCP       246d
+istio-system           istiod                                      ClusterIP      198.59.202.125   <none>           15010/TCP,15012/TCP,443/TCP,15014/TCP            246d
+istio-system           jaeger-collector                            ClusterIP      198.62.6.217     <none>           14268/TCP,14250/TCP,9411/TCP,4317/TCP,4318/TCP   246d
+istio-system           kiali                                       ClusterIP      198.49.19.67     <none>           20001/TCP,9090/TCP                               246d
+istio-system           prometheus                                  ClusterIP      198.61.3.107     <none>           9090/TCP                                         246d
+istio-system           tracing                                     ClusterIP      198.50.47.242    <none>           80/TCP,16685/TCP                                 246d
+istio-system           zipkin                                      ClusterIP      198.49.188.50    <none>           9411/TCP                                         246d
+kong-cp                kong-cp-kong-admin                          LoadBalancer   198.60.234.166   172.16.137.147   443:31683/TCP                                    41d
+kong-cp                kong-cp-kong-cluster                        ClusterIP      198.55.9.90      <none>           8005/TCP                                         41d
+kong-cp                kong-cp-kong-clustertelemetry               ClusterIP      198.51.180.80    <none>           8006/TCP                                         41d
+kong-cp                kong-cp-kong-manager                        LoadBalancer   198.49.85.87     172.16.137.148   443:32591/TCP                                    41d
+kong-dev-portal        kong-dev-portal-kong-portal                 LoadBalancer   198.53.90.207    172.16.137.146   443:31593/TCP                                    44d
+kong-dev-portal        kong-dev-portal-kong-portalapi              LoadBalancer   198.49.171.45    172.16.137.145   443:32075/TCP                                    44d
+kong-dp                kong-dp-kong-proxy                          LoadBalancer   198.55.13.232    172.16.137.144   80:31319/TCP,443:32724/TCP                       44d
+kong-dp                redis-server                                ClusterIP      198.63.249.222   <none>           6379/TCP                                         44d
+kong-eg-cp             kong-cp-kong-admin                          LoadBalancer   198.49.231.255   172.16.137.143   443:30275/TCP                                    41d
+kong-eg-cp             kong-cp-kong-cluster                        ClusterIP      198.51.236.110   <none>           8005/TCP                                         41d
+kong-eg-cp             kong-cp-kong-clustertelemetry               ClusterIP      198.57.26.133    <none>           8006/TCP                                         41d
+kong-eg-cp             kong-cp-kong-manager                        LoadBalancer   198.54.151.25    172.16.137.140   443:32251/TCP                                    41d
+kong-eg-dp             kong-dp-kong-proxy                          LoadBalancer   198.49.201.136   172.16.137.149   443:30951/TCP                                    41d
+kong-eg-dp             redis-server                                ClusterIP      198.61.0.13      <none>           6379/TCP                                         41d
+kube-system            antrea                                      ClusterIP      198.52.45.74     <none>           443/TCP                                          250d
+kube-system            kube-dns                                    ClusterIP      198.48.0.10      <none>           53/UDP,53/TCP,9153/TCP                           250d
+kube-system            kubestate-metrics                           LoadBalancer   198.56.14.183    172.16.137.139   6060:32137/TCP,6061:31566/TCP                    246d
+kube-system            kubestatemetrics-prometheus-service         LoadBalancer   198.58.25.53     172.16.137.155   7070:32461/TCP                                   16d
+kube-system            metrics-server                              ClusterIP      198.55.244.62    <none>           443/TCP                                          250d
+monitoring-np          cadvisor-daemon                             ClusterIP      198.62.92.86     <none>           7070/TCP                                         103d
+monitoring-np          cadvisor-prometheus-service                 LoadBalancer   198.61.88.181    172.16.137.154   7070:30467/TCP                                   16d
+monitoring-np          node-exporter                               ClusterIP      198.62.13.155    <none>           9100/TCP                                         103d
+nginx-image-store      nginx-image-restore                         ClusterIP      198.53.29.168    <none>           80/TCP,443/TCP                                   30d
+nginxplus              nginx-service                               LoadBalancer   198.52.190.183   172.16.137.151   443:30549/TCP                                    30d
+prometheus             prometheus-service                          LoadBalancer   198.58.112.9     172.16.137.138   7070:30000/TCP                                   103d
+protecttai             appbind-portal-fe-svc-dc                    LoadBalancer   198.49.169.217   172.16.137.153   443:32284/TCP                                    25d
+protecttai             appprotectt-portal-fe-svc-dc                LoadBalancer   198.61.45.80     172.16.137.152   443:31500/TCP                                    25d
+tanzu-system-ingress   contour                                     ClusterIP      198.52.139.68    <none>           8001/TCP                                         208d
+tanzu-system-ingress   envoy                                       LoadBalancer   198.48.197.248   172.16.137.142   80:30732/TCP,443:31232/TCP                       208d
+tkg-system             packaging-api                               ClusterIP      198.51.182.33    <none>           443/TCP,8080/TCP                                 250d
+vmware-system-csi      vsphere-csi-controller                      ClusterIP      198.59.122.250   <none>           2112/TCP,2113/TCP                                250d
+
+
+===================== Persistent Volumes =====================
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                          STORAGECLASS      VOLUMEATTRIBUTESCLASS   REASON   AGE
+pvc-0e6c1aff-9d55-41e7-a74d-1af0fa7a4fd1   10Gi       RWO            Delete           Bound    nginx-image-store/nginx-image-pvc-assets       dapdtnzspxx0001   <unset>                          30d
+pvc-0e8f9d76-2474-413d-90b3-a6f65a3358f2   10Gi       RWO            Delete           Bound    kube-system/f5-ipam-pvc                        dapdtnzspxx0001   <unset>                          247d
+pvc-1b87ecb8-5e9d-4851-a2f6-88a2c5d5315d   200Gi      RWO            Delete           Bound    harness/minio                                  dapdtnzspxx0001   <unset>                          35d
+pvc-22a6e321-86b6-4bd5-80ea-f505410ea23c   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-0   dapdtnzspxx0001   <unset>                          35d
+pvc-44e486c4-adbc-496c-b4d8-380d6ff9f60e   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-2     dapdtnzspxx0001   <unset>                          35d
+pvc-5f731261-1601-46a0-968d-ff0bc9c54e6f   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-1   dapdtnzspxx0001   <unset>                          35d
+pvc-72eb378c-f5d5-498c-89be-bda7069e448f   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-0       dapdtnzspxx0001   <unset>                          35d
+pvc-790e10cf-19d0-40ad-a7bb-72403ebd5476   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-2   dapdtnzspxx0001   <unset>                          35d
+pvc-87fab011-78a1-4d6f-bbf2-60a539b887fc   10Gi       RWO            Delete           Bound    nginx-image-store/nginx-pvc                    dapdtnzspxx0001   <unset>                          30d
+pvc-88257ce3-9d40-4de2-b709-768adac293d4   1Gi        RWO            Delete           Bound    kube-system/test-pvc                           dapdtnzspxx0001   <unset>                          225d
+pvc-a229cb62-f3ae-4476-8ef1-17d5d52e6060   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-1       dapdtnzspxx0001   <unset>                          35d
+pvc-a39951a7-cdf1-4c1b-a3a5-b27c3722717c   10Gi       RWO            Delete           Bound    kong-dp/redis-pvc                              dapdtnzspxx0001   <unset>                          44d
+pvc-a873bbbe-3cd6-4472-b156-61c36da56c4d   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-2       dapdtnzspxx0001   <unset>                          35d
+pvc-be528964-52e1-423d-88da-d30892bfffc7   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-2   dapdtnzspxx0001   <unset>                          35d
+pvc-c2e4da9c-63f3-4158-9fc6-78e2a8055423   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-1     dapdtnzspxx0001   <unset>                          35d
+pvc-c51e87e1-c177-4c86-b48c-8a7ade6ea266   200Gi      RWO            Delete           Bound    harness/data-postgres-0                        dapdtnzspxx0001   <unset>                          35d
+pvc-e355e962-2d56-4223-96b4-26f34a99bc0c   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-0     dapdtnzspxx0001   <unset>                          35d
+pvc-f187afb4-8455-4ab9-b1ae-4d97f9403c32   10Gi       RWO            Delete           Bound    kong-eg-dp/redis-pvc                           dapdtnzspxx0001   <unset>                          36d
+pvc-f274fcbc-aa87-4296-a98f-0e98b7eb514d   200Gi      RWO            Delete           Bound    harness/timescaledb-backup-minio               dapdtnzspxx0001   <unset>                          35d
+pvc-f95cb20d-630b-48ff-a5ef-fa71c62f6eb9   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-0   dapdtnzspxx0001   <unset>                          35d
+pvc-fbf0f0c4-d4ed-44f5-b442-8feeca1d57d4   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-1   dapdtnzspxx0001   <unset>                          35d
+
+
+===================== Persistent Volume Claims in All Namespaces =====================
+NAMESPACE           NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      VOLUMEATTRIBUTESCLASS   AGE
+harness             data-postgres-0                        Bound    pvc-c51e87e1-c177-4c86-b48c-8a7ade6ea266   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-0   Bound    pvc-22a6e321-86b6-4bd5-80ea-f505410ea23c   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-1   Bound    pvc-fbf0f0c4-d4ed-44f5-b442-8feeca1d57d4   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-2   Bound    pvc-790e10cf-19d0-40ad-a7bb-72403ebd5476   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-0     Bound    pvc-e355e962-2d56-4223-96b4-26f34a99bc0c   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-1     Bound    pvc-c2e4da9c-63f3-4158-9fc6-78e2a8055423   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-2     Bound    pvc-44e486c4-adbc-496c-b4d8-380d6ff9f60e   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             minio                                  Bound    pvc-1b87ecb8-5e9d-4851-a2f6-88a2c5d5315d   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-0   Bound    pvc-f95cb20d-630b-48ff-a5ef-fa71c62f6eb9   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-1   Bound    pvc-5f731261-1601-46a0-968d-ff0bc9c54e6f   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-2   Bound    pvc-be528964-52e1-423d-88da-d30892bfffc7   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             timescaledb-backup-minio               Bound    pvc-f274fcbc-aa87-4296-a98f-0e98b7eb514d   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-0       Bound    pvc-72eb378c-f5d5-498c-89be-bda7069e448f   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-1       Bound    pvc-a229cb62-f3ae-4476-8ef1-17d5d52e6060   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-2       Bound    pvc-a873bbbe-3cd6-4472-b156-61c36da56c4d   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+kong-dp             redis-pvc                              Bound    pvc-a39951a7-cdf1-4c1b-a3a5-b27c3722717c   10Gi       RWO            dapdtnzspxx0001   <unset>                 44d
+kong-eg-dp          redis-pvc                              Bound    pvc-f187afb4-8455-4ab9-b1ae-4d97f9403c32   10Gi       RWO            dapdtnzspxx0001   <unset>                 36d
+kube-system         f5-ipam-pvc                            Bound    pvc-0e8f9d76-2474-413d-90b3-a6f65a3358f2   10Gi       RWO            dapdtnzspxx0001   <unset>                 247d
+kube-system         test-pvc                               Bound    pvc-88257ce3-9d40-4de2-b709-768adac293d4   1Gi        RWO            dapdtnzspxx0001   <unset>                 225d
+nginx-image-store   nginx-image-pvc-assets                 Bound    pvc-0e6c1aff-9d55-41e7-a74d-1af0fa7a4fd1   10Gi       RWO            dapdtnzspxx0001   <unset>                 30d
+nginx-image-store   nginx-pvc                              Bound    pvc-87fab011-78a1-4d6f-bbf2-60a539b887fc   10Gi       RWO            dapdtnzspxx0001   <unset>                 30d
+
+
+===================== Deployments in All Namespaces =====================
+NAMESPACE                      NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+app                            application-cpu                  1/1     1            1           117d
+cert-manager                   cert-manager                     1/1     1            1           98d
+cert-manager                   cert-manager-cainjector          1/1     1            1           98d
+cert-manager                   cert-manager-webhook             1/1     1            1           98d
+ct-system                      admission-controller             1/1     1            1           20d
+ct-system                      collector                        3/3     3            3           20d
+ct-system                      policy                           1/1     1            1           20d
+digital-ns                     admin-portal-ui                  3/3     3            3           30d
+digital-ns                     nginx-test                       1/1     1            1           226d
+harness                        access-control                   2/2     2            2           35d
+harness                        change-data-capture              1/1     1            1           35d
+harness                        chaos-k8s-ifs                    2/2     2            2           34d
+harness                        chaos-linux-ifc                  2/2     2            2           34d
+harness                        chaos-linux-ifs                  2/2     2            2           34d
+harness                        chaos-machine-ifc                2/2     2            2           34d
+harness                        chaos-machine-ifs                2/2     2            2           34d
+harness                        chaos-manager                    2/2     2            2           34d
+harness                        chaos-web                        2/2     2            2           34d
+harness                        default-backend                  1/1     1            1           35d
+harness                        delegate-proxy                   1/1     1            1           35d
+harness                        gateway                          2/2     2            2           35d
+harness                        harness-ingress-controller       1/1     1            1           35d
+harness                        harness-manager                  2/2     2            2           35d
+harness                        log-service                      2/2     2            2           35d
+harness                        minio                            1/1     1            1           35d
+harness                        next-gen-ui                      2/2     2            2           35d
+harness                        ng-auth-ui                       2/2     2            2           35d
+harness                        ng-dashboard-aggregator          2/2     2            2           35d
+harness                        ng-manager                       2/2     2            2           35d
+harness                        pipeline-service                 2/2     2            2           35d
+harness                        platform-service                 2/2     2            2           35d
+harness                        policy-mgmt                      2/2     2            2           35d
+harness                        queue-service                    2/2     2            2           35d
+harness                        scm                              2/2     2            2           35d
+harness                        service-discovery-manager        2/2     2            2           33d
+harness                        template-service                 2/2     2            2           35d
+harness                        timescaledb-backup-minio         1/1     1            1           35d
+istio-system                   grafana                          1/1     1            1           246d
+istio-system                   istio-egressgateway              1/1     1            1           246d
+istio-system                   istio-ingressgateway             1/1     1            1           246d
+istio-system                   istiod                           1/1     1            1           246d
+istio-system                   jaeger                           1/1     1            1           246d
+istio-system                   kiali                            1/1     1            1           246d
+istio-system                   prometheus                       1/1     1            1           246d
+kong-cp                        kong-cp-kong                     0/0     0            0           41d
+kong-dev-portal                kong-dev-portal-kong             0/0     0            0           44d
+kong-dp                        kong-dp-kong                     0/0     0            0           44d
+kong-dp                        redis-server                     1/1     1            1           44d
+kong-eg-cp                     kong-cp-kong                     3/3     3            3           41d
+kong-eg-dp                     kong-dp-kong                     3/3     3            3           41d
+kong-eg-dp                     redis-server                     0/1     0            0           41d
+kube-system                    antrea-controller                1/1     1            1           250d
+kube-system                    cluster-autoscaler               1/1     1            1           82d
+kube-system                    coredns                          2/2     2            2           250d
+kube-system                    f5-ipam-controller               1/1     1            1           247d
+kube-system                    k8s-bigip-ctlr-deployment        1/1     1            1           247d
+kube-system                    kubestate-metrics                1/1     1            1           246d
+kube-system                    metrics-server                   1/1     1            1           250d
+kube-system                    prometheus-deployment            1/1     1            1           16d
+kube-system                    snapshot-controller              1/1     1            1           250d
+monitoring-np                  prometheus-deployment-cadvisor   1/1     1            1           16d
+nginx-image-store              nginx-deployment                 1/1     1            1           30d
+nginxplus                      nginx-plus                       2/2     2            2           30d
+prometheus                     prometheus-deployment            1/1     1            1           103d
+protecttai                     appbind-portal-fe-dc             1/1     1            1           25d
+protecttai                     appprotectt-portal-fe-dc         1/1     1            1           25d
+secretgen-controller           secretgen-controller             1/1     1            1           250d
+tanzu-system-ingress           contour                          2/2     2            2           208d
+tkg-system                     kapp-controller                  1/1     1            1           250d
+velero                         velero                           1/1     1            1           6d21h
+vmware-system-cloud-provider   guest-cluster-cloud-provider     1/1     1            1           250d
+vmware-system-csi              vsphere-csi-controller           1/1     1            1           250d
+
+
+===================== StatefulSets in All Namespaces =====================
+NAMESPACE   NAME                               READY   AGE
+harness     audit-event-streaming              1/1     35d
+harness     harness-timescaledb                3/3     35d
+harness     mongodb-replicaset-chart           3/3     35d
+harness     mongodb-replicaset-chart-arbiter   1/1     35d
+harness     postgres                           1/1     35d
+harness     redis-sentinel-harness-server      3/3     35d
+
+
+===================== DaemonSets in All Namespaces =====================
+NAMESPACE              NAME                     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+istio-system           istio-cni-node           10        10        10      10           10          kubernetes.io/os=linux   22d
+kube-system            antrea-agent             10        10        10      10           10          kubernetes.io/os=linux   250d
+kube-system            filebeat                 10        10        10      10           10          <none>                   23d
+kube-system            kube-proxy               10        10        10      10           10          kubernetes.io/os=linux   250d
+monitoring-np          cadvisor                 10        10        10      10           10          <none>                   42d
+monitoring-np          node-exporter            10        10        10      10           10          <none>                   103d
+tanzu-system-ingress   envoy                    7         7         7       7            7           <none>                   208d
+velero                 node-agent               10        10        10      10           10          <none>                   6d21h
+vmware-system-auth     guest-cluster-auth-svc   3         3         3       3            3           <none>                   250d
+vmware-system-csi      vsphere-csi-node         10        10        10      10           10          kubernetes.io/os=linux   250d
+
+
+===================== HTTPProxies in All Namespaces =====================
+NAMESPACE           NAME                  FQDN                                   TLS SECRET                 STATUS   STATUS DESCRIPTION
+digital-ns          nginx-service         dapdmzset1contour.bankofbaroda.co.in   contoursecret              valid    Valid HTTPProxy
+kong-dp             kong-proxy            daapi.bwd.bankofbaroda.com             contoursecret-new          valid    Valid HTTPProxy
+kong-dp             protecttai-proxy      daappsec.bwd.bankofbaroda.com          contoursecret-protecttai   valid    Valid HTTPProxy
+kong-eg-dp          kong-proxy            daapi-eg.bankofbaroda.co.in            contoursecret              valid    Valid HTTPProxy
+nginx-image-store   nginx-image-restore   daibprod.bankofbaroda.co.in            nginx-image-secret         valid    Valid HTTPProxy
+
+
+===================== ServiceEntries in All Namespaces =====================
+No resources found
+
+
+===================== App Packages in All Namespaces =====================
+NAMESPACE              NAME                                         DESCRIPTION           SINCE-DEPLOY   AGE
+cert-manager           cert-manager                                 Reconcile succeeded   6m50s          98d
+tanzu-system-ingress   contour                                      Reconcile succeeded   5m44s          208d
+tkg-system             cluster-autoscaler-pkgi                      Reconcile succeeded   7m36s          82d
+vmware-system-tkg      dapdtnzwcxx0001-antrea                       Reconcile succeeded   6m46s          250d
+vmware-system-tkg      dapdtnzwcxx0001-gateway-api                  Reconcile succeeded   2m31s          250d
+vmware-system-tkg      dapdtnzwcxx0001-guest-cluster-auth-service   Reconcile succeeded   4m23s          250d
+vmware-system-tkg      dapdtnzwcxx0001-metrics-server               Reconcile succeeded   9m25s          250d
+vmware-system-tkg      dapdtnzwcxx0001-pinniped                     Reconcile succeeded   32s            250d
+vmware-system-tkg      dapdtnzwcxx0001-secretgen-controller         Reconcile succeeded   2m20s          250d
+vmware-system-tkg      dapdtnzwcxx0001-vsphere-cpi                  Reconcile succeeded   51s            250d
+vmware-system-tkg      dapdtnzwcxx0001-vsphere-pv-csi               Reconcile succeeded   8m5s           250d
+=============================================================
+
+Cluster health check completed successfully. Output saved to dapdtnzwcxx0001.2025-0807_12-37-19.txt
+
+
+Set 2
+
+
+*************** Cluster: dapdtnzwcxx0001 ***************
+
+Timestamp: Thu Aug  7 12:43:46 PM IST 2025
+
+
+===================== Nodes =====================
+NAME                                            STATUS   ROLES           AGE   VERSION                 INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                 KERNEL-VERSION   CONTAINER-RUNTIME
+dapdtnzwcxx0001-8n6dw-4ch2p                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.141   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-8n6dw-8fhj7                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.135   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-8n6dw-nkfnf                     Ready    control-plane   15d   v1.31.7+vmware.1-fips   172.16.136.139   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.143   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.137   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.142   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.140   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.157   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.138   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc   Ready    <none>          15d   v1.31.7+vmware.1-fips   172.16.136.152   <none>        VMware Photon OS/Linux   6.1.138-2.ph5    containerd://1.7.27+vmware.1-fips
+
+
+===================== Nodes CPU and Memory Utilization =====================
+NAME                                            CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+dapdtnzwcxx0001-8n6dw-4ch2p                     200m         2%     3144Mi          5%
+dapdtnzwcxx0001-8n6dw-8fhj7                     271m         3%     4008Mi          6%
+dapdtnzwcxx0001-8n6dw-nkfnf                     234m         2%     3388Mi          5%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq   337m         1%     7889Mi          18%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95   1438m        6%     16169Mi         37%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm   673m         2%     17747Mi         40%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km   441m         1%     16203Mi         37%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq   510m         2%     12735Mi         29%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7   609m         2%     14271Mi         32%
+dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc   399m         1%     13834Mi         31%
+
+
+===================== Pods in All Namespaces =====================
+NAMESPACE                      NAME                                                              READY   STATUS      RESTARTS        AGE
+app                            application-cpu-65cf978dc5-hj2gx                                  3/3     Running     0               14d
+cert-manager                   cert-manager-6b495f797d-9pxvb                                     1/1     Running     0               15d
+cert-manager                   cert-manager-cainjector-6d9fdcfddd-stzkb                          1/1     Running     0               15d
+cert-manager                   cert-manager-webhook-5c76ddc664-fqfrn                             1/1     Running     0               15d
+ct-system                      admission-controller-875744b9-c4q99                               1/1     Running     0               15d
+ct-system                      collector-5877869c6b-488bm                                        1/1     Running     0               15d
+ct-system                      collector-5877869c6b-4brnb                                        1/1     Running     0               15d
+ct-system                      collector-5877869c6b-7r2nl                                        1/1     Running     0               15d
+ct-system                      policy-6dd5bfb46f-527gq                                           1/1     Running     0               15d
+digital-ns                     admin-portal-ui-7b5f6f548b-ft6js                                  3/3     Running     0               10d
+digital-ns                     admin-portal-ui-7b5f6f548b-pscg9                                  3/3     Running     0               10d
+digital-ns                     admin-portal-ui-7b5f6f548b-w9dlj                                  3/3     Running     0               11d
+digital-ns                     nginx-test-5f9894584d-zhxhs                                       3/3     Running     0               15d
+harness                        access-control-cc7c57b-5mlsz                                      1/1     Running     0               15d
+harness                        access-control-cc7c57b-sjlbp                                      1/1     Running     0               15d
+harness                        audit-event-streaming-0                                           1/1     Running     0               15d
+harness                        bg-processor-every-24h-29242080-wkvz2                             0/1     Completed   0               7h13m
+harness                        bg-processor-every-2h-29242440-rvwr5                              0/1     Completed   0               73m
+harness                        change-data-capture-f69764bfc-b7gkq                               1/1     Running     0               15d
+harness                        chaos-k8s-ifs-6dc9c6d698-dnsd4                                    1/1     Running     3 (15d ago)     15d
+harness                        chaos-k8s-ifs-6dc9c6d698-mjmnn                                    1/1     Running     3 (15d ago)     15d
+harness                        chaos-linux-ifc-689d7ddc5f-7drrh                                  1/1     Running     190 (15d ago)   15d
+harness                        chaos-linux-ifc-689d7ddc5f-842zh                                  1/1     Running     188 (15d ago)   15d
+harness                        chaos-linux-ifs-6f4444ddfc-2825q                                  1/1     Running     4 (15d ago)     15d
+harness                        chaos-linux-ifs-6f4444ddfc-cwwzs                                  1/1     Running     4 (15d ago)     15d
+harness                        chaos-machine-ifc-666dfdc486-gddmt                                1/1     Running     189 (15d ago)   15d
+harness                        chaos-machine-ifc-666dfdc486-t7h9v                                1/1     Running     188 (15d ago)   15d
+harness                        chaos-machine-ifs-8544bd54d4-b4kp9                                1/1     Running     4 (15d ago)     15d
+harness                        chaos-machine-ifs-8544bd54d4-zm4sl                                1/1     Running     4 (15d ago)     15d
+harness                        chaos-manager-559474bff4-jwldj                                    1/1     Running     0               15d
+harness                        chaos-manager-559474bff4-kz6pm                                    1/1     Running     0               15d
+harness                        chaos-web-676598947-5rfvm                                         1/1     Running     0               15d
+harness                        chaos-web-676598947-c4qv5                                         1/1     Running     0               15d
+harness                        default-backend-77bb8dc94f-s9nr9                                  1/1     Running     0               15d
+harness                        delegate-proxy-76d9495c96-4l7jv                                   1/1     Running     0               15d
+harness                        gateway-56d669bdcb-tdj8h                                          1/1     Running     0               15d
+harness                        gateway-56d669bdcb-txdsk                                          1/1     Running     0               15d
+harness                        harness-ingress-controller-578f564667-khr6q                       1/1     Running     0               15d
+harness                        harness-manager-9965fc96-6bphq                                    1/1     Running     0               15d
+harness                        harness-manager-9965fc96-brcrj                                    1/1     Running     0               15d
+harness                        harness-timescaledb-0                                             1/1     Running     0               15d
+harness                        harness-timescaledb-1                                             1/1     Running     0               15d
+harness                        harness-timescaledb-2                                             1/1     Running     0               15d
+harness                        harness-timescaledb-archive-cleanup-29241720-vqmfb                0/1     Completed   0               13h
+harness                        harness-timescaledb-archive-cleanup-29242080-lcvkg                0/1     Completed   0               7h13m
+harness                        harness-timescaledb-archive-cleanup-29242440-n47kn                0/1     Completed   0               73m
+harness                        log-service-cfb5d975f-j58rp                                       1/1     Running     0               15d
+harness                        log-service-cfb5d975f-tv6tf                                       1/1     Running     0               15d
+harness                        minio-597c778f6c-r65wt                                            1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-0                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-1                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-2                                        1/1     Running     0               15d
+harness                        mongodb-replicaset-chart-arbiter-0                                1/1     Running     0               15d
+harness                        next-gen-ui-559cd55bdd-fk4sq                                      1/1     Running     0               15d
+harness                        next-gen-ui-559cd55bdd-pftdm                                      1/1     Running     0               15d
+harness                        ng-auth-ui-c6ff96d7c-8m72f                                        1/1     Running     0               15d
+harness                        ng-auth-ui-c6ff96d7c-l2c8m                                        1/1     Running     0               15d
+harness                        ng-dashboard-aggregator-579756b589-cjkll                          1/1     Running     0               15d
+harness                        ng-dashboard-aggregator-579756b589-fcq6f                          1/1     Running     0               15d
+harness                        ng-manager-769f8f5f9c-d9l4z                                       1/1     Running     0               15d
+harness                        ng-manager-769f8f5f9c-kvm6x                                       1/1     Running     0               15d
+harness                        pipeline-service-bc8b88686-jt9wd                                  1/1     Running     1 (15d ago)     15d
+harness                        pipeline-service-bc8b88686-qwnk4                                  1/1     Running     1 (15d ago)     15d
+harness                        platform-service-54845f8f89-cc8wm                                 1/1     Running     2 (15d ago)     15d
+harness                        platform-service-54845f8f89-z4jbk                                 1/1     Running     0               15d
+harness                        policy-mgmt-6b87d4645b-vz8t5                                      1/1     Running     1 (15d ago)     15d
+harness                        policy-mgmt-6b87d4645b-wl4fl                                      1/1     Running     1 (15d ago)     15d
+harness                        postgres-0                                                        1/1     Running     0               15d
+harness                        queue-service-6b9cbccd5c-g8vz7                                    1/1     Running     0               15d
+harness                        queue-service-6b9cbccd5c-qx5hc                                    1/1     Running     0               15d
+harness                        redis-sentinel-harness-server-0                                   2/2     Running     0               15d
+harness                        redis-sentinel-harness-server-1                                   2/2     Running     0               15d
+harness                        redis-sentinel-harness-server-2                                   2/2     Running     0               15d
+harness                        scm-785c8cd979-4496b                                              1/1     Running     0               15d
+harness                        scm-785c8cd979-w2klx                                              1/1     Running     0               15d
+harness                        service-discovery-manager-68d758f89c-84fnx                        1/1     Running     4 (15d ago)     15d
+harness                        service-discovery-manager-68d758f89c-wsvmk                        1/1     Running     3 (15d ago)     15d
+harness                        template-service-579dd4b6ff-gv6lm                                 1/1     Running     0               15d
+harness                        template-service-579dd4b6ff-s85hj                                 1/1     Running     0               8d
+harness                        timescaledb-backup-minio-84dfbfc59-t8fjw                          1/1     Running     0               15d
+istio-system                   grafana-677f56cd49-46rvj                                          1/1     Running     0               15d
+istio-system                   istio-cni-node-27szq                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-4722s                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-b4cs2                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-kpxcl                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-kzpd5                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-l4dk8                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-nprvd                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-q7696                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-qp2zq                                              1/1     Running     0               15d
+istio-system                   istio-cni-node-xlcqm                                              1/1     Running     0               15d
+istio-system                   istio-egressgateway-85b5468cd5-cm6vn                              1/1     Running     0               15d
+istio-system                   istio-ingressgateway-fc5745c76-j7c7p                              1/1     Running     0               15d
+istio-system                   istiod-7646dc4bd7-qpv98                                           1/1     Running     0               15d
+istio-system                   jaeger-6485965cbb-5mvql                                           1/1     Running     0               15d
+istio-system                   kiali-77f885b79-4r7xm                                             1/1     Running     0               15d
+istio-system                   prometheus-69d6b589b5-gmqsw                                       2/2     Running     0               15d
+kong-cp                        kong-cp-kong-post-upgrade-migrations-db8fn                        0/1     Completed   0               10d
+kong-cp                        kong-cp-kong-pre-upgrade-migrations-mbdd9                         0/1     Completed   0               10d
+kong-dp                        redis-server-6bf785df77-xg6m8                                     1/1     Running     0               8d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-cvkmc                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-gkbzv                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-f8ffd9686-qfwsg                                      1/1     Running     19 (12d ago)    14d
+kong-eg-cp                     kong-cp-kong-post-upgrade-migrations-txbxk                        0/1     Completed   0               14d
+kong-eg-cp                     kong-cp-kong-pre-upgrade-migrations-mjfvd                         0/1     Completed   0               14d
+kong-eg-dp                     kong-dp-kong-7ff866445c-httdg                                     1/1     Running     0               15d
+kong-eg-dp                     kong-dp-kong-7ff866445c-thzdm                                     1/1     Running     0               15d
+kong-eg-dp                     kong-dp-kong-7ff866445c-w997z                                     1/1     Running     0               15d
+kube-system                    antrea-agent-9m24m                                                2/2     Running     0               15d
+kube-system                    antrea-agent-c9fqd                                                2/2     Running     0               15d
+kube-system                    antrea-agent-gk8t2                                                2/2     Running     0               15d
+kube-system                    antrea-agent-m8lvp                                                2/2     Running     0               15d
+kube-system                    antrea-agent-nxxmn                                                2/2     Running     0               15d
+kube-system                    antrea-agent-phksb                                                2/2     Running     0               15d
+kube-system                    antrea-agent-pnxmw                                                2/2     Running     0               15d
+kube-system                    antrea-agent-t2njh                                                2/2     Running     1 (15d ago)     15d
+kube-system                    antrea-agent-tjr67                                                2/2     Running     0               15d
+kube-system                    antrea-agent-v62p9                                                2/2     Running     0               15d
+kube-system                    antrea-controller-d45d66994-ttdd6                                 1/1     Running     2 (15d ago)     15d
+kube-system                    cluster-autoscaler-7895ddb8cc-fbhc8                               1/1     Running     0               15d
+kube-system                    coredns-6c86fb9b9c-78bsb                                          1/1     Running     0               15d
+kube-system                    coredns-6c86fb9b9c-vklrr                                          1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-4ch2p                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-8fhj7                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-8n6dw-nkfnf                       1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-5ckgq     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-7sf95     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-8bdvm     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-fb2km     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-jwpsq     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-mh7x7     1/1     Running     0               15d
+kube-system                    docker-registry-dapdtnzwcxx0001-node-pool-1-jjncz-mpvxj-ptbnc     1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-4ch2p                                  1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-8fhj7                                  1/1     Running     0               15d
+kube-system                    etcd-dapdtnzwcxx0001-8n6dw-nkfnf                                  1/1     Running     0               15d
+kube-system                    f5-ipam-controller-5bffdd6c99-lx4cs                               1/1     Running     0               14d
+kube-system                    filebeat-94w2p                                                    1/1     Running     0               15d
+kube-system                    filebeat-hvgkm                                                    1/1     Running     0               15d
+kube-system                    filebeat-lx4mc                                                    1/1     Running     0               15d
+kube-system                    filebeat-lzvjr                                                    1/1     Running     0               15d
+kube-system                    filebeat-mfd5d                                                    1/1     Running     0               15d
+kube-system                    filebeat-q2rxj                                                    1/1     Running     0               15d
+kube-system                    filebeat-q59d5                                                    1/1     Running     0               15d
+kube-system                    filebeat-sxbnm                                                    1/1     Running     0               15d
+kube-system                    filebeat-tlhtc                                                    1/1     Running     0               15d
+kube-system                    filebeat-zptmw                                                    1/1     Running     0               15d
+kube-system                    k8s-bigip-ctlr-deployment-6c4cb4b84-2shbj                         1/1     Running     0               14d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-4ch2p                        1/1     Running     0               15d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-8fhj7                        1/1     Running     0               15d
+kube-system                    kube-apiserver-dapdtnzwcxx0001-8n6dw-nkfnf                        1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-4ch2p               1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-8fhj7               1/1     Running     0               15d
+kube-system                    kube-controller-manager-dapdtnzwcxx0001-8n6dw-nkfnf               1/1     Running     0               15d
+kube-system                    kube-proxy-2qb7k                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-2vshw                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-b5896                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-f7k5s                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-h5xp8                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-h7r9v                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-hdgpx                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-qdvn6                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-sw7xv                                                  1/1     Running     0               15d
+kube-system                    kube-proxy-xll6x                                                  1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-4ch2p                        1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-8fhj7                        1/1     Running     0               15d
+kube-system                    kube-scheduler-dapdtnzwcxx0001-8n6dw-nkfnf                        1/1     Running     0               15d
+kube-system                    kubestate-metrics-5b9fd5864c-74xbx                                1/1     Running     0               15d
+kube-system                    metrics-server-745cc569b8-r8frk                                   1/1     Running     0               15d
+kube-system                    prometheus-deployment-758c595d8-4zh7b                             1/1     Running     0               15d
+kube-system                    snapshot-controller-564949bd49-68sqf                              1/1     Running     0               15d
+monitoring-np                  cadvisor-4xlzt                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-5vds8                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-8qc8d                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-b625s                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-jwqg8                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-k8c2h                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-kjmlm                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-kjsn5                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-rm2kb                                                    1/1     Running     0               15d
+monitoring-np                  cadvisor-x7dvn                                                    1/1     Running     0               15d
+monitoring-np                  node-exporter-2qnhf                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-4xsdf                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-9qx7k                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-9vdpk                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-bhvl5                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-c6rqt                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-fq2c6                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-g7hlv                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-p84wr                                               1/1     Running     0               15d
+monitoring-np                  node-exporter-vjs6k                                               1/1     Running     0               15d
+monitoring-np                  prometheus-deployment-cadvisor-57b8b67c54-pvkkm                   1/1     Running     0               15d
+nginx-image-store              nginx-deployment-77bcddf7df-nmdbq                                 1/1     Running     0               15d
+nginxplus                      nginx-plus-8bbbb5c44-lw6dg                                        1/1     Running     0               15d
+nginxplus                      nginx-plus-8bbbb5c44-n9v8v                                        1/1     Running     0               15d
+prometheus                     prometheus-deployment-67c74d45ff-2rb4t                            0/1     Completed   0               6d20h
+prometheus                     prometheus-deployment-67c74d45ff-4kj42                            0/1     Completed   0               3d22h
+prometheus                     prometheus-deployment-67c74d45ff-n7rf7                            0/1     Completed   0               9d
+prometheus                     prometheus-deployment-67c74d45ff-nxfps                            1/1     Running     0               20h
+protecttai                     appbind-portal-fe-dc-6658c694db-kbpnf                             1/1     Running     0               15d
+protecttai                     appprotectt-portal-fe-dc-67cd9b46df-g7b8p                         1/1     Running     0               15d
+secretgen-controller           secretgen-controller-75d486fd6f-kgv2c                             1/1     Running     0               15d
+tanzu-system-ingress           contour-6f95875758-8c2r7                                          1/1     Running     0               15d
+tanzu-system-ingress           contour-6f95875758-lvxhs                                          1/1     Running     0               15d
+tanzu-system-ingress           envoy-2kxlw                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-kwhhq                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-m7psc                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-r9ms7                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-xdtmk                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-zgz87                                                       2/2     Running     0               15d
+tanzu-system-ingress           envoy-zv92t                                                       2/2     Running     0               15d
+tkg-system                     kapp-controller-5c44748b4f-gztbn                                  2/2     Running     1 (15d ago)     15d
+velero                         app-default-kopia-x2hfw-maintain-job-1754540017622-pcmch          0/1     Completed   0               3h
+velero                         app-default-kopia-x2hfw-maintain-job-1754543617221-mtt4g          0/1     Completed   0               120m
+velero                         app-default-kopia-x2hfw-maintain-job-1754547517321-ztms4          0/1     Completed   0               55m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754542717421-8f68b    0/1     Completed   0               135m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754546616954-6nhzq    0/1     Completed   0               70m
+velero                         ct-system-default-kopia-jlklq-maintain-job-1754550217344-cqbzj    0/1     Completed   0               10m
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754543013023-pgvz2   0/1     Completed   0               130m
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754546621720-z2g8b   0/1     Completed   0               70m
+velero                         digital-ns-default-kopia-hkxsv-maintain-job-1754550513041-4f6v9   0/1     Completed   0               5m13s
+velero                         harness-default-kopia-cpsjx-maintain-job-1754540913018-qtt8k      0/1     Completed   0               165m
+velero                         harness-default-kopia-cpsjx-maintain-job-1754544513027-9lvtk      0/1     Completed   0               105m
+velero                         harness-default-kopia-cpsjx-maintain-job-1754548113036-2lxtz      0/1     Completed   0               45m
+velero                         istio-system-default-kopia-5247q-maintain-job-1754541213014drns   0/1     Completed   0               160m
+velero                         istio-system-default-kopia-5247q-maintain-job-1754544813029df2l   0/1     Completed   0               100m
+velero                         istio-system-default-kopia-5247q-maintain-job-175454841715lbvvd   0/1     Completed   0               40m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754541813020-qh2md      0/1     Completed   0               150m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754545413029-w8kq5      0/1     Completed   0               90m
+velero                         kong-cp-default-kopia-cql2j-maintain-job-1754549013038-qdnxr      0/1     Completed   0               30m
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-1754540018vstl   0/1     Completed   0               3h
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-175454361x5srf   0/1     Completed   0               120m
+velero                         kong-dev-portal-default-kopia-v2p5k-maintain-job-175454721khwbb   0/1     Completed   0               60m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754542117635-bmchz      0/1     Completed   0               145m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754546013031-cb6w9      0/1     Completed   0               80m
+velero                         kong-dp-default-kopia-qbq5w-maintain-job-1754549613039-nmdfd      0/1     Completed   0               20m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754540613017-z46fg   0/1     Completed   0               170m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754544213026-5thbl   0/1     Completed   0               110m
+velero                         kong-eg-cp-default-kopia-6dbs4-maintain-job-1754547813035-nzzb2   0/1     Completed   0               50m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754542113020-7h2gk   0/1     Completed   0               145m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754545713030-qzt29   0/1     Completed   0               85m
+velero                         kong-eg-dp-default-kopia-rxhrh-maintain-job-1754549313038-tm6cf   0/1     Completed   0               25m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-1754540313017znddw   0/1     Completed   0               175m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-175454391302544g67   0/1     Completed   0               115m
+velero                         kube-system-default-kopia-h9xbk-maintain-job-1754547513034xp5ls   0/1     Completed   0               55m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-175454272172nztc   0/1     Completed   0               135m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-175454661308nz4x   0/1     Completed   0               70m
+velero                         monitoring-np-default-kopia-2gb4n-maintain-job-1754550213056492   0/1     Completed   0               10m
+velero                         node-agent-54zcj                                                  1/1     Running     0               6d21h
+velero                         node-agent-94rcl                                                  1/1     Running     0               6d21h
+velero                         node-agent-d94hj                                                  1/1     Running     0               6d21h
+velero                         node-agent-gf85x                                                  1/1     Running     0               6d21h
+velero                         node-agent-j7xhb                                                  1/1     Running     0               6d21h
+velero                         node-agent-ncgzv                                                  1/1     Running     0               6d21h
+velero                         node-agent-nj6sz                                                  1/1     Running     0               6d21h
+velero                         node-agent-q6pwp                                                  1/1     Running     0               6d21h
+velero                         node-agent-qs7tn                                                  1/1     Running     0               6d21h
+velero                         node-agent-r2hw8                                                  1/1     Running     0               6d21h
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754542713022-qf6vk   0/1     Completed   0               135m
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754546313031-zvnh6   0/1     Completed   0               75m
+velero                         prometheus-default-kopia-dkmgp-maintain-job-1754549913040-kzx7w   0/1     Completed   0               15m
+velero                         repo-maintain-job-1754540617336-htvcb                             0/1     Completed   0               170m
+velero                         repo-maintain-job-1754541513019-4jlg5                             0/1     Completed   0               155m
+velero                         repo-maintain-job-1754543313024-wpcj6                             0/1     Completed   0               125m
+velero                         repo-maintain-job-1754544517621-jxctm                             0/1     Completed   0               105m
+velero                         repo-maintain-job-1754545113028-5kqph                             0/1     Completed   0               95m
+velero                         repo-maintain-job-1754546913033-nvgdw                             0/1     Completed   0               65m
+velero                         repo-maintain-job-1754548413037-hl2n6                             0/1     Completed   0               40m
+velero                         repo-maintain-job-1754548713037-plhkg                             0/1     Completed   0               35m
+velero                         repo-maintain-job-1754550517220-6vvdf                             0/1     Completed   0               5m9s
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754542413021-g5jct   0/1     Completed   0               140m
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754546017221-g7bjt   0/1     Completed   0               80m
+velero                         tkg-system-default-kopia-r9lvb-maintain-job-1754549617343-jkb67   0/1     Completed   0               20m
+velero                         velero-66bb9ccc8-6qhq5                                            1/1     Running     0               6d21h
+velero                         velero-default-kopia-tgrvz-maintain-job-1754543317122-xjx9t       0/1     Completed   0               125m
+velero                         velero-default-kopia-tgrvz-maintain-job-1754547213034-gkpcg       0/1     Completed   0               60m
+velero                         velero-default-kopia-tgrvz-maintain-job-1754550813041-zh7ps       0/1     Completed   0               13s
+vmware-system-antrea           antrea-pre-upgrade-job-fscnd                                      0/1     Completed   0               15d
+vmware-system-auth             guest-cluster-auth-svc-7dmnb                                      1/1     Running     0               15d
+vmware-system-auth             guest-cluster-auth-svc-b8kjn                                      1/1     Running     0               15d
+vmware-system-auth             guest-cluster-auth-svc-zpthk                                      1/1     Running     0               15d
+vmware-system-cloud-provider   guest-cluster-cloud-provider-58f644469d-rcbjg                     1/1     Running     0               15d
+vmware-system-csi              vsphere-csi-controller-79f54c46b7-cvrqk                           7/7     Running     0               15d
+vmware-system-csi              vsphere-csi-node-88962                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-k6k7v                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-mw7r4                                            3/3     Running     1 (15d ago)     15d
+vmware-system-csi              vsphere-csi-node-nchwj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-nwtsx                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-p8mgj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-qbvxh                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-s7csj                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-tmrvp                                            3/3     Running     0               15d
+vmware-system-csi              vsphere-csi-node-x2f47                                            3/3     Running     0               15d
+
+
+===================== Failed or Pending Pods =====================
+No resources found
+No failed or pending pods.
+
+
+===================== NotReady Nodes =====================
+All nodes are Ready.
+
+
+===================== Services in All Namespaces =====================
+NAMESPACE              NAME                                        TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)                                          AGE
+app                    application-cpu                             ClusterIP      198.62.164.125   <none>           80/TCP                                           117d
+cert-manager           cert-manager                                ClusterIP      198.59.56.174    <none>           9402/TCP                                         98d
+cert-manager           cert-manager-webhook                        ClusterIP      198.57.165.116   <none>           443/TCP                                          98d
+ct-system              admission-controller                        ClusterIP      198.58.121.85    <none>           443/TCP                                          20d
+ct-system              collector                                   ClusterIP      198.60.32.200    <none>           9898/TCP,9999/TCP                                20d
+ct-system              policy                                      ClusterIP      198.59.56.84     <none>           9898/TCP,9999/TCP                                20d
+default                kubernetes                                  ClusterIP      198.48.0.1       <none>           443/TCP                                          250d
+default                supervisor                                  ClusterIP      None             <none>           6443/TCP                                         250d
+digital-ns             admin-portal-ui                             ClusterIP      198.48.184.72    <none>           9031/TCP                                         30d
+digital-ns             nginx-service                               LoadBalancer   198.48.158.200   172.16.137.141   8090:32475/TCP                                   226d
+harness                access-control                              ClusterIP      198.62.201.15    <none>           9006/TCP                                         35d
+harness                change-data-capture                         ClusterIP      198.58.197.251   <none>           8190/TCP                                         35d
+harness                chaos-k8s-ifs-service                       ClusterIP      198.56.105.244   <none>           6000/TCP                                         34d
+harness                chaos-linux-ifc-service                     ClusterIP      198.55.67.141    <none>           8091/TCP                                         34d
+harness                chaos-linux-ifs-service                     ClusterIP      198.56.128.38    <none>           4000/TCP                                         34d
+harness                chaos-machine-ifc-service                   ClusterIP      198.54.64.75     <none>           5000/TCP                                         34d
+harness                chaos-machine-ifs-service                   ClusterIP      198.59.36.45     <none>           4000/TCP                                         34d
+harness                chaos-manager-service                       ClusterIP      198.55.80.133    <none>           8080/TCP                                         34d
+harness                chaos-web-service                           ClusterIP      198.58.47.34     <none>           8184/TCP                                         34d
+harness                default-backend                             ClusterIP      198.52.173.66    <none>           80/TCP                                           35d
+harness                delegate-proxy                              ClusterIP      198.49.132.238   <none>           80/TCP                                           35d
+harness                gateway                                     ClusterIP      198.55.67.206    <none>           80/TCP                                           35d
+harness                harness-ingress-controller                  LoadBalancer   198.62.127.151   172.16.137.150   10254:31309/TCP,80:30725/TCP,443:32138/TCP       35d
+harness                harness-manager                             ClusterIP      198.57.0.109     <none>           9090/TCP,9879/TCP                                35d
+harness                harness-manager-headless                    ClusterIP      None             <none>           9090/TCP,9879/TCP                                35d
+harness                log-service                                 ClusterIP      198.60.18.91     <none>           8079/TCP                                         35d
+harness                minio                                       ClusterIP      198.50.147.164   <none>           9000/TCP,9001/TCP                                35d
+harness                mongodb-replicaset-chart                    ClusterIP      None             <none>           27017/TCP                                        35d
+harness                mongodb-replicaset-chart-arbiter-headless   ClusterIP      None             <none>           27017/TCP                                        35d
+harness                next-gen-ui                                 ClusterIP      198.53.99.199    <none>           80/TCP                                           35d
+harness                ng-auth-ui                                  ClusterIP      198.54.57.131    <none>           80/TCP                                           35d
+harness                ng-dashboard-aggregator                     ClusterIP      198.53.96.61     <none>           7100/TCP                                         35d
+harness                ng-manager                                  ClusterIP      198.57.157.0     <none>           7090/TCP,9979/TCP,13002/TCP                      35d
+harness                ng-manager-headless                         ClusterIP      None             <none>           9979/TCP,13002/TCP                               35d
+harness                pipeline-service                            ClusterIP      198.58.244.175   <none>           12011/TCP,12001/TCP,14002/TCP,15302/TCP          35d
+harness                pipeline-service-headless                   ClusterIP      None             <none>           12011/TCP,14002/TCP,15302/TCP                    35d
+harness                platform-service                            ClusterIP      198.50.68.187    <none>           9005/TCP                                         35d
+harness                policy-mgmt                                 ClusterIP      198.53.55.153    <none>           3000/TCP,3535/TCP                                35d
+harness                postgres                                    ClusterIP      198.54.173.145   <none>           5432/TCP                                         35d
+harness                postgres-hl                                 ClusterIP      None             <none>           5432/TCP                                         35d
+harness                queue-service                               ClusterIP      198.49.53.20     <none>           9091/TCP                                         35d
+harness                redis-sentinel-harness                      ClusterIP      None             <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-0           ClusterIP      198.63.236.52    <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-1           ClusterIP      198.51.123.208   <none>           6379/TCP,26379/TCP                               35d
+harness                redis-sentinel-harness-announce-2           ClusterIP      198.48.194.82    <none>           6379/TCP,26379/TCP                               35d
+harness                scm-service                                 ClusterIP      198.52.105.170   <none>           8091/TCP                                         35d
+harness                service-discovery-manager                   ClusterIP      198.55.253.140   <none>           8080/TCP                                         33d
+harness                template-service                            ClusterIP      198.60.196.217   <none>           15011/TCP,15002/TCP,16002/TCP                    35d
+harness                timescaledb-backup-minio                    ClusterIP      198.50.233.190   <none>           9000/TCP,9001/TCP                                35d
+harness                timescaledb-single-chart                    ClusterIP      198.57.51.107    <none>           5432/TCP                                         35d
+harness                timescaledb-single-chart-config             ClusterIP      None             <none>           8008/TCP                                         35d
+harness                timescaledb-single-chart-replica            ClusterIP      198.55.89.81     <none>           5432/TCP                                         35d
+istio-system           grafana                                     ClusterIP      198.54.140.153   <none>           3000/TCP                                         246d
+istio-system           istio-egressgateway                         ClusterIP      198.62.40.155    <none>           80/TCP,443/TCP                                   246d
+istio-system           istio-ingressgateway                        LoadBalancer   198.56.74.216    172.16.137.137   15021:32731/TCP,80:31557/TCP,443:30962/TCP       246d
+istio-system           istiod                                      ClusterIP      198.59.202.125   <none>           15010/TCP,15012/TCP,443/TCP,15014/TCP            246d
+istio-system           jaeger-collector                            ClusterIP      198.62.6.217     <none>           14268/TCP,14250/TCP,9411/TCP,4317/TCP,4318/TCP   246d
+istio-system           kiali                                       ClusterIP      198.49.19.67     <none>           20001/TCP,9090/TCP                               246d
+istio-system           prometheus                                  ClusterIP      198.61.3.107     <none>           9090/TCP                                         246d
+istio-system           tracing                                     ClusterIP      198.50.47.242    <none>           80/TCP,16685/TCP                                 246d
+istio-system           zipkin                                      ClusterIP      198.49.188.50    <none>           9411/TCP                                         246d
+kong-cp                kong-cp-kong-admin                          LoadBalancer   198.60.234.166   172.16.137.147   443:31683/TCP                                    41d
+kong-cp                kong-cp-kong-cluster                        ClusterIP      198.55.9.90      <none>           8005/TCP                                         41d
+kong-cp                kong-cp-kong-clustertelemetry               ClusterIP      198.51.180.80    <none>           8006/TCP                                         41d
+kong-cp                kong-cp-kong-manager                        LoadBalancer   198.49.85.87     172.16.137.148   443:32591/TCP                                    41d
+kong-dev-portal        kong-dev-portal-kong-portal                 LoadBalancer   198.53.90.207    172.16.137.146   443:31593/TCP                                    44d
+kong-dev-portal        kong-dev-portal-kong-portalapi              LoadBalancer   198.49.171.45    172.16.137.145   443:32075/TCP                                    44d
+kong-dp                kong-dp-kong-proxy                          LoadBalancer   198.55.13.232    172.16.137.144   80:31319/TCP,443:32724/TCP                       44d
+kong-dp                redis-server                                ClusterIP      198.63.249.222   <none>           6379/TCP                                         44d
+kong-eg-cp             kong-cp-kong-admin                          LoadBalancer   198.49.231.255   172.16.137.143   443:30275/TCP                                    41d
+kong-eg-cp             kong-cp-kong-cluster                        ClusterIP      198.51.236.110   <none>           8005/TCP                                         41d
+kong-eg-cp             kong-cp-kong-clustertelemetry               ClusterIP      198.57.26.133    <none>           8006/TCP                                         41d
+kong-eg-cp             kong-cp-kong-manager                        LoadBalancer   198.54.151.25    172.16.137.140   443:32251/TCP                                    41d
+kong-eg-dp             kong-dp-kong-proxy                          LoadBalancer   198.49.201.136   172.16.137.149   443:30951/TCP                                    41d
+kong-eg-dp             redis-server                                ClusterIP      198.61.0.13      <none>           6379/TCP                                         41d
+kube-system            antrea                                      ClusterIP      198.52.45.74     <none>           443/TCP                                          250d
+kube-system            kube-dns                                    ClusterIP      198.48.0.10      <none>           53/UDP,53/TCP,9153/TCP                           250d
+kube-system            kubestate-metrics                           LoadBalancer   198.56.14.183    172.16.137.139   6060:32137/TCP,6061:31566/TCP                    246d
+kube-system            kubestatemetrics-prometheus-service         LoadBalancer   198.58.25.53     172.16.137.155   7070:32461/TCP                                   16d
+kube-system            metrics-server                              ClusterIP      198.55.244.62    <none>           443/TCP                                          250d
+monitoring-np          cadvisor-daemon                             ClusterIP      198.62.92.86     <none>           7070/TCP                                         103d
+monitoring-np          cadvisor-prometheus-service                 LoadBalancer   198.61.88.181    172.16.137.154   7070:30467/TCP                                   16d
+monitoring-np          node-exporter                               ClusterIP      198.62.13.155    <none>           9100/TCP                                         103d
+nginx-image-store      nginx-image-restore                         ClusterIP      198.53.29.168    <none>           80/TCP,443/TCP                                   30d
+nginxplus              nginx-service                               LoadBalancer   198.52.190.183   172.16.137.151   443:30549/TCP                                    30d
+prometheus             prometheus-service                          LoadBalancer   198.58.112.9     172.16.137.138   7070:30000/TCP                                   103d
+protecttai             appbind-portal-fe-svc-dc                    LoadBalancer   198.49.169.217   172.16.137.153   443:32284/TCP                                    25d
+protecttai             appprotectt-portal-fe-svc-dc                LoadBalancer   198.61.45.80     172.16.137.152   443:31500/TCP                                    25d
+tanzu-system-ingress   contour                                     ClusterIP      198.52.139.68    <none>           8001/TCP                                         208d
+tanzu-system-ingress   envoy                                       LoadBalancer   198.48.197.248   172.16.137.142   80:30732/TCP,443:31232/TCP                       208d
+tkg-system             packaging-api                               ClusterIP      198.51.182.33    <none>           443/TCP,8080/TCP                                 250d
+vmware-system-csi      vsphere-csi-controller                      ClusterIP      198.59.122.250   <none>           2112/TCP,2113/TCP                                250d
+
+
+===================== Persistent Volumes =====================
+NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                          STORAGECLASS      VOLUMEATTRIBUTESCLASS   REASON   AGE
+pvc-0e6c1aff-9d55-41e7-a74d-1af0fa7a4fd1   10Gi       RWO            Delete           Bound    nginx-image-store/nginx-image-pvc-assets       dapdtnzspxx0001   <unset>                          30d
+pvc-0e8f9d76-2474-413d-90b3-a6f65a3358f2   10Gi       RWO            Delete           Bound    kube-system/f5-ipam-pvc                        dapdtnzspxx0001   <unset>                          247d
+pvc-1b87ecb8-5e9d-4851-a2f6-88a2c5d5315d   200Gi      RWO            Delete           Bound    harness/minio                                  dapdtnzspxx0001   <unset>                          35d
+pvc-22a6e321-86b6-4bd5-80ea-f505410ea23c   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-0   dapdtnzspxx0001   <unset>                          35d
+pvc-44e486c4-adbc-496c-b4d8-380d6ff9f60e   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-2     dapdtnzspxx0001   <unset>                          35d
+pvc-5f731261-1601-46a0-968d-ff0bc9c54e6f   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-1   dapdtnzspxx0001   <unset>                          35d
+pvc-72eb378c-f5d5-498c-89be-bda7069e448f   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-0       dapdtnzspxx0001   <unset>                          35d
+pvc-790e10cf-19d0-40ad-a7bb-72403ebd5476   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-2   dapdtnzspxx0001   <unset>                          35d
+pvc-87fab011-78a1-4d6f-bbf2-60a539b887fc   10Gi       RWO            Delete           Bound    nginx-image-store/nginx-pvc                    dapdtnzspxx0001   <unset>                          30d
+pvc-88257ce3-9d40-4de2-b709-768adac293d4   1Gi        RWO            Delete           Bound    kube-system/test-pvc                           dapdtnzspxx0001   <unset>                          225d
+pvc-a229cb62-f3ae-4476-8ef1-17d5d52e6060   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-1       dapdtnzspxx0001   <unset>                          35d
+pvc-a39951a7-cdf1-4c1b-a3a5-b27c3722717c   10Gi       RWO            Delete           Bound    kong-dp/redis-pvc                              dapdtnzspxx0001   <unset>                          44d
+pvc-a873bbbe-3cd6-4472-b156-61c36da56c4d   1Gi        RWO            Delete           Bound    harness/wal-volume-harness-timescaledb-2       dapdtnzspxx0001   <unset>                          35d
+pvc-be528964-52e1-423d-88da-d30892bfffc7   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-2   dapdtnzspxx0001   <unset>                          35d
+pvc-c2e4da9c-63f3-4158-9fc6-78e2a8055423   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-1     dapdtnzspxx0001   <unset>                          35d
+pvc-c51e87e1-c177-4c86-b48c-8a7ade6ea266   200Gi      RWO            Delete           Bound    harness/data-postgres-0                        dapdtnzspxx0001   <unset>                          35d
+pvc-e355e962-2d56-4223-96b4-26f34a99bc0c   200Gi      RWO            Delete           Bound    harness/datadir-mongodb-replicaset-chart-0     dapdtnzspxx0001   <unset>                          35d
+pvc-f187afb4-8455-4ab9-b1ae-4d97f9403c32   10Gi       RWO            Delete           Bound    kong-eg-dp/redis-pvc                           dapdtnzspxx0001   <unset>                          36d
+pvc-f274fcbc-aa87-4296-a98f-0e98b7eb514d   200Gi      RWO            Delete           Bound    harness/timescaledb-backup-minio               dapdtnzspxx0001   <unset>                          35d
+pvc-f95cb20d-630b-48ff-a5ef-fa71c62f6eb9   100Gi      RWO            Delete           Bound    harness/storage-volume-harness-timescaledb-0   dapdtnzspxx0001   <unset>                          35d
+pvc-fbf0f0c4-d4ed-44f5-b442-8feeca1d57d4   10Gi       RWO            Delete           Bound    harness/data-redis-sentinel-harness-server-1   dapdtnzspxx0001   <unset>                          35d
+
+
+===================== Persistent Volume Claims in All Namespaces =====================
+NAMESPACE           NAME                                   STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      VOLUMEATTRIBUTESCLASS   AGE
+harness             data-postgres-0                        Bound    pvc-c51e87e1-c177-4c86-b48c-8a7ade6ea266   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-0   Bound    pvc-22a6e321-86b6-4bd5-80ea-f505410ea23c   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-1   Bound    pvc-fbf0f0c4-d4ed-44f5-b442-8feeca1d57d4   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             data-redis-sentinel-harness-server-2   Bound    pvc-790e10cf-19d0-40ad-a7bb-72403ebd5476   10Gi       RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-0     Bound    pvc-e355e962-2d56-4223-96b4-26f34a99bc0c   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-1     Bound    pvc-c2e4da9c-63f3-4158-9fc6-78e2a8055423   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             datadir-mongodb-replicaset-chart-2     Bound    pvc-44e486c4-adbc-496c-b4d8-380d6ff9f60e   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             minio                                  Bound    pvc-1b87ecb8-5e9d-4851-a2f6-88a2c5d5315d   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-0   Bound    pvc-f95cb20d-630b-48ff-a5ef-fa71c62f6eb9   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-1   Bound    pvc-5f731261-1601-46a0-968d-ff0bc9c54e6f   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             storage-volume-harness-timescaledb-2   Bound    pvc-be528964-52e1-423d-88da-d30892bfffc7   100Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             timescaledb-backup-minio               Bound    pvc-f274fcbc-aa87-4296-a98f-0e98b7eb514d   200Gi      RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-0       Bound    pvc-72eb378c-f5d5-498c-89be-bda7069e448f   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-1       Bound    pvc-a229cb62-f3ae-4476-8ef1-17d5d52e6060   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+harness             wal-volume-harness-timescaledb-2       Bound    pvc-a873bbbe-3cd6-4472-b156-61c36da56c4d   1Gi        RWO            dapdtnzspxx0001   <unset>                 35d
+kong-dp             redis-pvc                              Bound    pvc-a39951a7-cdf1-4c1b-a3a5-b27c3722717c   10Gi       RWO            dapdtnzspxx0001   <unset>                 44d
+kong-eg-dp          redis-pvc                              Bound    pvc-f187afb4-8455-4ab9-b1ae-4d97f9403c32   10Gi       RWO            dapdtnzspxx0001   <unset>                 36d
+kube-system         f5-ipam-pvc                            Bound    pvc-0e8f9d76-2474-413d-90b3-a6f65a3358f2   10Gi       RWO            dapdtnzspxx0001   <unset>                 247d
+kube-system         test-pvc                               Bound    pvc-88257ce3-9d40-4de2-b709-768adac293d4   1Gi        RWO            dapdtnzspxx0001   <unset>                 225d
+nginx-image-store   nginx-image-pvc-assets                 Bound    pvc-0e6c1aff-9d55-41e7-a74d-1af0fa7a4fd1   10Gi       RWO            dapdtnzspxx0001   <unset>                 30d
+nginx-image-store   nginx-pvc                              Bound    pvc-87fab011-78a1-4d6f-bbf2-60a539b887fc   10Gi       RWO            dapdtnzspxx0001   <unset>                 30d
+
+
+===================== Deployments in All Namespaces =====================
+NAMESPACE                      NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+app                            application-cpu                  1/1     1            1           117d
+cert-manager                   cert-manager                     1/1     1            1           98d
+cert-manager                   cert-manager-cainjector          1/1     1            1           98d
+cert-manager                   cert-manager-webhook             1/1     1            1           98d
+ct-system                      admission-controller             1/1     1            1           20d
+ct-system                      collector                        3/3     3            3           20d
+ct-system                      policy                           1/1     1            1           20d
+digital-ns                     admin-portal-ui                  3/3     3            3           30d
+digital-ns                     nginx-test                       1/1     1            1           226d
+harness                        access-control                   2/2     2            2           35d
+harness                        change-data-capture              1/1     1            1           35d
+harness                        chaos-k8s-ifs                    2/2     2            2           34d
+harness                        chaos-linux-ifc                  2/2     2            2           34d
+harness                        chaos-linux-ifs                  2/2     2            2           34d
+harness                        chaos-machine-ifc                2/2     2            2           34d
+harness                        chaos-machine-ifs                2/2     2            2           34d
+harness                        chaos-manager                    2/2     2            2           34d
+harness                        chaos-web                        2/2     2            2           34d
+harness                        default-backend                  1/1     1            1           35d
+harness                        delegate-proxy                   1/1     1            1           35d
+harness                        gateway                          2/2     2            2           35d
+harness                        harness-ingress-controller       1/1     1            1           35d
+harness                        harness-manager                  2/2     2            2           35d
+harness                        log-service                      2/2     2            2           35d
+harness                        minio                            1/1     1            1           35d
+harness                        next-gen-ui                      2/2     2            2           35d
+harness                        ng-auth-ui                       2/2     2            2           35d
+harness                        ng-dashboard-aggregator          2/2     2            2           35d
+harness                        ng-manager                       2/2     2            2           35d
+harness                        pipeline-service                 2/2     2            2           35d
+harness                        platform-service                 2/2     2            2           35d
+harness                        policy-mgmt                      2/2     2            2           35d
+harness                        queue-service                    2/2     2            2           35d
+harness                        scm                              2/2     2            2           35d
+harness                        service-discovery-manager        2/2     2            2           33d
+harness                        template-service                 2/2     2            2           35d
+harness                        timescaledb-backup-minio         1/1     1            1           35d
+istio-system                   grafana                          1/1     1            1           246d
+istio-system                   istio-egressgateway              1/1     1            1           246d
+istio-system                   istio-ingressgateway             1/1     1            1           246d
+istio-system                   istiod                           1/1     1            1           246d
+istio-system                   jaeger                           1/1     1            1           246d
+istio-system                   kiali                            1/1     1            1           246d
+istio-system                   prometheus                       1/1     1            1           246d
+kong-cp                        kong-cp-kong                     0/0     0            0           41d
+kong-dev-portal                kong-dev-portal-kong             0/0     0            0           44d
+kong-dp                        kong-dp-kong                     0/0     0            0           44d
+kong-dp                        redis-server                     1/1     1            1           44d
+kong-eg-cp                     kong-cp-kong                     3/3     3            3           41d
+kong-eg-dp                     kong-dp-kong                     3/3     3            3           41d
+kong-eg-dp                     redis-server                     0/1     0            0           41d
+kube-system                    antrea-controller                1/1     1            1           250d
+kube-system                    cluster-autoscaler               1/1     1            1           82d
+kube-system                    coredns                          2/2     2            2           250d
+kube-system                    f5-ipam-controller               1/1     1            1           247d
+kube-system                    k8s-bigip-ctlr-deployment        1/1     1            1           247d
+kube-system                    kubestate-metrics                1/1     1            1           246d
+kube-system                    metrics-server                   1/1     1            1           250d
+kube-system                    prometheus-deployment            1/1     1            1           16d
+kube-system                    snapshot-controller              1/1     1            1           250d
+monitoring-np                  prometheus-deployment-cadvisor   1/1     1            1           16d
+nginx-image-store              nginx-deployment                 1/1     1            1           30d
+nginxplus                      nginx-plus                       2/2     2            2           30d
+prometheus                     prometheus-deployment            1/1     1            1           103d
+protecttai                     appbind-portal-fe-dc             1/1     1            1           25d
+protecttai                     appprotectt-portal-fe-dc         1/1     1            1           25d
+secretgen-controller           secretgen-controller             1/1     1            1           250d
+tanzu-system-ingress           contour                          2/2     2            2           208d
+tkg-system                     kapp-controller                  1/1     1            1           250d
+velero                         velero                           1/1     1            1           6d21h
+vmware-system-cloud-provider   guest-cluster-cloud-provider     1/1     1            1           250d
+vmware-system-csi              vsphere-csi-controller           1/1     1            1           250d
+
+
+===================== StatefulSets in All Namespaces =====================
+NAMESPACE   NAME                               READY   AGE
+harness     audit-event-streaming              1/1     35d
+harness     harness-timescaledb                3/3     35d
+harness     mongodb-replicaset-chart           3/3     35d
+harness     mongodb-replicaset-chart-arbiter   1/1     35d
+harness     postgres                           1/1     35d
+harness     redis-sentinel-harness-server      3/3     35d
+
+
+===================== DaemonSets in All Namespaces =====================
+NAMESPACE              NAME                     DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+istio-system           istio-cni-node           10        10        10      10           10          kubernetes.io/os=linux   22d
+kube-system            antrea-agent             10        10        10      10           10          kubernetes.io/os=linux   250d
+kube-system            filebeat                 10        10        10      10           10          <none>                   23d
+kube-system            kube-proxy               10        10        10      10           10          kubernetes.io/os=linux   250d
+monitoring-np          cadvisor                 10        10        10      10           10          <none>                   42d
+monitoring-np          node-exporter            10        10        10      10           10          <none>                   103d
+tanzu-system-ingress   envoy                    7         7         7       7            7           <none>                   208d
+velero                 node-agent               10        10        10      10           10          <none>                   6d21h
+vmware-system-auth     guest-cluster-auth-svc   3         3         3       3            3           <none>                   250d
+vmware-system-csi      vsphere-csi-node         10        10        10      10           10          kubernetes.io/os=linux   250d
+
+
+===================== HTTPProxies in All Namespaces =====================
+NAMESPACE           NAME                  FQDN                                   TLS SECRET                 STATUS   STATUS DESCRIPTION
+digital-ns          nginx-service         dapdmzset1contour.bankofbaroda.co.in   contoursecret              valid    Valid HTTPProxy
+kong-dp             kong-proxy            daapi.bwd.bankofbaroda.com             contoursecret-new          valid    Valid HTTPProxy
+kong-dp             protecttai-proxy      daappsec.bwd.bankofbaroda.com          contoursecret-protecttai   valid    Valid HTTPProxy
+kong-eg-dp          kong-proxy            daapi-eg.bankofbaroda.co.in            contoursecret              valid    Valid HTTPProxy
+nginx-image-store   nginx-image-restore   daibprod.bankofbaroda.co.in            nginx-image-secret         valid    Valid HTTPProxy
+
+
+===================== ServiceEntries in All Namespaces =====================
+No resources found
+
+
+===================== App Packages in All Namespaces =====================
+NAMESPACE              NAME                                         DESCRIPTION           SINCE-DEPLOY   AGE
+cert-manager           cert-manager                                 Reconcile succeeded   3m9s           98d
+tanzu-system-ingress   contour                                      Reconcile succeeded   2m4s           208d
+tkg-system             cluster-autoscaler-pkgi                      Reconcile succeeded   3m58s          82d
+vmware-system-tkg      dapdtnzwcxx0001-antrea                       Reconcile succeeded   3m4s           250d
+vmware-system-tkg      dapdtnzwcxx0001-gateway-api                  Reconcile succeeded   8m54s          250d
+vmware-system-tkg      dapdtnzwcxx0001-guest-cluster-auth-service   Reconcile succeeded   45s            250d
+vmware-system-tkg      dapdtnzwcxx0001-metrics-server               Reconcile succeeded   5m46s          250d
+vmware-system-tkg      dapdtnzwcxx0001-pinniped                     Reconcile succeeded   6m55s          250d
+vmware-system-tkg      dapdtnzwcxx0001-secretgen-controller         Reconcile succeeded   8m43s          250d
+vmware-system-tkg      dapdtnzwcxx0001-vsphere-cpi                  Reconcile succeeded   7m14s          250d
+vmware-system-tkg      dapdtnzwcxx0001-vsphere-pv-csi               Reconcile succeeded   4m27s          250d
+=============================================================
+
+Cluster health check completed successfully. Output saved to dapdtnzwcxx0001.2025-0807_12-42-44.txt
