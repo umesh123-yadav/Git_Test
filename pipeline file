@@ -1,0 +1,1146 @@
+https://daci.bankofbaroda.co.in:7443/job/microservice/
+
+====redis cash =================
+
+
+pipeline {
+    agent { label 'Jenkins_master_node' }
+
+    parameters {
+        choice(
+            name: 'TARGET_ENV',
+            choices: ['UAT', 'DEV'],
+            description: 'Select the environment to flush Redis'
+        )
+    }
+
+    environment {
+        UAT_SERVER = "172.16.91.160"
+        DEV_SERVER = "172.16.91.161"
+        REDIS_PORT = "7369"
+        REDIS_CERT = "/etc/redis/ssl/cert/redis.pem"
+        REDIS_KEY = "/etc/redis/ssl/cert/redis.pem"
+        REDIS_CACERT = "/etc/redis/ssl/cert/redis.pem"
+        REDIS_PASSWORD = "Accenture123"
+        SSH_USER = "devops"
+        SSH_PASS = "devops@1234"
+    }
+
+    stages {
+        stage('Flush Redis') {
+            steps {
+                script {
+                    def targetServer = (params.TARGET_ENV == 'UAT') ? UAT_SERVER : DEV_SERVER
+
+                    sh """
+                    sshpass -p '${SSH_PASS}' ssh -o StrictHostKeyChecking=no ${SSH_USER}@${targetServer} <<EOF
+                    sudo redis-cli -h ${targetServer} -p ${REDIS_PORT} \\
+                        --tls --cert ${REDIS_CERT} \\
+                        --key ${REDIS_KEY} \\
+                        --cacert ${REDIS_CACERT} <<REDISCMDS
+AUTH ${REDIS_PASSWORD}
+KEYS *
+FLUSHALL
+REDISCMDS
+EOF
+                    """
+                }
+            }
+        }
+    }
+}
+
+
+
+// pipeline {
+//     agent { label 'Jenkins_master_node' }
+
+//     environment {
+//         UAT_SERVER = "172.16.91.160"
+//         DEV_SERVER = "172.16.91.161"
+//         REDIS_PORT = "7369"
+//         REDIS_CERT = "/etc/redis/ssl/cert/redis.pem"
+//         REDIS_KEY = "/etc/redis/ssl/cert/redis.pem"
+//         REDIS_CACERT = "/etc/redis/ssl/cert/redis.pem"
+//         REDIS_PASSWORD = "Accenture123"
+//         SSH_USER = "devops"
+//     }
+
+//     stages {
+//         stage('Flush Redis - UAT') {
+//             steps {
+//                 script {
+//                     sh """
+//                     sshpass -p 'devops@1234' ssh -o StrictHostKeyChecking=no ${SSH_USER}@${UAT_SERVER} <<EOF
+//                     sudo redis-cli -h ${UAT_SERVER} -p ${REDIS_PORT} \\
+//                         --tls --cert ${REDIS_CERT} \\
+//                         --key ${REDIS_KEY} \\
+//                         --cacert ${REDIS_CACERT} <<REDISCMDS
+// AUTH ${REDIS_PASSWORD}
+// KEYS *
+// FLUSHALL
+// REDISCMDS
+// EOF
+//                     """
+//                 }
+//             }
+//         }
+
+//         stage('Flush Redis - DEV') {
+//             steps {
+//                 script {
+//                     sh """
+//                     sshpass -p 'devops@1234' ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEV_SERVER} <<EOF
+//                     sudo redis-cli -h ${DEV_SERVER} -p ${REDIS_PORT} \\
+//                         --tls --cert ${REDIS_CERT} \\
+//                         --key ${REDIS_KEY} \\
+//                         --cacert ${REDIS_CACERT} <<REDISCMDS
+// AUTH ${REDIS_PASSWORD}
+// KEYS *
+// FLUSHALL
+// REDISCMDS
+// EOF
+//                     """
+//                 }
+//             }
+//         }
+//     }
+// }
+
+===grafa
+
+def failedDownloads = [] // GLOBAL scope
+
+pipeline {
+    agent any
+
+    triggers {
+        cron('45 10 * * *') // Runs every day at 10:45 AM
+    }
+
+    environment {
+        BASE_URL = "http://admin:accenture%40123@DANMGFAWNXX0007.bankofbaroda.co.in:4001/api/dashboards/uid"
+        TIMESTAMP = sh(script: "date +%Y%m%d_%H%M%S", returnStdout: true).trim()
+        GITHUB_BRANCH = "grafana_json_export"
+        GITHUB_REPO_URL = "https://devopsuser:Accenture%40123@danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/daily-ops-logs.git"
+        DASHBOARDS = """
+            c96cb84e-9d7e-4a2a-b12c-c34fe05aaf13 arcot_dashboard.json
+            edfb8987-6c26-4007-b97c-df5a5213407b consolidate_dashboard.json
+            a96c1f12-5a57-4d62-9da1-849ec9837ece database_consolidate_alert.json
+            bfdf85f0-8f60-4b40-9bb4-70a9dbef0400 elasticsearch_logs.json
+            b12169b5-ff9b-4a3c-bcc0-84a05480e9ec jaeger.json
+            f1c00785-c500-42f6-af13-939159af7002 jenkins.json
+            e769a34f-d01e-41a0-a759-c91cb849d97c kafka.json
+            b525e033-31ad-4b49-b285-0a8600ca7275 kong.json
+            a22c511b-d32c-4548-8878-237216407d17 kubernetes.json
+            TgmJnqnnks minio.json
+            f8ab7bc1-171c-42f1-97ee-ecf55cdf8c95 mongodb.json
+            SsEeTs97k opstree_mongodb_dashboard.json
+            bf77da55-58ce-4657-bea9-53b2bff2fb23 oracledb.json
+            d4ba5bc2-f56b-4099-9490-ce72c031b433 pods_dashboard.json
+            caf86a50-afb6-44f1-8ede-577ee14b225f postgresql.json
+            ff2559fe-b417-451c-994c-d3c1dd0c2c65 redis.json
+            cajLam1Zk tomcat.json
+            af1c8598-ac23-4ada-96eb-965bf57c8b97 vm.json
+        """
+    }
+
+    stages {
+        stage('Fetch Dashboards') {
+            steps {
+                script {
+                    DASHBOARDS.split('\n').each { line ->
+                        def parts = line.trim().split(' ')
+                        if (parts.length == 2) {
+                            def uid = parts[0]
+                            def fileName = parts[1]
+                            def folderName = fileName.replace('.json', '')
+                            def timestampedFileName = fileName.replace('.json', "_${TIMESTAMP}.json")
+                            def url = "${BASE_URL}/${uid}"
+
+                            sh "mkdir -p dashboards/${folderName}"
+
+                            echo "Fetching ${fileName} from ${url} at ${TIMESTAMP}"
+
+                            def status = sh(
+                                script: "curl -s -o dashboards/${folderName}/${timestampedFileName} ${url}",
+                                returnStatus: true
+                            )
+
+                            if (status == 0) {
+                                echo "✅ Successfully downloaded ${timestampedFileName}"
+                            } else {
+                                echo "❌ Failed to download ${timestampedFileName}"
+                                failedDownloads << fileName
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Clone GitHub Repository') {
+            steps {
+                script {
+                    sh """
+                        echo "Cloning repository..."
+                        rm -rf repo
+                        git clone -b ${GITHUB_BRANCH} ${GITHUB_REPO_URL} repo
+                        rm -rf repo/dashboards/
+                        cp -r dashboards/ repo/dashboards/
+                    """
+                }
+            }
+        }
+
+        stage('Commit and Push Changes') {
+            steps {
+                script {
+                    dir('repo') {
+                        sh """
+                            echo "Staging all changes..."
+                            git add .
+                            echo "Committing updates..."
+                            git commit -m "Grafana dashboard export on ${TIMESTAMP}" || echo "No changes to commit"
+                            echo "Pushing changes..."
+                            git push origin ${GITHUB_BRANCH}
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                if (failedDownloads && !failedDownloads.isEmpty()) {
+                    currentBuild.result = 'FAILURE'
+                    currentBuild.description = "Failures: ${failedDownloads.join(', ')}"
+                    echo "❌ Dashboard export failed for: ${failedDownloads.join(', ')}"
+                } else {
+                    echo "✅ All dashboards exported successfully."
+                }
+            }
+        }
+    }
+}
+
+
+// pipeline {
+//     agent any
+    
+//     triggers {
+//         cron('45 10 * * *') // Runs every day at 10:45 AM
+//     }
+    
+//     environment {
+//         BASE_URL = "http://admin:accenture%40123@DANMGFAWNXX0007.bankofbaroda.co.in:4001/api/dashboards/uid"
+//         TIMESTAMP = sh(script: "date +%Y%m%d_%H%M%S", returnStdout: true).trim()
+//         GITHUB_BRANCH = "grafana_json_export"
+//         GITHUB_REPO_URL = "https://devopsuser:Accenture%40123@danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/daily-ops-logs.git"
+//         DASHBOARDS = """
+//             c96cb84e-9d7e-4a2a-b12c-c34fe05aaf13 arcot_dashboard.json
+//             edfb8987-6c26-4007-b97c-df5a5213407b consolidate_dashboard.json
+//             a96c1f12-5a57-4d62-9da1-849ec9837ece database_consolidate_alert.json
+//             bfdf85f0-8f60-4b40-9bb4-70a9dbef0400 elasticsearch_logs.json
+//             b12169b5-ff9b-4a3c-bcc0-84a05480e9ec jaeger.json
+//             f1c00785-c500-42f6-af13-939159af7002 jenkins.json
+//             e769a34f-d01e-41a0-a759-c91cb849d97c kafka.json
+//             b525e033-31ad-4b49-b285-0a8600ca7275 kong.json
+//             a22c511b-d32c-4548-8878-237216407d17 kubernetes.json
+//             TgmJnqnnks minio.json
+//             f8ab7bc1-171c-42f1-97ee-ecf55cdf8c95 mongodb.json
+//             SsEeTs97k opstree_mongodb_dashboard.json
+//             bf77da55-58ce-4657-bea9-53b2bff2fb23 oracledb.json
+//             d4ba5bc2-f56b-4099-9490-ce72c031b433 pods_dashboard.json
+//             caf86a50-afb6-44f1-8ede-577ee14b225f postgresql.json
+//             ff2559fe-b417-451c-994c-d3c1dd0c2c65 redis.json
+//             cajLam1Zk tomcat.json
+//             af1c8598-ac23-4ada-96eb-965bf57c8b97 vm.json
+//         """
+//     }
+    
+//     stages {
+//         stage('Fetch Dashboards') {
+//             steps {
+//                 script {
+//                     DASHBOARDS.split('\n').each { line ->
+//                         def parts = line.trim().split(' ')
+//                         if (parts.length == 2) {
+//                             def uid = parts[0]
+//                             def fileName = parts[1]
+//                             def folderName = fileName.replace('.json', '')
+//                             def timestampedFileName = fileName.replace('.json', "_${TIMESTAMP}.json")
+//                             def url = "${BASE_URL}/${uid}"
+                            
+//                             sh "mkdir -p dashboards/${folderName}"
+                            
+//                             echo "Fetching ${fileName} from ${url} at ${TIMESTAMP}"
+                            
+//                             def result = sh(script: "curl -s -o dashboards/${folderName}/${timestampedFileName} ${url}", returnStatus: true)
+                            
+//                             if (result == 0) {
+//                                 echo "Successfully downloaded ${timestampedFileName}"
+//                             } else {
+//                                 echo "Failed to download ${timestampedFileName}"
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         stage('Clone GitHub Repository') {
+//             steps {
+//                 script {
+//                     sh """
+//                         echo "Cloning repository..."
+//                         rm -rf repo
+//                         git clone -b ${GITHUB_BRANCH} ${GITHUB_REPO_URL} repo
+//                         rm -rf repo/dashboards/
+//                         cp -r dashboards/ repo/dashboards/
+//                     """
+//                 }
+//             }
+//         }
+//         stage('Commit and Push Changes') {
+//             steps {
+//                 script {
+//                     dir('repo') {
+//                         sh """
+//                             echo "Staging all changes..."
+//                             git add .
+//                             echo "Checking for changes..."
+//                             git commit -m "Update repository with the latest code from S3"
+//                             echo "Pushing changes to remote branch..."
+//                             git push origin ${GITHUB_BRANCH}
+//                         """
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+
+=========kaka
+pipeline {
+    agent {
+      label 'Jenkins_master_node'
+    }
+
+    parameters {
+        choice(name: 'ACTION', choices: ['list', 'create', 'delete', 'describe'], description: 'Kafka Action to perform')
+        
+        string(name: 'TOPIC_NAME', defaultValue: '', description: 'Topic name (for create/delete/describe)')
+        string(name: 'PARTITIONS', defaultValue: '', description: 'Partitions (only for create)')
+        string(name: 'REPLICATION_FACTOR', defaultValue: '', description: 'Replication Factor (only for create)')
+    }
+
+    environment {
+        KAFKA_BIN = "/var/lib/jenkins/kafka/confluent/confluent-7.5.3/bin"
+        BOOTSTRAP_SERVERS = "DADMCFKBZXX0001.bankofbaroda.co.in:9092,DADMCFKBZXX0002.bankofbaroda.co.in:9092,DADMCFKBZXX0003.bankofbaroda.co.in:9092"
+        CONFIG_FILE = "/var/lib/jenkins/kafka/confluent/confluent-7.5.3/bin/ssl.properties"
+    }
+
+    stages {
+        stage('Run Kafka Command') {
+            steps {
+                script {
+                    def cmd = ""
+
+                    switch (params.ACTION) {
+                        case 'list':
+                            cmd = "${env.KAFKA_BIN}/kafka-topics --list --bootstrap-server ${env.BOOTSTRAP_SERVERS} --command-config ${env.CONFIG_FILE}"
+                            break
+                        case 'delete':
+                            if (!params.TOPIC_NAME?.trim()) {
+                                error "TOPIC_NAME is required for delete action"
+                            }
+                            cmd = "${env.KAFKA_BIN}/kafka-topics --delete --bootstrap-server ${env.BOOTSTRAP_SERVERS} --topic ${params.TOPIC_NAME} --command-config ${env.CONFIG_FILE}"
+                            break
+                        case 'create':
+                            if (!params.TOPIC_NAME?.trim() || !params.PARTITIONS?.trim() || !params.REPLICATION_FACTOR?.trim()) {
+                                error "TOPIC_NAME, PARTITIONS, and REPLICATION_FACTOR are required for create action"
+                            }
+                            cmd = "${env.KAFKA_BIN}/kafka-topics --create --bootstrap-server ${env.BOOTSTRAP_SERVERS} --topic ${params.TOPIC_NAME} --partitions ${params.PARTITIONS} --replication-factor ${params.REPLICATION_FACTOR} --command-config ${env.CONFIG_FILE}"
+                            break
+                        case 'describe':
+                            if (!params.TOPIC_NAME?.trim()) {
+                                error "TOPIC_NAME is required for describe action"
+                            }
+                            cmd = "${env.KAFKA_BIN}/kafka-topics --describe --topic ${params.TOPIC_NAME} --bootstrap-server ${env.BOOTSTRAP_SERVERS} --command-config ${env.CONFIG_FILE}"
+                            break
+                        default:
+                            error "Unsupported ACTION: ${params.ACTION}"
+                    }
+
+                    echo "Executing command: ${cmd}"
+                    sh "${cmd}"
+                }
+            }
+        }
+    }
+}
+
+============
+
+
+
+s3_buket file 
+
+
+=======
+
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'REPO_NAME',
+            choices: [
+                '',
+                'digital-account-microservice',
+                'digital-admin-portal-frontend',
+                'digital-administration-microservice',
+                'digital-arcot-wrapper-service',
+                'digital-audit-consumer-microservice',
+                'digital-async-consumer-microservice',
+                'digital-authentication-microservice',
+                'digital-balance-microservice',
+                'digital-batch-checker-service',
+                'digital-batch-manager-service',
+                'digital-batch-workers-service',
+                'digital-beneficiary-management-microservice',
+                'digital-callback-microservice',
+                'digital-card-microservice',
+                'digital-cbs-master-admin-microservice',
+                'digital-certification-microservice',
+                'digital-connect24-wrapper-microservice',
+                'digital-consent-consumer-microservice',
+                'digital-contextual-search-microservice',
+                'digital-crypto-microservice',
+                'digital-database-retry-consumer-microservice',
+                'digital-document-generator-microservice',
+                'digital-document-microservice',
+                'digital-fincore-wrapper-microservice',
+                'digital-fund-transfer-microservice',
+                'digital-integrations-microservice',
+                'digital-invest-microservice',
+                'digital-kyc-microservice',
+                'digital-legacy-wrapper-microservice',
+                'digital-master-microservice',
+                'digital-notification-consumer-microservice',
+                'digital-notification-consumer-admin-microservice',
+                'digital-notification-microservice',
+                'digital-otp-microservice',
+                'digital-payment-microservice',
+                'digital-platform-admin-microservice',
+                'digital-preference-microservice',
+                'digital-product-admin-microservice',
+                'digital-profile-microservice',
+                'digital-registration-microservice',
+                'digital-rules-audit-consumer-microservice',
+                'digital-servicing-microservice',
+                'digital-statement-microservice',
+                'digital-trading-microservice',
+                'digital-transaction-consumer-microservice',
+                'digital-travel-and-rewards-microservice',
+                'digital-user-admin-microservice'
+            ],
+            description: 'Select the repository to update'
+        )
+    }
+
+    environment {
+        BASE_DIR = 'zip_files'
+    }
+
+    stages {
+//         stage('Clean Workspace') {
+//             steps {
+//                 deleteDir()
+//             }
+//         }
+
+        stage('Clone Git Repository') {
+            steps {
+                dir("${env.BASE_DIR}") {
+                    script {
+                        sh "rm -rf ${params.REPO_NAME}"
+                        sh "pwd"
+                        sh "git clone https://devopsuser:Accenture%40123@danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/${params.REPO_NAME}.git"
+                    }
+                }
+            }
+        }
+
+        stage('Unzip Archive & Replace Files') {
+            steps {
+                dir("${env.BASE_DIR}") {
+                    script {
+                        
+                      
+                        def zipFile = "${params.REPO_NAME}.zip"
+                        
+                          // Unzip archive
+                        sh "unzip -o ${zipFile}"
+                        
+                        def devFolder = sh(
+                            script: "ls -d ${params.REPO_NAME}-*/ | head -n 1 | tr -d '/'",
+                            returnStdout: true
+                        ).trim()
+
+                        
+                      
+
+                        // Replace src/ directory
+                        sh """
+                            rm -rf ${params.REPO_NAME}/src
+                            cp -r ${devFolder}/src ${params.REPO_NAME}/
+                        """
+
+                        // Replace package.json
+                        sh """
+                            rm -rf ${params.REPO_NAME}/package.json
+                            cp ${devFolder}/package.json ${params.REPO_NAME}/
+                        """
+                        
+                        sh """
+                            rm -rf ${params.REPO_NAME}/test
+                            cp -r ${devFolder}/test ${params.REPO_NAME}/
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Git Commit and Push') {
+            steps {
+                dir("${env.BASE_DIR}/${params.REPO_NAME}") {
+                    sh """
+                        git add .
+                        git commit -m "Automated: Sync development code"
+                        git push origin main
+                    """
+                }
+            }
+        }
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Repository '${params.REPO_NAME}' successfully updated and pushed."
+        }
+        failure {
+            echo "Failed to update '${params.REPO_NAME}' repository."
+        }
+    }
+}
+
+
+
+// pipeline {
+//     agent any
+
+//     parameters {
+//         choice(
+//             name: 'GITHUB_REPO_URL',
+//             choices: [
+//                 ' ',
+//                 'digital-account-microservice'
+//             ],
+//             description: 'Select the GitHub repository to update.'
+//         )
+//         string(name: 'GITHUB_BRANCH', defaultValue: 'main', description: 'Mention the branch of the GitHub repository to update.')
+//         file(name: 'ZIP_FILE', description: 'Upload the ZIP file containing the new src folder')
+//     }
+
+//     environment {
+//         CLONE_DIR = 'cloned-repo'
+//         TEMP_UNZIP_DIR = 'unzipped'
+//         ZIP_NAME = 'uploaded.zip'
+//         REPO_URL = ''
+//         GITHUB_REPO = ''
+//     }
+
+//     stages {
+// //         stage('Map GitHub URL') {
+// //             steps {
+// //                 script {
+// //                     def repoMap = [
+// //                         'digital-account-microservice' : 'https://devopsuser:Accenture%40123@danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/digital-account-microservice.git'
+// //                     ]
+
+// //                     if (!repoMap.containsKey(params.GITHUB_REPO_NAME)) {
+// //                         error "Invalid or empty GitHub repository selection."
+// //                     }
+
+// //                     env.REPO_URL = repoMap[params.GITHUB_REPO_NAME]
+// //                 }
+// //             }
+// //         }
+
+// //         stage('Clone Selected GitHub Repo') {
+// //             steps {
+// //                 dir("${CLONE_DIR}") {
+// //                     git url: "${env.REPO_URL}", branch: "${params.GITHUB_BRANCH}"
+// //                 }
+// //             }
+// //         }
+//         stage('Set GitHub Repo URL') {
+//             steps {
+//                 script {
+//                     def repoMap = [
+//                         'digital-account-microservice': 'danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/digital-account-microservice.git'
+//                     ]
+//                     GITHUB_REPO_URL = repoMap[GITHUB_REPO_URL]
+//                     echo "Selected GitHub repository URL: ${GITHUB_REPO_URL}"
+//                 }
+//             }
+//         }
+//         stage('Clone GitHub Repository') {
+//             steps {
+//                 script {
+                    
+//                withCredentials([usernamePassword(credentialsId: '97ca0091-bfdc-42ac-9576-fd30e93ecc1a', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+//                     sh """
+//                         echo "Cloning repository..."
+//                         rm -rf ${CLONE_DIR}
+//                         git clone -b ${GITHUB_BRANCH} https://${GIT_USER}:${GIT_PASS}@${GITHUB_REPO_URL} ${CLONE_DIR}
+//                     """
+//                 }
+//              }
+//           }
+//         }       
+
+//         stage('Unzip Uploaded File') {
+//             steps {
+//                 sh """
+//                     echo "Uploaded ZIP path: ${ZIP_FILE}"
+//                     ls -l "${ZIP_FILE}"
+//                     mkdir -p ${TEMP_UNZIP_DIR}
+//                     unzip -q "${ZIP_FILE}" -d ${TEMP_UNZIP_DIR}
+//                 """
+//             }
+//         }
+
+//         stage('Replace src Folder') {
+//             steps {
+//                 script {
+//                     def newSrc = sh(script: "find ${TEMP_UNZIP_DIR} -type d -name src | head -n 1", returnStdout: true).trim()
+
+//                     if (!fileExists(newSrc)) {
+//                         error "No src folder found inside the uploaded zip."
+//                     }
+
+//                     def oldSrc = "${CLONE_DIR}/src"
+
+//                     sh """
+//                         rm -rf ${oldSrc}
+//                         mkdir -p ${oldSrc}
+//                         cp -r ${newSrc}/* ${oldSrc}/
+//                     """
+//                 }
+//             }
+//         }
+
+//         stage('Confirm Update') {
+//             steps {
+//                 sh 'ls -lR ${CLONE_DIR}/src'
+//             }
+//         }
+//     }
+
+//     post {
+//         cleanup {
+//             sh 'rm -rf ${TEMP_UNZIP_DIR} ${ZIP_NAME}'
+//         }
+//     }
+// }
+
+
+===============
+
+
+
+pipeline {
+  agent {
+    label 'Jenkins_master_node'
+  }
+  environment {
+    CRYPTO_BASE_URL = 'https://api-gateway.digital.idb-digitallabs.com/crypto'
+    GENRATE_KEY_URL = '/api/crypto/v1/keys/rsa/generate'
+    SECRET_NAME = 'crypto-key-secret'
+    YAML_UPDATE_SCRIPT = './update_values_yaml.sh'
+//     YAML_PROD_UPDATE_SCRIPT = './update_values_prod_yaml.sh'
+  }
+
+  parameters{
+    choice(name: 'SERVICE', choices: 
+    [
+      '',
+      'account-microservice',
+      'admin-cbs-master-microservice',
+      'admin-document-generator-microservice',
+      'admin-portal-ui',
+      'administration-microservice',
+      'arcot-microservice',
+      'async-consumer-microservice',
+      'audit-consumer-microservice',
+      'authentication-microservice',
+      'balance-microservice',
+      'batch-checker',
+      'batch-manager',
+      'batch-workers',
+      'beneficiary-management-microservice',
+      'callback-microservice',
+      'card-microservice',
+      'certification-microservice',
+      'code-generator',
+      'connect24-microservice',
+      'consent-consumer-microservice',
+      'contextual-search-microservice',
+      'crypto-microservice',
+      'dab-pl-journey-frontend',
+      'database-retry-consumer-microservice',
+      'document-generator-microservice',
+      'document-microservice',
+      'encryption-microservice',
+      'financial-transaction-admin-microservice',
+      'fincore-wrapper-microservice',
+      'fund-transfer-microservice',
+      'gen-authentication-microservice',
+      'genai-trulens-dashboard',
+      'genai-workspace-backend',
+      'genai-workspace-ui',
+      'github-json-reader',
+      'ib-app-ui',
+      'insurance-microservice',
+      'integrations-microservice',
+      'internet-banking-frontend',
+      'invest-microservice',
+      'iso8583-microservice',
+      'kyc-microservice',
+      'legacy-wrapper-microservice',
+      'master-microservice',
+      'mongodb-encryptor',
+      'notification-microservice',
+      'notification-consumer-microservice',
+      'notification-consumer-admin-microservice',
+      'otp-microservice',
+      'payment-microservice',
+      'platform-admin-microservice',
+      'preference-microservice',
+      'product-admin-microservice',
+      'profile-microservice',
+      'registration-microservice',
+      'rule-engine-microservice',
+      'rules-audit-consumer-microservice',
+      'rules-manager-frontend',
+      'servicing-microservice',
+      'soap-virtualization-service',
+      'statement-microservice',
+      'trading-microservice',
+      'travel-and-rewards-microservice',
+      'transaction-consumer-microservice',
+      'tweet-pilot-genai-service',
+      'tweet-pilot-service',
+      'tweet-pilot-ui',
+      'uptime-kuma',
+      'user-admin-microservice',
+      'upi-microservice',
+      'virtualization-service'
+    ],
+    description: 'Service Name to deploy')
+    choice(name: 'ENV', choices: ['DEV', 'UAT', 'UAT/DEV', 'DC'], description: 'Select the environment')  
+    choice(name: 'DEPLOY', choices: ['true', 'false'], description: 'Flag to deploy service')
+    string(name: 'TAG', defaultValue: '', description: 'Image tag')
+    string(name: 'TAG_PREVIOUS', defaultValue: '', description: 'Previous Image tag')
+    choice(name: 'DEPLOYMENT_TYPE', choices: ['Rolling Update', 'Canary', 'Blue Green'], description: 'Select the deployment type')
+    string(name: 'KUBE_NAMESPACE', defaultValue: 'digital-ns', description: 'Namespace to deploy')
+    string(name: 'OTHER_ENV', defaultValue: '', description: 'Other environment parameters for Helm')
+    booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback to previous Helm release?')
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: '*/main']],
+            userRemoteConfigs: scm.userRemoteConfigs
+        ])
+      }
+    }
+    stage('Update YAML Files') {
+      when {
+          expression { return params.ROLLBACK == false }
+      }
+      steps {
+        script {
+          
+          if(params.TAG != '' || params.SERVICE == 'batch-manager' || params.SERVICE == 'batch-workers'){
+                sh "chmod 755 update_values_yaml.sh"
+                sh "${env.YAML_UPDATE_SCRIPT} ${params.SERVICE} ${env.TAG} ${env.TAG_PREVIOUS} \"${params.DEPLOYMENT_TYPE}\""
+          }
+          else{
+               withCredentials([usernamePassword(credentialsId: '97ca0091-bfdc-42ac-9576-fd30e93ecc1a', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                      
+                def tags = sh(script: "git ls-remote --tags --sort=-v:refname https://${GIT_USER}:${GIT_PASS}@danmgitwnxx0001.bankofbaroda.co.in/digital-architecture/digital-${params.SERVICE}.git", returnStdout: true).trim().split('\n').collect { it.split()[1].replaceAll('refs/tags/', '').replaceAll('\\^\\{\\}', '') }.unique()
+                def latestTag = tags[0]
+               latestTag = latestTag.replaceAll("^v", "")
+                sh "chmod 755 update_values_yaml.sh"
+                sh "${env.YAML_UPDATE_SCRIPT} ${params.SERVICE} ${latestTag} ${env.TAG_PREVIOUS} \"${params.DEPLOYMENT_TYPE}\""
+               }
+          
+          }
+            }
+        }
+    }
+
+    
+//     stage('Update HPA'){
+//       when {
+//          expression { params.ENV == 'UAT' } 
+//       }
+//       steps {
+//           sh "chmod 755 update_hpa_yaml.sh"
+//           sh "./update_hpa_yaml.sh ${params.MIN_PODS} ${params.MAX_PODS}"
+//      }
+     
+//   }
+    
+    
+//     stage('Add Routes in Kong'){
+//       when {
+//         expression {
+//             !(params.SERVICE in [
+//                 'user-admin-microservice',
+//                 'product-admin-microservice',
+//                 'platform-admin-microservice',
+//                 'admin-cbs-master-microservice',
+//                 'admin-portal-ui',
+//                 'legacy-wrapper-microservice',
+//                 'batch-manager',
+//                 'batch-workers',
+//                 'batch-checker',
+//             ])
+//         }
+//     }
+//       steps{
+//         script{
+//         build job: 'daily-ops-logs/kong_routes_service_test', parameters: [sting(name: 'SERIVCE_NAME', value: params.SERVICE, string(name: 'KONG_ENV', value: params.ENV]  
+         
+//         }  
+//       }
+//     }
+    
+    stage('DEPLOY to specific Environment') {
+      when {
+          expression { return params.ROLLBACK == false }
+      }
+        steps {
+            script {
+              withCredentials([string(credentialsId: 'VSPHERE_PASSWORD', variable: 'KUBECTL_VSPHERE_PASSWORD')]){
+                  if (params.ENV == 'UAT' || params.ENV == 'UAT/DEV') {
+                      input message: 'Approve to proceed?', submitter: 'acc-aniketchavan,pd-sharanambandekar,pd-rohitjaiswar,pd-shubammali' 
+                      echo "Running UAT-specific stage"
+                      sh '''
+                      kubectl vsphere login --vsphere-username tkgadmin@vsphere.local --server 172.16.90.70 --insecure-skip-tls-verify --tanzu-kubernetes-cluster-namespace danmtnznsxx0001 --tanzu-kubernetes-cluster-name danmtnzwcxx0001
+                      echo $KUBECTL_VSPHERE_PASSWORD
+                      helm upgrade --install ${SERVICE} k8s/microservices-helm-chart -f k8s/microservices-helm-chart/values-uat.yaml -f k8s/common-yamls/bank-uat.yaml -f k8s/yamls/${SERVICE}/values.yaml --set config.namespace=${KUBE_NAMESPACE} ${OTHER_ENV} -n ${KUBE_NAMESPACE}
+                     
+                      '''
+                  }
+
+                  if (params.ENV == 'DEV' || params.ENV == 'UAT/DEV') {
+                      echo "Running DEV-specific stage"
+            sh '''
+                      kubectl vsphere login --vsphere-username tkgadmin@vsphere.local --server 172.16.90.70 --insecure-skip-tls-verify --tanzu-kubernetes-cluster-namespace danmtnznsxx0002 --tanzu-kubernetes-cluster-name danmtnzwcxx0002
+                      echo $KUBECTL_VSPHERE_PASSWORD
+                      helm upgrade --install ${SERVICE} k8s/microservices-helm-chart -f k8s/microservices-helm-chart/values-dev.yaml -f k8s/common-yamls/bank-dev.yaml -f k8s/yamls/${SERVICE}/values.yaml --set config.namespace=${KUBE_NAMESPACE} --set hpa.enabled=false ${OTHER_ENV} -n ${KUBE_NAMESPACE}
+                   
+              '''
+             }
+                 
+                
+        }
+      }
+    }
+  }
+//     stage("Upload Chart to jfrog"){
+//       steps{
+//         when{
+//           expression{
+//               return ['DC', 'DR'].contains(params.ENV)
+//           }
+//         }
+//         script{
+          
+//            withCredentials([usernamePassword(credentialsId: 'jfrog_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+//              if(params.ENV== 'DC'){
+//             sh """
+//                CHART_VERSION=${params.TAG}
+               
+//                helm package k8s/microservices-helm-chart/ --version ${CHART_VERSION} --app-version ${CHART_VERSION} -d release-package
+//                cp k8s/microservices-helm-chart/values-prod.yaml release-package/
+//                cp k8s/common-yamls/bank-prod.yaml release-package/
+//                cp k8s/yamls/${SERVICE}/values-prod.yaml release-package/${SERVICE}.yaml
+               
+//                for file in release-package/*; do
+//                FILENAME=$(basename "$file")
+//                curl -u ${USERNAME}:${PASSWORD} -T "$file" \
+//                "https://daregistry.bankofbaroda.co.in:9443/artifactory/digital-microservices-chart-prod/${SERVICE}/${CHART_VERSION}/$FILENAME"
+//                done
+            
+            
+            
+//             """
+//              }
+//              else if(params.ENV == 'DR'){
+//               sh """
+//                CHART_VERSION=${params.TAG}
+               
+//                helm package k8s/microservices-helm-chart/ --version ${CHART_VERSION} --app-version ${CHART_VERSION} -d release-package
+//                cp k8s/microservices-helm-chart/values-dr.yaml release-package/
+//                cp k8s/common-yamls/bank-dr.yaml release-package/
+//                cp k8s/yamls/${SERVICE}/values-prod.yaml release-package/${SERVICE}.yaml
+               
+//                for file in release-package/*; do
+//                FILENAME=$(basename "$file")
+//                curl -u ${USERNAME}:${PASSWORD} -T "$file" \
+//                "https://daregistry.bankofbaroda.co.in:9443/artifactory/digital-microservices-chart-DR/${SERVICE}/${CHART_VERSION}/$FILENAME"
+//                done
+            
+            
+            
+//            """
+//              }
+//            }
+//         }
+//       }
+//     }   
+    
+  
+  
+//     stage('Rollback to N-1 Version') {
+//       steps {
+//         withCredentials([usernamePassword(credentialsId: 'jfrog_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+//           sh '''
+//             set -e
+
+//             SERVICE=${SERVICE}
+//             CHART_VERSION=${params.TAG}
+//             NAMESPACE=${KUBE_NAMESPACE}
+//             ARTIFACTORY_URL="https://daregistry.bankofbaroda.co.in:9443/artifactory"
+//             REPO="digital-microservices-chart-prod"
+//             TARGET_DIR="rollback"
+
+//             mkdir -p $TARGET_DIR
+
+//             FILES=(
+//               "microservices-helm-chart-${CHART_VERSION}.tgz"
+//               "values-prod.yaml"
+//               "bank-prod.yaml"
+//               "service-specific-values.yaml"
+//             )
+
+//             echo "Downloading release files from Artifactory..."
+//             for file in "${FILES[@]}"; do
+//               echo "Downloading $file..."
+//               curl -sSf -u "$USERNAME:$PASSWORD" \
+//                 -o "$TARGET_DIR/$file" \
+//                 "$ARTIFACTORY_URL/$REPO/$SERVICE/$CHART_VERSION/$file"
+//             done
+
+//             echo "Re-deploying version ${CHART_VERSION} for service ${SERVICE}..."
+//             helm upgrade --install $SERVICE $TARGET_DIR/microservices-helm-chart-${CHART_VERSION}.tgz \
+//               -f $TARGET_DIR/values-prod.yaml \
+//               -f $TARGET_DIR/bank-prod.yaml \
+//               -f $TARGET_DIR/service-specific-values.yaml \
+//               -n $NAMESPACE
+//           '''
+//         }
+//       }
+//     }  
+    
+    
+  stage('Rollback if selected') {
+      when {
+          expression { return params.ROLLBACK == true }
+      }
+        steps {
+            script {
+              withCredentials([string(credentialsId: 'VSPHERE_PASSWORD', variable: 'KUBECTL_VSPHERE_PASSWORD')]){
+                  if (params.ENV == 'UAT' || params.ENV == 'UAT/DEV') {
+                      input message: 'Approve to proceed?', submitter: 'acc-aniketchavan,pd-shubammali,pd-sharanambandekar,pd-rohitjaiswar'
+                      echo "Running UAT-specific stage"
+                      sh '''
+                      kubectl vsphere login --vsphere-username tkgadmin@vsphere.local --server 172.16.90.70 --insecure-skip-tls-verify --tanzu-kubernetes-cluster-namespace danmtnznsxx0001 --tanzu-kubernetes-cluster-name danmtnzwcxx0001
+                      echo $KUBECTL_VSPHERE_PASSWORD
+                      export REVISION=$(helm history ${SERVICE} -n ${KUBE_NAMESPACE} --output json | jq '[.[] | select(.status == "deployed" or .status == "superseded")] | sort_by(.revision) | reverse | .[1].revision')
+                      echo "Using revision: $REVISION"
+                      helm rollback ${SERVICE} $REVISION -n ${KUBE_NAMESPACE}
+                      '''
+                  }
+
+                  if (params.ENV == 'DEV' || params.ENV == 'UAT/DEV') {
+                      echo "Running DEV-specific stage"
+            sh '''
+                      kubectl vsphere login --vsphere-username tkgadmin@vsphere.local --server 172.16.90.70 --insecure-skip-tls-verify --tanzu-kubernetes-cluster-namespace danmtnznsxx0002 --tanzu-kubernetes-cluster-name danmtnzwcxx0002
+                      echo $KUBECTL_VSPHERE_PASSWORD
+                      export REVISION=$(helm history ${SERVICE} -n ${KUBE_NAMESPACE} --output json | jq '[.[] | select(.status == "deployed" or .status == "superseded")] | sort_by(.revision) | reverse | .[1].revision')
+                      echo "Using revision: $REVISION"
+                      helm rollback ${SERVICE} $REVISION -n ${KUBE_NAMESPACE}
+              '''
+             }
+               
+                  
+               
+        }
+      }
+    }
+  }
+}
+     post{
+      always{
+          cleanWs()
+        }
+      }   
+  
+}
+
+//                       helm uninstall ${SERVICE} -n ${KUBE_NAMESPACE} || true
+//                       sleep 5
+
+// pipeline {
+//   agent {
+//     label 'Jenkins_master_node'
+//   }
+//   environment {
+//     CRYPTO_BASE_URL = 'https://api-gateway.digital.idb-digitallabs.com/crypto'
+//     GENRATE_KEY_URL = '/api/crypto/v1/keys/rsa/generate'
+//     SECRET_NAME = 'crypto-key-secret'
+//     KUBECTL_VSPHERE_PASSWORD = 'Tkg@admin1234'
+//     YAML_UPDATE_SCRIPT = './update_values_yaml.sh'
+//   }
+
+//   parameters{
+//     choice(name: 'SERVICE', choices:
+//     [
+//       '',
+//       'account-microservice',
+//       'admin-cbs-master-microservice',
+//       'admin-portal-ui',
+//       'administration-microservice',
+//       'arcot-microservice',
+//       'async-consumer-microservice',
+//       'audit-consumer-microservice',
+//       'authentication-microservice',
+//       'balance-microservice',
+//       'batch-manager',
+//       'batch-workers',
+//       'beneficiary-management-microservice',
+//       'callback-microservice',
+//       'card-microservice',
+//       'certification-microservice',
+//       'code-generator',
+//       'connect24-microservice',
+//       'consent-consumer-microservice',
+//       'contextual-search-microservice',
+//       'crypto-microservice',
+//       'dab-pl-journey-frontend',
+//       'database-retry-consumer-microservice',
+//       'document-generator-microservice',
+//       'document-microservice',
+//       'financial-transaction-admin-microservice',
+//       'fincore-wrapper-microservice',
+//       'fund-transfer-microservice',
+//       'gen-authentication-microservice',
+//       'genai-workspace-backend',
+//       'genai-workspace-ui',
+//       'github-json-reader',
+//       'ib-app-ui',
+//       'insurance-microservice',
+//       'integrations-microservice',
+//       'internet-banking-frontend',
+//       'invest-microservice',
+//       'iso8583-microservice',
+//       'kyc-microservice',
+//       'legacy-wrapper-microservice',
+//       'master-microservice',
+//       'master-microservice-oracle',
+//       'notification-microservice',
+//       'otp-microservice',
+//       'payment-microservice',
+//       'platform-admin-microservice',
+//       'preference-microservice',
+//       'product-admin-microservice',
+//       'profile-microservice',
+//       'registration-microservice',
+//       'rule-engine-microservice',
+//       'rules-audit-consumer-microservice',
+//       'rules-manager-frontend',
+//       'service-virtualization',
+//       'servicing-microservice',
+//       'soap-virtualization-service',
+//       'statement-microservice',
+//       'trading-microservice',
+//       'transaction-consumer-microservice',
+//       'tweet-pilot-genai-service',
+//       'tweet-pilot-service',
+//       'tweet-pilot-ui',
+//       'uptime-kuma',
+//       'user-admin-microservice',
+//       'virtualization-service'
+//     ],
+//     description: 'Service Name to deploy')
+//     choice(name: 'DEPLOY', choices: ['','true', 'false'], description: 'Flag to deploy service')
+//     string(name: 'TAG', defaultValue: '', description: 'Image tag')
+//     string(name: 'TAG_PREVIOUS', defaultValue: '', description: 'Previous Image tag')
+//     choice(name: 'DEPLOYMENT_TYPE', choices: ['', 'Rolling Update', 'Canary', 'Blue Green'], description: 'Select the deployment type')
+//     string(name: 'KUBE_NAMESPACE', defaultValue: 'digital-ns', description: 'Namespace to deploy')
+//     string(name: 'OTHER_ENV', defaultValue: '', description: 'Other environment parameters for Helm')
+  
+//   }
+//   stages {
+//     stage('Checkout') {
+//       steps {
+//         checkout([
+//             $class: 'GitSCM',
+//             branches: [[name: '*/DEV_DEPLOY']],
+//             userRemoteConfigs: scm.userRemoteConfigs
+//         ])
+//       }
+//     }
+//     stage('Update YAML Files') {
+//         steps {
+//             script {
+//                 sh "chmod 755 update_values_yaml.sh"
+//                 sh "${env.YAML_UPDATE_SCRIPT} ${params.SERVICE} ${env.TAG} ${env.TAG_PREVIOUS} \"${params.DEPLOYMENT_TYPE}\""
+//             }
+//         }
+//     }
+//     stage('Service Deployment') {
+//       steps {
+//         script { 
+//           withCredentials([string(credentialsId: 'VSPHERE_PASSWORD', variable: 'KUBECTL_VSPHERE_PASSWORD')]){
+//               sh '''
+//                 kubectl vsphere login --vsphere-username tkgadmin@vsphere.local --server 172.16.90.70 --insecure-skip-tls-verify --tanzu-kubernetes-cluster-namespace danmtnznsxx0002 --tanzu-kubernetes-cluster-name danmtnzwcxx0002
+//                 echo $KUBECTL_VSPHERE_PASSWORD
+//                 helm uninstall ${SERVICE} -n digital-ns
+//                 helm install ${SERVICE} k8s/microservices-helm-chart -f k8s/yamls/${SERVICE}/values.yaml -f k8s/common-yamls/bank-dev.yaml --set config.namespace=${KUBE_NAMESPACE} ${OTHER_ENV} -n ${KUBE_NAMESPACE} 
+//               '''
+//           } // helm upgrade --install ${SERVICE} k8s/microservices-helm-chart -f k8s/yamls/${SERVICE}/values.yaml -f k8s/common-yamls/bank-dev.yaml --set config.namespace=${KUBE_NAMESPACE} ${OTHER_ENV} -n ${KUBE_NAMESPACE} --debug
+//         }
+//       }
+//     }
+//   }
+// }
+
