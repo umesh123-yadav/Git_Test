@@ -1,0 +1,190 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"cluster.x-k8s.io/v1beta1","kind":"Cluster","metadata":{"annotations":{},"name":"danmtnzwcxx0001","namespace":"danmtnznsxx0001"},"spec":{"clusterNetwork":{"pods":{"cidrBlocks":["192.101.2.0/16"]},"serviceDomain":"cluster.local","services":{"cidrBlocks":["198.52.100.0/12"]}},"topology":{"class":"tanzukubernetescluster","controlPlane":{"replicas":3},"variables":[{"name":"vmClass","value":"guaranteed-2xlarge"},{"name":"storageClass","value":"danmtnzspxx0001"},{"name":"defaultStorageClass","value":"danmtnzspxx0001"},{"name":"nodePoolVolumes","value":[{"capacity":{"storage":"100Gi"},"mountPath":"/var/lib/containerd","name":"containerd","storageClass":"danmtnzspxx0001"},{"capacity":{"storage":"100Gi"},"mountPath":"/var/lib/kubelett","name":"kubelet","storageClass":"danmtnzspxx0001"}]}],"version":"v1.26.13---vmware.1-fips.1-tkg.3","workers":{"machineDeployments":[{"class":"node-pool","name":"node-pool-1","replicas":3,"variables":{"overrides":[{"name":"vmClass","value":"danmtnzvcxx0001"}]}}]}}}}
+    run.tanzu.vmware.com/tkr-data-synced: ""
+    run.tanzu.vmware.com/tkr-spec: H4sIAAAAAAAC/5xWz6+jNhC+71+Bcl3Ziw0kgWtPVdVLteqhq1U1mCFxY2zLNry+rfq/V/x4QBKyeV1uGX/z8c34myHh1WKDAYoPURRFF6mrIvoM+lv7S1ui0xjQ/4YKweMAACs7dF4aXUSu1TT0UNo1L+CQCtN86hgoe4bkgyn/QhEWag0NFlHHKD9QxgghUxIjtbSeMhIuJ8oH6Ak1Ogg4pux2c763IJaIR1UrqS9zoJVVEZX8mOZ7BJKKjJMUWEZygYzkvM4EIuY8zwe0Q29aJ3CuZ2KZ3j6E2BARDoffQTboAzS2iHY85imJc8L4Z5YVfF+k6R9jfoUKb9C6Verq7ORAoEUnTeVRGF35FUhBicqPXesf4wk4cS4iaKp9ug6PDbJnE4xex/tLLSIldfv3OrxUmtB4N5+Ei7u/Rx9AV+CquS3907Gbn5Qf7iOUsc3gfOffP6Xs2fngmHeB3sk1uu9/QCmfwaC1CYM9fBH98+8QMy8ancMaHWqBq6skVwPUNcb2VjNuY4LYnPQ2lj+p1gd0v0sXWlC/gjhLjT83cMIVdBqzRpKyhrhEDlCLnKX1fk04TArUKROH/EAyrA8kjVlNAPKYxJnIK3GEY3UlQhgdnFEK3cqr41MqIy5D0W8GX0FqqUHJb+h8EX35OoQa0HDCqpaoqjHqLYqxTUt3phv4+HhRXOYdtbT4af6MlH3rHFrjZTDutYiUEaDOxocii+P405QnzZyBQVTFqu4NjpWF5vMApyLqEppRxv6cWPe3aiy0Hn+UfJfQfDkTxmGl/Q8rZZTFdFbK7qT2be/keq8ZP6RfOX10Ylu2OrSE8zglw/4ivTcvR0/e9SlYUz02dWlM8MGBtSAu2zpAB4dwt+cooyyhyZtHkuHVbBJ0r8DbMzoktiPCy3uyhDIaL37ruZJnXMLKLVX8cMvEHzFdwFqyTOc9W0zTI+XXbA9rPLXoAxHjriHQhjPx6DopcEtmQuOPPV36iK7B4KTwA8e2tv0ibWx/9ojLo3AYTqifVMuy2949rNZKraXFaouGr2j492kEWCilkkGi36JKOF320H3LIeALvBLYskJMj6vcZzKUFGbLl3y/mPyGxAcI7TQx/V8ROX3Lvnz98F8AAAD//wLLS1sdCgAA
+    tkg.tanzu.vmware.com/skip-tls-verify: ""
+    tkg.tanzu.vmware.com/tkg-http-proxy: ""
+    tkg.tanzu.vmware.com/tkg-https-proxy: ""
+    tkg.tanzu.vmware.com/tkg-ip-family: ""
+    tkg.tanzu.vmware.com/tkg-no-proxy: ""
+    tkg.tanzu.vmware.com/tkg-proxy-ca-cert: ""
+    tkg.tanzu.vmware.com/tkg-registry-additional-ca-cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUg5VENDQnQyZ0F3SUJBZ0lRQkh1VzFycTFmY0ZuTUhjUGVKSUV2REFOQmdrcWhraUc5dzBCQVFzRkFEQloKTVFzd0NRWURWUVFHRXdKVlV6RVZNQk1HQTFVRUNoTU1SR2xuYVVObGNuUWdTVzVqTVRNd01RWURWUVFERXlwRQphV2RwUTJWeWRDQkhiRzlpWVd3Z1J6SWdWRXhUSUZKVFFTQlRTRUV5TlRZZ01qQXlNQ0JEUVRFd0hoY05NalF3Ck5qRXlNREF3TURBd1doY05NalV3TnpFek1qTTFPVFU1V2pCc01Rc3dDUVlEVlFRR0V3SkpUakVVTUJJR0ExVUUKQ0JNTFRXRm9ZWEpoYzJoMGNtRXhEekFOQmdOVkJBY1RCazExYldKaGFURVhNQlVHQTFVRUNoTU9RbUZ1YXlCdgpaaUJDWVhKdlpHRXhIVEFiQmdOVkJBTU1GQ291WW1GdWEyOW1ZbUZ5YjJSaExtTnZMbWx1TUlJQ0lqQU5CZ2txCmhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBbm1VTmZ3aWxvTTUzMTRrOWp6d1BvWG1lQ0R3UUZ4U2kKZHR4aEF2N2xEbHRkTDRrRHAyR0RueERaOWhkNjBWOWFvcFRZOFhSYXNySlBhUzBYaThqQWJvRDBHYnkzd0V6agpmb3FQa2JnVlZNRUxIREE3TVR0WGQ5OCtoTXU3WXBvbkZjYUV2SzFVZ1Urd1hkdXJRUVZ1ZmIxQ054UHlzbHVXCllIdWprWFN2UXg5cGlRRjc1WENsSzVZYk41TU9QNWdTOFRMNUp6YUZQNFQzei9pZVR6U3ZVd2FDNzBxUHBRdkgKekFzOWhlbGhRUkVGUUhFNkVNaFV4am50TTRZUnBqMTF6NkhoRlBwSFNpZHc2VXNna1RYZ1NrcWdpT2QzZGU1NwpZRTVOSEZqVEdTRFJ1VExhWnRFb2ZBNUxBYUZVVkVlK1YySXEzbDgvcGNEU3kxaUYrMDI3NTF4bUJqelBzVGF1Ck53djBvOWVZS2hMUElTSVpNWUpGRW4xWmhQVmpweXVIODQ0RW8wR040bHhGSE1naTRZUVM0WUxSNFJZZUZ0Z1cKWGZzM3JOTTdHSG93RmQ2b3dRRUxoYVNIT0tWSU1mc2x2bVdPVFAxYW12RitsRks3dkZPR1JXd2VuOE90K1g5egpZZklIOHBQWlNtTFo1WWNjSGQzUklKOFhraGxycFIzY3hxby83UC82NU9FbHZPTmx5SnNKTWJCQVErODZ4R2NqCnlrMWhkSy9uY2E1aHpwS1YxenJEcGkyQ3NaY3gyVFpJRmczVlZBL0NNVGF6M3daVmVhdmEzemFDYU05NEI0UG8KRkd4WU1Ob3YyejBTZndNbUFTNGJpWG0vTWE1TEdLZGZGT3ZBZk8rY0tWYnI3eVdhUTNVUmF3L3U5N094MFc1Sgo5dVV6N1E0aENtc0NBd0VBQWFPQ0E2UXdnZ09nTUI4R0ExVWRJd1FZTUJhQUZIU0ZnTUJteDk4MzNzKzlLVGVxCkF4Mis3YzBYTUIwR0ExVWREZ1FXQkJSZ0dIc291eXNaTFlPQmV2QktDT3dIYXhaOTNEQXpCZ05WSFJFRUxEQXEKZ2hRcUxtSmhibXR2Wm1KaGNtOWtZUzVqYnk1cGJvSVNZbUZ1YTI5bVltRnliMlJoTG1OdkxtbHVNRDRHQTFVZApJQVEzTURVd013WUdaNEVNQVFJQ01Da3dKd1lJS3dZQkJRVUhBZ0VXRzJoMGRIQTZMeTkzZDNjdVpHbG5hV05sCmNuUXVZMjl0TDBOUVV6QU9CZ05WSFE4QkFmOEVCQU1DQmFBd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUcKQ0NzR0FRVUZCd01DTUlHZkJnTlZIUjhFZ1pjd2daUXdTS0JHb0VTR1FtaDBkSEE2THk5amNtd3pMbVJwWjJsagpaWEowTG1OdmJTOUVhV2RwUTJWeWRFZHNiMkpoYkVjeVZFeFRVbE5CVTBoQk1qVTJNakF5TUVOQk1TMHhMbU55CmJEQklvRWFnUklaQ2FIUjBjRG92TDJOeWJEUXVaR2xuYVdObGNuUXVZMjl0TDBScFoybERaWEowUjJ4dlltRnMKUnpKVVRGTlNVMEZUU0VFeU5UWXlNREl3UTBFeExURXVZM0pzTUlHSEJnZ3JCZ0VGQlFjQkFRUjdNSGt3SkFZSQpLd1lCQlFVSE1BR0dHR2gwZEhBNkx5OXZZM053TG1ScFoybGpaWEowTG1OdmJUQlJCZ2dyQmdFRkJRY3dBb1pGCmFIUjBjRG92TDJOaFkyVnlkSE11WkdsbmFXTmxjblF1WTI5dEwwUnBaMmxEWlhKMFIyeHZZbUZzUnpKVVRGTlMKVTBGVFNFRXlOVFl5TURJd1EwRXhMVEV1WTNKME1Bd0dBMVVkRXdFQi93UUNNQUF3Z2dGK0Jnb3JCZ0VFQWRaNQpBZ1FDQklJQmJnU0NBV29CYUFCMkFCTHhUalM5VTNKTWhBWVp3NDgvZWhQNDU3VmloNGljYlRBRmhPdmxoaVk2CkFBQUJrQXJDeDVBQUFBUURBRWN3UlFJaEFMeVdsNldvb1BlM3hjTkF5VlhINGpsTC9yZmwxSHFNT0hQNXBwdXkKd1Zab0FpQXBScFc1RitQR25pUDJtMEdWNjBVQ0c3SHhDcDBqVmFuaW10TUVmUjc2WFFCMkFIMVpIaExoZUNwNwpIR0ZuZkY3OStOQ0hYQlNnVHBXZXVRTXYyUTZNTG5tNEFBQUJrQXJDeHdjQUFBUURBRWN3UlFJZ0xyc2FYaWNnCmwxYndXYWZpV1hjQmpHclJmeUI0dWloQVliR2VDNHNGa0JjQ0lRRFVvS0ZreHIxbXFzVEVWSmZvT25LTi9kdi8KT0c2bmRKM3JKak1SSzZWUFhBQjJBT2JTTVdOQWQ0ekJFRUVHMTNHNXpzSFNRUGFXaEliN3VvY3lIZjBlTjQ1UQpBQUFCa0FyQ3h4Y0FBQVFEQUVjd1JRSWhBSkFaa3psQ1k4Tlg5UXBWSTNTQUZFZ2RySmhtZlprM1Foa1QxQjM4Ck53NnVBaUFaUXJxR0FndlpiWFM2MnR4eW9qRzUrSFpXZmRiTjZCVnJ0dVBpOWswMmJ6QU5CZ2txaGtpRzl3MEIKQVFzRkFBT0NBUUVBUzgybWhEdCtDOVh1VWl0MXhZU3Njb0dybFRDN1A3RDJ2NzgydnRJeTMxd2xKWWNYT2ExNwptdDBiK3JhRS9xWlBOV1A4K2JuSjRnd2lEdXR2WFZCRkJ4eGZsQUkwYmZmYVZ2Sm1RNGFPUkw5T3VqdjlRMWJoCkJlTG53dkV4a2NKSWdLSWI3ZUovQXhLTzRhNVA2S0pTbVlaUkxIN2JIZFk0VjVTQ3c2OGJCWkVnUEpwZDRWQzcKVzZnRGlWbDZEdG0rZFVnWkcvWGZWSmFoNlVWdktIN2VyRWpBUEJTL1ZSL0hvSjczaXllU2wxU1BtWnhWbVhsdwpGN3FMd1lvZXNQOEhOZFBmZTIxcWFoZDY5OURlLzRGQTcwZlZncjdYTXBFSzR2UkxqUFN6ek0zejNtK2dlT2dSClpTY0Yvei9QSXRoa2hsZHJWakM2endOUTJOQ0VkWVF0WHc9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgo=
+    tkg.tanzu.vmware.com/tkg-registry-additional-skip-tls-verify: ""
+  creationTimestamp: "2024-07-04T05:15:15Z"
+  finalizers:
+  - cluster.cluster.x-k8s.io
+  - tkg.tanzu.vmware.com/addon
+  generation: 34
+  labels:
+    cluster.x-k8s.io/cluster-name: danmtnzwcxx0001
+    run.tanzu.vmware.com/tkr: v1.27.11---vmware.1-fips.1-tkg.2
+    topology.cluster.x-k8s.io/owned: ""
+  name: danmtnzwcxx0001
+  namespace: danmtnznsxx0001
+  resourceVersion: "353830187"
+  uid: 215fe035-b750-4967-a6bb-0e1f2bc33b46
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      - 192.101.2.0/16
+    serviceDomain: cluster.local
+    services:
+      cidrBlocks:
+      - 198.52.100.0/12
+  controlPlaneEndpoint:
+    host: 172.16.90.74
+    port: 6443
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: KubeadmControlPlane
+    name: danmtnzwcxx0001-74dw8
+    namespace: danmtnznsxx0001
+  infrastructureRef:
+    apiVersion: vmware.infrastructure.cluster.x-k8s.io/v1beta1
+    kind: VSphereCluster
+    name: danmtnzwcxx0001-7rc84
+    namespace: danmtnznsxx0001
+  topology:
+    class: tanzukubernetescluster
+    controlPlane:
+      metadata: {}
+      replicas: 3
+    variables:
+    - name: TKR_DATA
+      value:
+        v1.26.13+vmware.1-fips.1:
+          kubernetesSpec:
+            coredns:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: v1.9.3_vmware.18-fips.1
+            etcd:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: v3.5.11_vmware.3-fips.1
+            imageRepository: localhost:5000/vmware.io
+            pause:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: "3.9"
+            version: v1.26.13+vmware.1-fips.1
+          labels:
+            image-type: vmi
+            os-arch: amd64
+            os-name: photon
+            os-type: linux
+            os-version: "3"
+            run.tanzu.vmware.com/os-image: vmi-df3420f070d11a329
+            run.tanzu.vmware.com/tkr: v1.26.13---vmware.1-fips.1-tkg.3
+            vmi-name: vmi-df3420f070d11a329
+          osImageRef:
+            name: vmi-df3420f070d11a329
+        v1.27.11+vmware.1-fips.1:
+          kubernetesSpec:
+            coredns:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: v1.10.1_vmware.16-fips.1
+            etcd:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: v3.5.11_vmware.6-fips.1
+            imageRepository: localhost:5000/vmware.io
+            pause:
+              imageRepository: localhost:5000/vmware.io
+              imageTag: "3.9"
+            version: v1.27.11+vmware.1-fips.1
+          labels:
+            image-type: vmi
+            os-arch: amd64
+            os-name: photon
+            os-type: linux
+            os-version: "3"
+            run.tanzu.vmware.com/os-image: vmi-bfa0be2aafc914f61
+            run.tanzu.vmware.com/tkr: v1.27.11---vmware.1-fips.1-tkg.2
+            vmi-name: vmi-bfa0be2aafc914f61
+          osImageRef:
+            name: vmi-bfa0be2aafc914f61
+    - name: clusterEncryptionConfigYaml
+      value: LS0tCmFwaVZlcnNpb246IGFwaXNlcnZlci5jb25maWcuazhzLmlvL3YxCmtpbmQ6IEVuY3J5cHRpb25Db25maWd1cmF0aW9uCnJlc291cmNlczoKICAtIHJlc291cmNlczoKICAgIC0gc2VjcmV0cwogICAgcHJvdmlkZXJzOgogICAgLSBhZXNjYmM6CiAgICAgICAga2V5czoKICAgICAgICAtIG5hbWU6IGtleTEKICAgICAgICAgIHNlY3JldDogcHZuRW9UUUFJOVFVdUU5bGhacEFyaUlja3prOCtYQS9oYlNMV09FSFVTVT0KICAgIC0gaWRlbnRpdHk6IHt9Cg==
+    - name: controlPlaneCertificateRotation
+      value:
+        activate: false
+        daysBefore: 90
+    - name: defaultStorageClass
+      value: danmtnzspxx0001
+    - name: extensionCert
+      value:
+        contentSecret:
+          key: tls.crt
+          name: danmtnzwcxx0001-extensions-ca
+    - name: nodePoolVolumes
+      value:
+      - capacity:
+          storage: 100Gi
+        mountPath: /var/lib/containerd
+        name: containerd
+        storageClass: danmtnzspxx0001
+      - capacity:
+          storage: 100Gi
+        mountPath: /var/lib/kubelett
+        name: kubelet
+        storageClass: danmtnzspxx0001
+    - name: ntp
+      value: 172.16.67.93
+    - name: podSecurityStandard
+      value: {}
+    - name: storageClass
+      value: danmtnzspxx0001
+    - name: trust
+      value:
+        additionalTrustedCAs:
+        - name: additional-ca-1
+    - name: user
+      value:
+        passwordSecret:
+          key: ssh-passwordkey
+          name: danmtnzwcxx0001-ssh-password-hashed
+        sshAuthorizedKey: |
+          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCdR67rS6zu9S8Ns14fEBSdYYu0hTz9t/Vij/jwDABEB++O4bgsRqmtXdraoechy7NgEDruniJ0rZ0GhgZchG0QoVh4etH4yNkcrB0+wRGrGiziHcfvMTWlFIs6xtnODHuyq32TwIh+4iLpoEkznha7MCMNoYYeUzaGA2wS6YR223cwZUY95wOeexFIchAqXrF9HNkQbRvgmN0LRR2mxchn+/AgIJIABfVZ6F2sLuKUtNxKspAZK/82m8WP6VhyW70NBPBVvEjuedRSv9MCFGjfa0f9EXcV+bQDsm7yxYmWxmp/8DFC7srRQ3bAuOAs08n0LCYZNQ1OA08EaApYHmj19KpYU2W+noWYU24YRk3W5L7SLqZCL8fafuP/X1aHnXCCCCCr4jJqPgTrs/L8nRVl6ReNhdTMoLfEt8xS0fVQgOhN24QeFJpxPELuVDQwQntwuvF7Xsy7NX1JqXzAcQcyyxwMO8QUp+PCnqJHCanRLrK/TQ14y3BFLEVqrwfxA/eI6SIYrNed48gDArHCp3pLbKK8SgQhKi+4s02IpwcqY3Na6gjOyaXexrYv/nfIeImSVSbNUWlan0bGBCUGdTzAMNT9hYPODD5IGIc1M0kBW5e4TbPxS9NyIU5Kl1S7KVpZtm7nMtq6sZ+f9EVO2NtchJ5/6scQDxGDmsmJ1MEIEQ==
+    - name: vmClass
+      value: guaranteed-2xlarge
+    version: v1.27.11+vmware.1-fips.1
+    workers:
+      machineDeployments:
+      - class: node-pool
+        metadata: {}
+        name: node-pool-1
+        replicas: 17
+        variables:
+          overrides:
+          - name: vmClass
+            value: danmtnzvcxx0001
+status:
+  conditions:
+  - lastTransitionTime: "2024-10-07T10:40:37Z"
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2024-07-04T05:16:55Z"
+    status: "True"
+    type: ControlPlaneInitialized
+  - lastTransitionTime: "2024-10-07T10:40:37Z"
+    status: "True"
+    type: ControlPlaneReady
+  - lastTransitionTime: "2024-07-04T05:15:32Z"
+    status: "True"
+    type: InfrastructureReady
+  - lastTransitionTime: "2025-05-28T12:57:41Z"
+    status: "True"
+    type: TopologyReconciled
+  - lastTransitionTime: "2025-04-17T07:14:18Z"
+    message: '[v1.28.8+vmware.1-fips.1-tkg.2]'
+    status: "True"
+    type: UpdatesAvailable
+  controlPlaneReady: true
+  failureDomains:
+    domain-c48:
+      controlPlane: true
+  infrastructureReady: true
+  observedGeneration: 34
+  phase: Provisioned
