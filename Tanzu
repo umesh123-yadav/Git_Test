@@ -7478,6 +7478,1456 @@ NAME                         READY   STATUS    RESTARTS   AGE
 nginx-test-84d5768f9-gz9lh   1/1     Running   0          14m
 [devops@DAPDTNZBTXX1001 tmp]$
 
+==============After Switch Network failure Tanzu issue ============================
+
+
+
+
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# kubectl  get cluster -A
+NAMESPACE         NAME              CLUSTERCLASS             PHASE         AGE    VERSION
+dapmtnznsxx0001   dapmtnzwcxx0001   builtin-generic-v3.1.0   Provisioned   140d   v1.31.7+vmware.1-fips
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# k get machines -A
+NAMESPACE         NAME                                            CLUSTER           NODENAME                                        PROVIDERID                                       PHASE     AGE     VERSION
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   vsphere://4232a58c-92d6-0aa2-67cd-faf12f69cbcd   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   vsphere://423230c0-d779-b6d0-90e2-5111da6a390c   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   vsphere://4232201b-472c-bbac-6f11-5c5c6a018f1e   Running   3h55m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   vsphere://4232c48d-468f-2457-5284-5c04adcffbdd   Running   3h7m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   vsphere://42327fe4-31b3-be13-4a64-b7708447ad70   Running   5h10m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dwhxz   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dwhxz   vsphere://4232d754-ea4c-d0cb-c414-59d077456e15   Running   5h8m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   vsphere://42327c65-3915-6e75-5ada-56644420ef8b   Running   3h55m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   vsphere://42329db4-e69c-d015-b3a7-bcad47e390d3   Running   3h8m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   vsphere://4232f800-2a27-3412-bb63-17db684591ae   Running   3h55m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   vsphere://42328c45-fd56-26d2-7e67-c431f03f281e   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   vsphere://42329711-e5ae-f610-6199-29351635a3af   Running   5h8m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   vsphere://42321b8b-d122-76a6-58a3-3497ed075d38   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   vsphere://4232fe1e-6371-afde-ad33-609e753fc5b8   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   vsphere://42325c40-ca54-2a8c-a31e-32fca1a04039   Running   5h9m    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   vsphere://42320a48-af0b-dce6-a64c-0df645b4e716   Running   5h10m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   vsphere://4232061c-71be-bada-5a61-bd4afff34eeb   Running   3h55m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   vsphere://4232d336-fe37-427f-aceb-2f11738a9623   Running   5h11m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-zttc4   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-zttc4   vsphere://423212df-05fe-d595-ef3a-681295c316ae   Running   3h58m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-6h9r8                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-6h9r8                     vsphere://42323f6b-95cc-6ad4-1892-440caf7ad40d   Running   57d     v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-fgbn4                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-fgbn4                     vsphere://4232c949-dbaf-e4ea-deff-4d5eee52db90   Running   57d     v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-szr5k                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-szr5k                     vsphere://423203df-b16d-6a79-17f5-e0f02760eab5   Running   57d     v1.31.7+vmware.1-fips
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+
+
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# k get vm -A  -o wide
+NAMESPACE         NAME                                            POWER-STATE   CLASS                IMAGE                   PRIMARY-IP4     AGE
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.27   5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.9    5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.33   3h56m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.25   3h8m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.28   5h11m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dwhxz   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.12   5h9m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.16   3h56m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.19   3h9m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.32   3h56m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.15   5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.10   5h9m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.6    5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.31   5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.20   5h10m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.26   5h11m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.13   3h56m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.14   5h12m
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-zttc4   PoweredOn     dapmtnzvcxx0001      vmi-b4e207f48e475ea85   172.16.153.11   3h59m
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-6h9r8                     PoweredOn     guaranteed-2xlarge   vmi-b4e207f48e475ea85   172.16.153.29   57d
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-fgbn4                     PoweredOn     guaranteed-2xlarge   vmi-b4e207f48e475ea85   172.16.153.30   57d
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-szr5k                     PoweredOn     guaranteed-2xlarge   vmi-b4e207f48e475ea85   172.16.153.17   57d
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+
+
+
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# export KUBECONFIG=/etc/kubernetes/admin.conf
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# alias etcdctl='/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/*/fs/usr/local/bin/etcdctl --cert /etc/kubernetes/pki/etcd/peer.crt --key /etc/kubernetes/pki/etcd/peer.key --cacert /etc/kubernetes/pki/etcd/ca.crt'
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# etcdctl --cluster=true endpoint health -w table
++----------------------------+--------+------------+-------+
+|          ENDPOINT          | HEALTH |    TOOK    | ERROR |
++----------------------------+--------+------------+-------+
+| https://172.16.153.29:2379 |   true | 7.009652ms |       |
+| https://172.16.153.30:2379 |   true | 8.068282ms |       |
+| https://172.16.153.17:2379 |   true | 8.494274ms |       |
++----------------------------+--------+------------+-------+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# etcdctl member list -w table
++------------------+---------+-----------------------------+----------------------------+----------------------------+------------+
+|        ID        | STATUS  |            NAME             |         PEER ADDRS         |        CLIENT ADDRS        | IS LEARNER |
++------------------+---------+-----------------------------+----------------------------+----------------------------+------------+
+|  7e3096ef3a005f5 | started | dapmtnzwcxx0001-slcvq-6h9r8 | https://172.16.153.29:2380 | https://172.16.153.29:2379 |      false |
+| 2be581c2d5bd0b56 | started | dapmtnzwcxx0001-slcvq-szr5k | https://172.16.153.17:2380 | https://172.16.153.17:2379 |      false |
+| cb483918ea087c2e | started | dapmtnzwcxx0001-slcvq-fgbn4 | https://172.16.153.30:2380 | https://172.16.153.30:2379 |      false |
++------------------+---------+-----------------------------+----------------------------+----------------------------+------------+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# etcdctl --cluster=true endpoint status -w table
++----------------------------+------------------+----------------------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|          ENDPOINT          |        ID        |       VERSION        | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++----------------------------+------------------+----------------------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://172.16.153.29:2379 |  7e3096ef3a005f5 | 3.5.19+vmware.1-fips |  626 MB |     false |      false |        12 |  104150376 |          104150376 |        |
+| https://172.16.153.17:2379 | 2be581c2d5bd0b56 | 3.5.19+vmware.1-fips |  632 MB |     false |      false |        12 |  104150376 |          104150376 |        |
+| https://172.16.153.30:2379 | cb483918ea087c2e | 3.5.19+vmware.1-fips |  628 MB |      true |      false |        12 |  104150376 |          104150376 |        |
++----------------------------+------------------+----------------------+---------+-----------+------------+-----------+------------+--------------------+--------+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+
+
+
+
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get pods -A|grep -iv run
+NAMESPACE                      NAME                                                              READY   STATUS                            RESTARTS          AGE
+ct-next-gen                    ip-threat-lookup-job-29301860-j46rf                               0/1     CrashLoopBackOff                  5 (37s ago)       3m45s
+ct-system                      collector-5b998b5799-4sws9                                        0/1     Init:0/1                          0                 79m
+ct-system                      collector-5b998b5799-bn88t                                        0/1     Init:0/1                          0                 79m
+ct-system                      collector-5b998b5799-wtpdl                                        0/1     Init:0/1                          0                 79m
+digital-ns                     account-microservice-6cc78f87db-bv8dv                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     account-microservice-6cc78f87db-kvfsr                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     account-microservice-6cc78f87db-pwhcc                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     async-consumer-microservice-74595cb8f5-25pcp                      0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     async-consumer-microservice-74595cb8f5-f22lz                      0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     async-consumer-microservice-74595cb8f5-lt9sp                      0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-j6z5x               0/2     CrashLoopBackOff                  21 (90s ago)      52m
+digital-ns                     callback-microservice-64cb9c7db5-7tc68                            0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     callback-microservice-64cb9c7db5-kbxw2                            0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     callback-microservice-64cb9c7db5-klfsb                            0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     card-microservice-f489f4bcd-l7ppr                                 0/2     CrashLoopBackOff                  6 (16s ago)       7m58s
+digital-ns                     card-microservice-f489f4bcd-llnwk                                 1/2     CrashLoopBackOff                  13 (3m57s ago)    51m
+digital-ns                     certification-microservice-7db67bc696-ml8wn                       0/2     CrashLoopBackOff                  8 (2m15s ago)     15m
+digital-ns                     certification-microservice-7db67bc696-nzm25                       0/2     CrashLoopBackOff                  8 (115s ago)      15m
+digital-ns                     connect24-microservice-58db8d8fbc-cphqk                           1/2     Error                             14 (5m55s ago)    56m
+digital-ns                     connect24-microservice-58db8d8fbc-mlf2t                           1/2     CrashLoopBackOff                  14 (37s ago)      57m
+digital-ns                     contextual-search-microservice-57d97d76b9-cgjsw                   0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     contextual-search-microservice-57d97d76b9-ln2w4                   0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     contextual-search-microservice-57d97d76b9-vhhz8                   0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-6hgf6                     1/2     CrashLoopBackOff                  15 (4s ago)       57m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-bmsfn                     1/2     CrashLoopBackOff                  14 (63s ago)      57m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-r5x8p                     1/2     CrashLoopBackOff                  14 (69s ago)      57m
+digital-ns                     integrations-microservice-556987f5f8-fs7zw                        0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     integrations-microservice-556987f5f8-ntf4s                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     integrations-microservice-556987f5f8-r6bln                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     invest-microservice-cd75fd954-fnk7r                               0/2     CrashLoopBackOff                  14 (2m2s ago)     37m
+digital-ns                     kyc-microservice-5db7bd7f75-hhnl9                                 0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     kyc-microservice-5db7bd7f75-pmvdg                                 0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     kyc-microservice-5db7bd7f75-vxtnk                                 0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-hvpht                      0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-nd9qb                      0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-nqccl                      0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-consumer-microservice-58d594b8f5-5dbsd               0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-consumer-microservice-58d594b8f5-fvtvp               0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-consumer-microservice-58d594b8f5-m2m6c               0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-microservice-5dfc79b4dd-86d67                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-microservice-5dfc79b4dd-rfgb4                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     notification-microservice-5dfc79b4dd-zgwvc                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     payment-microservice-5f975f45db-56p4l                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     payment-microservice-5f975f45db-gzhhq                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     payment-microservice-5f975f45db-q4f9g                             0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     preference-microservice-76dc756745-64gf4                          1/2     CrashLoopBackOff                  14 (5s ago)       57m
+digital-ns                     registration-microservice-584b978886-fwsw8                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     registration-microservice-584b978886-gqcsk                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     registration-microservice-584b978886-hmj6g                        0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     service-discovery-lifecycle-agent-a7cu8-5c6677476-26rxk           1/2     InvalidImageName                  0                 57m
+digital-ns                     service-discovery-lifecycle-agent-fyhto-558f68d99b-dn6f5          1/2     InvalidImageName                  0                 57m
+digital-ns                     service-discovery-lifecycle-agent-jyhv8-8447d55bdd-f4hwr          1/2     InvalidImageName                  0                 57m
+digital-ns                     service-discovery-lifecycle-agent-of2vm-84444c457b-26js8          1/2     InvalidImageName                  0                 57m
+digital-ns                     service-discovery-lifecycle-agent-y8ypx-8576584644-d42dw          1/2     InvalidImageName                  0                 57m
+digital-ns                     servicing-microservice-56c7d98bc5-jgcqk                           0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     servicing-microservice-56c7d98bc5-ncvl6                           0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     servicing-microservice-56c7d98bc5-tdqh8                           0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     trading-microservice-5f555cfd9c-vscsw                             1/2     CrashLoopBackOff                  14 (2m50s ago)    57m
+digital-ns                     transaction-consumer-microservice-d5fb56b-78twz                   1/2     CrashLoopBackOff                  15 (47s ago)      57m
+digital-ns                     transaction-consumer-microservice-d5fb56b-gswmk                   1/2     CrashLoopBackOff                  15 (56s ago)      57m
+digital-ns                     transaction-consumer-microservice-d5fb56b-t5r9g                   1/2     CrashLoopBackOff                  15 (42s ago)      57m
+digital-ns                     travel-and-rewards-microservice-558468c5d-c5z7x                   0/2     Init:CreateContainerConfigError   0                 57m
+digital-ns                     travel-and-rewards-microservice-558468c5d-h2bg4                   0/2     Init:CreateContainerConfigError   0                 56m
+digital-ns                     travel-and-rewards-microservice-558468c5d-j8x97                   0/2     Init:CreateContainerConfigError   0                 57m
+digitaladmin                   arcot-microservice-5b8b86cd99-5cm6v                               0/2     Init:0/2                          0                 78m
+digitaladmin                   arcot-microservice-5b8b86cd99-ccgh4                               0/2     Init:0/2                          0                 78m
+digitaladmin                   arcot-microservice-5b8b86cd99-sgzwp                               0/2     Init:0/2                          0                 78m
+harness-delegate-chaos         ddci-9b14652de76c4f6f80585aadeb3a7d68-846969b9b4-7bdsz            0/1     Pending                           0                 78m
+harness-delegate-chaos         service-discovery-lifecycle-agent-4gt1y-5d7b44766-l5lwh           0/1     InvalidImageName                  0                 78m
+harness-delegate-chaos         service-discovery-lifecycle-agent-j1mdj-68b9d9687d-vbztw          0/1     InvalidImageName                  0                 78m
+harness-delegate-chaos         service-discovery-lifecycle-agent-jimjt-7cf99765bb-rvvqx          0/1     InvalidImageName                  0                 78m
+harness-delegate-chaos         service-discovery-lifecycle-agent-s6nxw-fbb8cc8bb-9d6qs           0/1     InvalidImageName                  0                 78m
+harness-delegate-chaos         service-discovery-lifecycle-agent-sgozi-78658bb658-zvdhx          0/1     InvalidImageName                  0                 78m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301840-pwmz5                   0/1     Completed                         0                 26m
+harness-delegate-ng            service-discovery-lifecycle-agent-a9don-847c84dc6c-tjsvt          0/1     InvalidImageName                  0                 78m
+harness-delegate-ng            service-discovery-lifecycle-agent-an95h-86bd984444-gsvtx          0/1     ImagePullBackOff                  0                 78m
+harness-delegate-ng            service-discovery-lifecycle-agent-yotiw-75cc864966-6zjmm          0/1     ImagePullBackOff                  0                 78m
+hce                            ddci-fe58c013ff27415989a340ab62153981-67c8df75bc-n2zd2            0/1     ImagePullBackOff                  0                 78m
+kube-system                    cluster-autoscaler-6cfc5f4679-9jb6w                               0/1     Pending                           0                 71m
+kube-system                    filebeat-gr58j                                                    0/1     Evicted                           0                 14m
+kube-system                    filebeat-jlnts                                                    0/1     Evicted                           0                 14m
+kube-system                    filebeat-xh48t                                                    0/1     Evicted                           0                 14m
+kube-system                    snapshot-controller-64fbc6cb44-7rgl2                              0/1     Pending                           0                 78m
+monitoring-dc                  cadvisor-58g57                                                    0/1     Evicted                           0                 11m
+monitoring-dc                  cadvisor-k5gcf                                                    0/1     Evicted                           0                 11m
+monitoring-dc                  cadvisor-m9z4n                                                    0/1     Evicted                           0                 11m
+monitoring-dc                  node-exporter-7xzlx                                               0/1     Evicted                           0                 10m
+monitoring-dc                  node-exporter-9z7nr                                               0/1     Evicted                           0                 10m
+monitoring-dc                  node-exporter-m9j29                                               0/1     Evicted                           0                 10m
+tkg-system                     kapp-controller-7f846586b7-gpxkh                                  0/2     Pending                           0                 69m
+tkg-system                     kapp-controller-df6f79f78-265zp                                   0/2     Pending                           0                 71m
+velero                         app-default-kopia-mr6pz-maintain-job-1758111284309-546v6          0/1     Error                             0                 12m
+velero                         app-default-kopia-mr6pz-maintain-job-1758111546326-v4rkv          0/1     Error                             0                 7m43s
+velero                         app-default-kopia-mr6pz-maintain-job-1758111886227-cwwfp          0/1     Error                             0                 2m3s
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758111291336skmmv   0/1     Error                             0                 11m
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-17581115544044jk9l   0/1     Error                             0                 7m35s
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758111893236jp667   0/1     Error                             0                 116s
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758111226109-nqj54    0/1     Error                             0                 13m
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758111608504-pxztd    0/1     Error                             0                 6m41s
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758111833103-hxkfj    0/1     Error                             0                 2m56s
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758111233204-c54x2   0/1     Error                             0                 12m
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758111617528-m6lh5   0/1     Error                             0                 6m32s
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758111841104-g4jwb   0/1     Error                             0                 2m48s
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811124020fw547   0/1     Error                             0                 12m
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811156040lj8rz   0/1     Error                             0                 7m29s
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811184810mf7dv   0/1     Error                             0                 2m41s
+velero                         kube-system-default-kopia-282vg-maintain-job-17581112472108hz7w   0/1     Error                             0                 12m
+velero                         kube-system-default-kopia-282vg-maintain-job-175811156840466pm5   0/1     Error                             0                 7m21s
+velero                         kube-system-default-kopia-282vg-maintain-job-1758111857204ghxlw   0/1     Error                             0                 2m32s
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758111300404-g59zs     0/1     Error                             0                 11m
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758111526110-krs7w     0/1     Error                             0                 8m3s
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758111900304-66qtw     0/1     Error                             0                 109s
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-175811125526mtrw   0/1     Error                             0                 12m
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581115774z96p5   0/1     Error                             0                 7m12s
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581118642dlxlp   0/1     Error                             0                 2m25s
+velero                         node-agent-m9t9s                                                  0/1     Evicted                           0                 10m
+velero                         node-agent-wdxxq                                                  0/1     Evicted                           0                 10m
+velero                         node-agent-x28t4                                                  0/1     Evicted                           0                 10m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758111308403-gczl7   0/1     Error                             0                 11m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758111533034-bvx8v   0/1     Error                             0                 7m56s
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758111907304-5hd7b   0/1     Error                             0                 102s
+velero                         repo-maintain-job-1758111262236-6tkmc                             0/1     Error                             0                 12m
+velero                         repo-maintain-job-1758111316413-q6qwc                             0/1     Error                             0                 11m
+velero                         repo-maintain-job-1758111539308-75kcp                             0/1     Error                             0                 7m50s
+velero                         repo-maintain-job-1758111584504-k28cr                             0/1     Error                             0                 7m5s
+velero                         repo-maintain-job-1758111872204-z9rbn                             0/1     Error                             0                 2m17s
+velero                         repo-maintain-job-1758111915304-bh5ss                             0/1     Error                             0                 94s
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758111268304-8zzpb   0/1     Error                             0                 12m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758111592503-g8s4f   0/1     Error                             0                 6m57s
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758111878202-2kr6n   0/1     Error                             0                 2m11s
+velero                         velero-default-kopia-64q52-maintain-job-1758111276303-qg7fb       0/1     Error                             0                 12m
+velero                         velero-default-kopia-64q52-maintain-job-1758111600503-kwbw6       0/1     Error                             0                 6m49s
+velero                         velero-default-kopia-64q52-maintain-job-1758111826111-4tmpx       0/1     Error                             0                 3m3s
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get pkgi -A
+NAMESPACE              NAME                                         PACKAGE NAME                                  PACKAGE VERSION               DESCRIPTION                                                            AGE
+cert-manager           cert-manager                                 cert-manager.tanzu.vmware.com                 1.16.1+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+tanzu-system-ingress   contour                                      contour.tanzu.vmware.com                      1.28.2+vmware.1-tkg.1         Reconcile failed: Error (see .status.usefulErrorMessage for details)   140d
+tkg-system             cluster-autoscaler-pkgi                      cluster-autoscaler.tanzu.vmware.com           1.31.0+vmware.1-tkg.1         Reconcile failed: Error (see .status.usefulErrorMessage for details)   124d
+vmware-system-tkg      dapmtnzwcxx0001-antrea                       antrea.tanzu.vmware.com                       2.1.0+vmware.3-tkg.1          Reconcile failed: Error (see .status.usefulErrorMessage for details)   140d
+vmware-system-tkg      dapmtnzwcxx0001-gateway-api                  gateway-api.tanzu.vmware.com                  1.0.0+vmware.1-tkg.3-vmware   Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-guest-cluster-auth-service   guest-cluster-auth-service.tanzu.vmware.com   1.4.0+vmware.1-tkg.1          Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-metrics-server               metrics-server.tanzu.vmware.com               0.7.1+vmware.5-tkg.2          Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-pinniped                     pinniped.tanzu.vmware.com                     0.32.0+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-secretgen-controller         secretgen-controller.tanzu.vmware.com         0.18.0+vmware.3-tkg.3         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-vsphere-cpi                  vsphere-cpi.tanzu.vmware.com                  1.31.1+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-vsphere-pv-csi               vsphere-pv-csi.tanzu.vmware.com               3.3.2+vmware.1-tkg.1          Reconcile failed: Error (see .status.usefulErrorMessage for details)   140d
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k describe pkgi contour -n tanzu-system-ingress
+Name:         contour
+Namespace:    tanzu-system-ingress
+Labels:       <none>
+Annotations:  packaging.carvel.dev/package-ClusterRole: contour-tanzu-system-ingress-cluster-role
+              packaging.carvel.dev/package-ClusterRoleBinding: contour-tanzu-system-ingress-cluster-rolebinding
+              packaging.carvel.dev/package-Secret: contour-tanzu-system-ingress-values
+              packaging.carvel.dev/package-ServiceAccount: contour-tanzu-system-ingress-sa
+              tkg.tanzu.vmware.com/tanzu-package-ClusterRole: contour-tanzu-system-ingress-cluster-role
+              tkg.tanzu.vmware.com/tanzu-package-ClusterRoleBinding: contour-tanzu-system-ingress-cluster-rolebinding
+              tkg.tanzu.vmware.com/tanzu-package-Secret: contour-tanzu-system-ingress-values
+              tkg.tanzu.vmware.com/tanzu-package-ServiceAccount: contour-tanzu-system-ingress-sa
+API Version:  packaging.carvel.dev/v1alpha1
+Kind:         PackageInstall
+Metadata:
+  Creation Timestamp:  2025-04-30T08:24:16Z
+  Finalizers:
+    finalizers.packageinstall.packaging.carvel.dev/delete
+  Generation:        2
+  Resource Version:  95212128
+  UID:               10010db7-c0e1-4288-911a-2dd38c11d671
+Spec:
+  Package Ref:
+    Ref Name:  contour.tanzu.vmware.com
+    Version Selection:
+      Constraints:  1.28.2+vmware.1-tkg.1
+      Prereleases:
+  Service Account Name:  contour-tanzu-system-ingress-sa
+  Values:
+    Secret Ref:
+      Name:  contour-tanzu-system-ingress-values
+Status:
+  Conditions:
+    Message:               Error (see .status.usefulErrorMessage for details)
+    Status:                True
+    Type:                  ReconcileFailed
+  Friendly Description:    Reconcile failed: Error (see .status.usefulErrorMessage for details)
+  Last Attempted Version:  1.28.2+vmware.1-tkg.1
+  Observed Generation:     2
+  Useful Error Message:    kapp: Error: Timed out waiting after 5m0s for resources: [daemonset/envoy (apps/v1) namespace: tanzu-system-ingress]
+  Version:                 1.28.2+vmware.1-tkg.1
+Events:                    <none>
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k describe pkgi dapmtnzwcxx0001-vsphere-pv-csi -n vmware-system-tkg
+Name:         dapmtnzwcxx0001-vsphere-pv-csi
+Namespace:    vmware-system-tkg
+Labels:       <none>
+Annotations:  tkg.tanzu.vmware.com/cluster-name: dapmtnzwcxx0001
+              tkg.tanzu.vmware.com/cluster-namespace: dapmtnznsxx0001
+API Version:  packaging.carvel.dev/v1alpha1
+Kind:         PackageInstall
+Metadata:
+  Creation Timestamp:  2025-04-30T07:06:31Z
+  Finalizers:
+    finalizers.packageinstall.packaging.carvel.dev/delete
+  Generation:        6
+  Resource Version:  95212932
+  UID:               d1f10998-5d8a-4cec-8c19-b0b2c022d1db
+Spec:
+  Package Ref:
+    Ref Name:  vsphere-pv-csi.tanzu.vmware.com
+    Version Selection:
+      Constraints:  3.3.2+vmware.1-tkg.1
+      Prereleases:
+  Service Account Name:  tanzu-cluster-bootstrap-sa
+  Sync Period:           10m0s
+  Values:
+    Secret Ref:
+      Name:  dapmtnzwcxx0001-vsphere-pv-csi-data-values
+Status:
+  Conditions:
+    Message:               Error (see .status.usefulErrorMessage for details)
+    Status:                True
+    Type:                  ReconcileFailed
+  Friendly Description:    Reconcile failed: Error (see .status.usefulErrorMessage for details)
+  Last Attempted Version:  3.3.2+vmware.1-tkg.1
+  Observed Generation:     6
+  Useful Error Message:    kapp: Error: Timed out waiting after 30s for resources:
+  - daemonset/vsphere-csi-node (apps/v1) namespace: vmware-system-csi
+  - deployment/snapshot-controller (apps/v1) namespace: kube-system
+  Version:  3.3.2+vmware.1-tkg.1
+Events:     <none>
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k describe pkgi dapmtnzwcxx0001-antrea -n vmware-system-tkg
+Name:         dapmtnzwcxx0001-antrea
+Namespace:    vmware-system-tkg
+Labels:       <none>
+Annotations:  tkg.tanzu.vmware.com/cluster-name: dapmtnzwcxx0001
+              tkg.tanzu.vmware.com/cluster-namespace: dapmtnznsxx0001
+API Version:  packaging.carvel.dev/v1alpha1
+Kind:         PackageInstall
+Metadata:
+  Creation Timestamp:  2025-04-30T07:06:31Z
+  Finalizers:
+    finalizers.packageinstall.packaging.carvel.dev/delete
+  Generation:        5
+  Resource Version:  95212565
+  UID:               27a28d9c-7a12-49e9-a5a1-3e99748e1936
+Spec:
+  Package Ref:
+    Ref Name:  antrea.tanzu.vmware.com
+    Version Selection:
+      Constraints:  2.1.0+vmware.3-tkg.1
+      Prereleases:
+  Service Account Name:  tanzu-cluster-bootstrap-sa
+  Sync Period:           10m0s
+  Values:
+    Secret Ref:
+      Name:  dapmtnzwcxx0001-antrea-data-values
+Status:
+  Conditions:
+    Message:               Error (see .status.usefulErrorMessage for details)
+    Status:                True
+    Type:                  ReconcileFailed
+  Friendly Description:    Reconcile failed: Error (see .status.usefulErrorMessage for details)
+  Last Attempted Version:  2.1.0+vmware.3-tkg.1
+  Observed Generation:     5
+  Useful Error Message:    kapp: Error: Timed out waiting after 30s for resources: [daemonset/antrea-agent (apps/v1) namespace: kube-system]
+  Version:                 2.1.0+vmware.3-tkg.1
+Events:                    <none>
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# kubectl rollout restart deploy kapp-controller -n tkg-system
+deployment.apps/kapp-controller restarted
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get po -n tkg-system
+NAME                               READY   STATUS    RESTARTS   AGE
+kapp-controller-5dd59cd955-4jbsv   0/2     Pending   0          18s
+kapp-controller-7f846586b7-gpxkh   0/2     Pending   0          86m
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k delete po kapp-controller-5dd59cd955-4jbsv kapp-controller-7f846586b7-gpxkh -n tkg-system
+pod "kapp-controller-5dd59cd955-4jbsv" deleted
+pod "kapp-controller-7f846586b7-gpxkh" deleted
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get po -n tkg-system
+NAME                               READY   STATUS    RESTARTS   AGE
+kapp-controller-5dd59cd955-9ws2c   0/2     Pending   0          7s
+kapp-controller-7f846586b7-j48bb   0/2     Pending   0          7s
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get po -n tkg-system
+
+
+
+
+
+
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k describe po kapp-controller-5dd59cd955-9ws2c -n tkg-system
+Name:                 kapp-controller-5dd59cd955-9ws2c
+Namespace:            tkg-system
+Priority:             2000000000
+Priority Class Name:  system-cluster-critical
+Service Account:      kapp-controller-sa
+Node:                 <none>
+Labels:               app=kapp-controller
+                      kapp.k14s.io/app=1745996780036701092
+                      kapp.k14s.io/association=v1.e5a124df9395a8554954064a126ba46d
+                      pod-template-hash=5dd59cd955
+Annotations:          kubectl.kubernetes.io/restartedAt: 2025-09-17T12:44:09Z
+Status:               Pending
+IP:
+IPs:                  <none>
+Controlled By:        ReplicaSet/kapp-controller-5dd59cd955
+Init Containers:
+  init-kapp-controller:
+    Image:      localhost:5000/tkg/packages/core/kapp-controller@sha256:b00d215d9730f6107abce6142922089249d2a0cd21088109694ab67dca2bebf9
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      /bin/sh
+    Args:
+      -c
+      cp /etc/resolv.conf /etc/resolv.conf.bak; sed '1 i nameserver 198.48.0.10' /etc/resolv.conf.bak > /etc/resolv.conf; rm /etc/resolv.conf.bak; cp -R /etc/* /kapp-etc; chmod g+w /kapp-etc/pki/tls/certs/
+    Environment:  <none>
+    Mounts:
+      /kapp-etc from etc (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-2ngng (ro)
+Containers:
+  kapp-controller:
+    Image:           localhost:5000/tkg/packages/core/kapp-controller@sha256:b00d215d9730f6107abce6142922089249d2a0cd21088109694ab67dca2bebf9
+    Ports:           10100/TCP, 8080/TCP
+    Host Ports:      10100/TCP, 8080/TCP
+    SeccompProfile:  RuntimeDefault
+    Args:
+      -packaging-global-namespace=tkg-system
+      -enable-api-priority-and-fairness=True
+      -tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+      -concurrency=4
+      -metrics-bind-address=0
+    Requests:
+      cpu:     120m
+      memory:  100Mi
+    Environment:
+      KAPPCTRL_MEM_TMP_DIR:       /etc/kappctrl-mem-tmp
+      KAPPCTRL_SIDECAREXEC_SOCK:  /etc/kappctrl-mem-tmp/sidecarexec.sock
+      KAPPCTRL_SYSTEM_NAMESPACE:  tkg-system (v1:metadata.namespace)
+      KAPPCTRL_API_PORT:          10100
+    Mounts:
+      /etc/kappctrl-mem-tmp from template-fs (rw)
+      /home/kapp-controller from home (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-2ngng (ro)
+  kapp-controller-sidecarexec:
+    Image:           localhost:5000/tkg/packages/core/kapp-controller@sha256:b00d215d9730f6107abce6142922089249d2a0cd21088109694ab67dca2bebf9
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Args:
+      --sidecarexec
+    Requests:
+      cpu:     120m
+      memory:  100Mi
+    Environment:
+      KAPPCTRL_SIDECAREXEC_SOCK:  /etc/kappctrl-mem-tmp/sidecarexec.sock
+      IMGPKG_ACTIVE_KEYCHAINS:    gke,aks,ecr
+    Mounts:
+      /etc from etc (rw)
+      /etc/kappctrl-mem-tmp from template-fs (rw)
+      /home/kapp-controller from home (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from empty-sa (rw)
+Conditions:
+  Type           Status
+  PodScheduled   False
+Volumes:
+  template-fs:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  home:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  empty-sa:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  <unset>
+  etc:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  kube-api-access-2ngng:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              node-role.kubernetes.io/control-plane=
+                             run.tanzu.vmware.com/tkr=v1.31.7---vmware.1-fips-vkr.2
+Tolerations:                 CriticalAddonsOnly op=Exists
+                             node-role.kubernetes.io/control-plane:NoSchedule
+                             node-role.kubernetes.io/master:NoSchedule
+                             node.cloudprovider.kubernetes.io/uninitialized=true:NoSchedule
+                             node.kubernetes.io/not-ready:NoSchedule
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  43s   default-scheduler  0/21 nodes are available: 18 node(s) didn't match Pod's node affinity/selector, 3 node(s) had untolerated taint {node.kubernetes.io/disk-pressure: }. preemption: 0/21 nodes are available: 21 Preemption is not helpful for scheduling.
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+After reboot control plane and worker node it is status below ---------
+
+
+=====================
+
+root@DAPMVCNVM0001 [ ~ ]# service-control --stop --all && service-control --start --all
+Operation not cancellable. Please wait for it to finish...
+Performing stop operation on service observability...
+Successfully stopped service observability
+Performing stop operation on service vmware-pod...
+Successfully stopped service vmware-pod
+Performing stop operation on service vmware-vdtc...
+Successfully stopped service vmware-vdtc
+Performing stop operation on profile: ALL...
+Successfully stopped service vmware-vmon
+Successfully stopped profile: ALL.
+Performing stop operation on service vmcad...
+Successfully stopped service vmcad
+Performing stop operation on service vmdird...
+Successfully stopped service vmdird
+Performing stop operation on service vmafdd...
+Successfully stopped service vmafdd
+Performing stop operation on service lwsmd...
+Successfully stopped service lwsmd
+Operation not cancellable. Please wait for it to finish...
+Performing start operation on service lwsmd...
+Successfully started service lwsmd
+Performing start operation on service vmafdd...
+Successfully started service vmafdd
+Performing start operation on service vmdird...
+Successfully started service vmdird
+Performing start operation on service vmcad...
+Successfully started service vmcad
+Performing start operation on profile: ALL...
+Successfully started service vmware-vmon
+Successfully started profile: ALL.
+Performing start operation on service observability...
+Successfully started service observability
+Performing start operation on service vmware-vdtc...
+Successfully started service vmware-vdtc
+Performing start operation on service vmware-pod...
+Successfully started service vmware-pod
+root@DAPMVCNVM0001 [ ~ ]#
+
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get po -A | grep kap
+tkg-system                     kapp-controller-df6f79f78-p6bff                                   2/2     Running                  0               42m
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get pkgi -A
+NAMESPACE              NAME                                         PACKAGE NAME                                  PACKAGE VERSION               DESCRIPTION                                                            AGE
+cert-manager           cert-manager                                 cert-manager.tanzu.vmware.com                 1.16.1+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+tanzu-system-ingress   contour                                      contour.tanzu.vmware.com                      1.28.2+vmware.1-tkg.1         Reconcile failed: Error (see .status.usefulErrorMessage for details)   140d
+tkg-system             cluster-autoscaler-pkgi                      cluster-autoscaler.tanzu.vmware.com           1.31.0+vmware.1-tkg.1         Reconcile failed: Error (see .status.usefulErrorMessage for details)   124d
+vmware-system-tkg      dapmtnzwcxx0001-antrea                       antrea.tanzu.vmware.com                       2.1.0+vmware.3-tkg.1          Reconcile failed: Error (see .status.usefulErrorMessage for details)   140d
+vmware-system-tkg      dapmtnzwcxx0001-gateway-api                  gateway-api.tanzu.vmware.com                  1.0.0+vmware.1-tkg.3-vmware   Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-guest-cluster-auth-service   guest-cluster-auth-service.tanzu.vmware.com   1.4.0+vmware.1-tkg.1          Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-metrics-server               metrics-server.tanzu.vmware.com               0.7.1+vmware.5-tkg.2          Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-pinniped                     pinniped.tanzu.vmware.com                     0.32.0+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-secretgen-controller         secretgen-controller.tanzu.vmware.com         0.18.0+vmware.3-tkg.3         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-vsphere-cpi                  vsphere-cpi.tanzu.vmware.com                  1.31.1+vmware.1-tkg.1         Reconcile succeeded                                                    140d
+vmware-system-tkg      dapmtnzwcxx0001-vsphere-pv-csi               vsphere-pv-csi.tanzu.vmware.com               3.3.2+vmware.1-tkg.1          Reconciling                                                            140d
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k describe pkgi dapmtnzwcxx0001-antrea -n vmware-system-tkg
+Name:         dapmtnzwcxx0001-antrea
+Namespace:    vmware-system-tkg
+Labels:       <none>
+Annotations:  tkg.tanzu.vmware.com/cluster-name: dapmtnzwcxx0001
+              tkg.tanzu.vmware.com/cluster-namespace: dapmtnznsxx0001
+API Version:  packaging.carvel.dev/v1alpha1
+Kind:         PackageInstall
+Metadata:
+  Creation Timestamp:  2025-04-30T07:06:31Z
+  Finalizers:
+    finalizers.packageinstall.packaging.carvel.dev/delete
+  Generation:        5
+  Resource Version:  95508814
+  UID:               27a28d9c-7a12-49e9-a5a1-3e99748e1936
+Spec:
+  Package Ref:
+    Ref Name:  antrea.tanzu.vmware.com
+    Version Selection:
+      Constraints:  2.1.0+vmware.3-tkg.1
+      Prereleases:
+  Service Account Name:  tanzu-cluster-bootstrap-sa
+  Sync Period:           10m0s
+  Values:
+    Secret Ref:
+      Name:  dapmtnzwcxx0001-antrea-data-values
+Status:
+  Conditions:
+    Message:               Error (see .status.usefulErrorMessage for details)
+    Status:                True
+    Type:                  ReconcileFailed
+  Friendly Description:    Reconcile failed: Error (see .status.usefulErrorMessage for details)
+  Last Attempted Version:  2.1.0+vmware.3-tkg.1
+  Observed Generation:     5
+  Useful Error Message:    kapp: Error: Timed out waiting after 30s for resources: [daemonset/antrea-agent (apps/v1) namespace: kube-system]
+  Version:                 2.1.0+vmware.3-tkg.1
+Events:                    <none>
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+# k logs kapp-controller-df6f79f78-p6bff -n tkg-system
+
+{"level":"info","ts":"2025-09-17T13:26:14Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:16Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:16Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:18Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:18Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:20Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:20Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:22Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:22Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:24Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:24Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:26Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:26Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:28Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:28Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:30Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:30Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:32Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:32Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:34Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:34Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:36Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:36Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:38Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:38Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:40Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:40Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:42Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:42Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:44Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:44Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:46Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-ingress"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:26:46Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"contour","namespace":"tanzu-system-ingress"}}
+{"level":"info","ts":"2025-09-17T13:26:48Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"contour","namespace":"tanzu-system-i
+ploy"}
+{"level":"info","ts":"2025-09-17T13:36:14Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:16Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:16Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:18Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:18Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:20Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:20Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:22Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:22Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:24Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:24Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:26Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:26Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:28Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:28Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:30Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:30Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:32Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:32Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:34Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:34Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:36Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:36Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:38Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:38Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+{"level":"info","ts":"2025-09-17T13:36:40Z","logger":"kc.controller.app","msg":"Updating status","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"},"desc":"marking last deploy"}
+{"level":"info","ts":"2025-09-17T13:36:40Z","logger":"kc.controller.pkgi","msg":"Reconciling","request":{"name":"cluster-autoscaler-pkgi","namespace":"tkg-system"}}
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]# k get pods -A|grep -iv run
+NAMESPACE                      NAME                                                              READY   STATUS                   RESTARTS         AGE
+app                            application-cpu-759c64d7dc-bctld                                  0/3     Unknown                  0                5h20m
+ct-next-gen                    archival-job-29301915-99mhb                                       0/1     ContainerCreating        0                36m
+ct-next-gen                    ip-threat-lookup-job-29301910-x4h4g                               0/1     ContainerCreating        0                40m
+ct-system                      collector-5b998b5799-4sws9                                        0/1     Init:0/1                 0                164m
+ct-system                      collector-5b998b5799-bn88t                                        0/1     Init:0/1                 1                164m
+ct-system                      collector-5b998b5799-wtpdl                                        0/1     Init:0/1                 0                164m
+digital-admin                  arcot-microservice-b9446b996-8xpfs                                0/2     Unknown                  1                5h19m
+digital-admin                  arcot-microservice-b9446b996-b84gm                                0/2     Unknown                  1                5h19m
+digital-admin                  arcot-microservice-b9446b996-vc6tk                                0/2     Init:0/2                 0                39m
+digital-ns                     account-microservice-6cc78f87db-bv8dv                             0/2     Init:CrashLoopBackOff    12 (4m50s ago)   142m
+digital-ns                     account-microservice-6cc78f87db-lmb9j                             0/2     Init:1/2                 0                46m
+digital-ns                     account-microservice-6cc78f87db-pwhcc                             0/2     Init:CrashLoopBackOff    13 (65s ago)     142m
+digital-ns                     admin-cbs-master-microservice-746674f858-28z6s                    0/2     Unknown                  0                142m
+digital-ns                     admin-cbs-master-microservice-746674f858-7hqfd                    0/2     PodInitializing          3 (138m ago)     139m
+digital-ns                     admin-cbs-master-microservice-746674f858-9pz6m                    0/2     Unknown                  0                142m
+digital-ns                     admin-cbs-master-microservice-746674f858-p4wbc                    0/2     Unknown                  0                142m
+digital-ns                     admin-cbs-master-microservice-746674f858-r4tv5                    0/2     Unknown                  0                50m
+digital-ns                     admin-cbs-master-microservice-746674f858-sjshc                    0/2     Unknown                  0                107m
+digital-ns                     admin-document-generator-microservice-78f9c89644-58dmz            0/2     Unknown                  0                142m
+digital-ns                     admin-document-generator-microservice-78f9c89644-dw8v8            0/2     Unknown                  0                142m
+digital-ns                     admin-document-generator-microservice-78f9c89644-ztkgd            0/2     Unknown                  0                142m
+digital-ns                     administration-microservice-595659677-db47j                       0/2     Unknown                  2                142m
+digital-ns                     administration-microservice-595659677-gn59b                       0/2     Init:0/2                 0                39m
+digital-ns                     administration-microservice-595659677-sb5fq                       0/2     Unknown                  0                142m
+digital-ns                     async-consumer-microservice-74595cb8f5-25pcp                      0/2     Init:1/2                 0                142m
+digital-ns                     async-consumer-microservice-74595cb8f5-f22lz                      0/2     Init:0/2                 13 (5m6s ago)    142m
+digital-ns                     async-consumer-microservice-74595cb8f5-lt9sp                      0/2     Init:CrashLoopBackOff    12 (4m25s ago)   142m
+digital-ns                     audit-consumer-microservice-5774b6c467-76glz                      0/2     Unknown                  1                142m
+digital-ns                     audit-consumer-microservice-5774b6c467-9b58z                      0/2     Unknown                  4                142m
+digital-ns                     audit-consumer-microservice-5774b6c467-9cfz2                      0/2     Unknown                  1                142m
+digital-ns                     authentication-microservice-8698db7789-cfw9w                      0/2     Unknown                  0                142m
+digital-ns                     authentication-microservice-8698db7789-lqb4c                      0/2     PodInitializing          2                142m
+digital-ns                     authentication-microservice-8698db7789-n8rrc                      0/2     Init:0/2                 0                39m
+digital-ns                     balance-microservice-5965948c4b-fjnn4                             0/2     PodInitializing          2                142m
+digital-ns                     balance-microservice-5965948c4b-k582s                             0/2     Unknown                  0                142m
+digital-ns                     balance-microservice-5965948c4b-zkkqf                             0/2     Init:0/2                 0                39m
+digital-ns                     batch-checker-6586dc585f-755vv                                    0/2     Unknown                  1                142m
+digital-ns                     batch-checker-6586dc585f-gmp6k                                    0/2     Unknown                  2                142m
+digital-ns                     batch-checker-6586dc585f-xw9fn                                    0/2     Unknown                  0                142m
+digital-ns                     batch-manager-7bdcb8d6df-cb4ms                                    0/2     Error                    19               142m
+digital-ns                     batch-manager-7bdcb8d6df-glfjd                                    0/2     Unknown                  0                142m
+digital-ns                     batch-manager-7bdcb8d6df-qnhvw                                    0/2     Unknown                  0                142m
+digital-ns                     batch-workers-5449657c74-978br                                    0/2     PodInitializing          2                142m
+digital-ns                     batch-workers-5449657c74-fdjzw                                    0/2     Unknown                  0                46m
+digital-ns                     batch-workers-5449657c74-t77f4                                    0/2     PodInitializing          2 (141m ago)     142m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-7nzfk               0/2     Unknown                  0                139m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-7z8wm               0/2     Unknown                  0                142m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-g6w4r               0/2     Unknown                  0                142m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-j6z5x               0/2     Error                    34               137m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-xmw6t               0/2     Unknown                  0                142m
+digital-ns                     callback-microservice-64cb9c7db5-7tc68                            0/2     Init:Error               13 (5m23s ago)   142m
+digital-ns                     callback-microservice-64cb9c7db5-kbxw2                            0/2     Init:CrashLoopBackOff    13 (45s ago)     142m
+digital-ns                     callback-microservice-64cb9c7db5-klfsb                            0/2     Init:CrashLoopBackOff    13 (2m20s ago)   142m
+digital-ns                     card-microservice-f489f4bcd-b8s2q                                 0/2     Unknown                  1                142m
+digital-ns                     card-microservice-f489f4bcd-dl5x5                                 0/2     Unknown                  1                108m
+digital-ns                     card-microservice-f489f4bcd-jrm6l                                 0/2     Init:0/2                 0                39m
+digital-ns                     card-microservice-f489f4bcd-l7ppr                                 0/2     Error                    17               93m
+digital-ns                     card-microservice-f489f4bcd-n9hp7                                 0/2     PodInitializing          2 (96m ago)      142m
+digital-ns                     card-microservice-f489f4bcd-t8qc7                                 0/2     Unknown                  0                142m
+digital-ns                     certification-microservice-7db67bc696-4b6q4                       0/2     Unknown                  2                142m
+digital-ns                     certification-microservice-7db67bc696-5tlzh                       0/2     Init:0/2                 0                39m
+digital-ns                     certification-microservice-7db67bc696-6hcbm                       0/2     Unknown                  0                131m
+digital-ns                     certification-microservice-7db67bc696-6x8pj                       0/2     Unknown                  2                46m
+digital-ns                     certification-microservice-7db67bc696-7xprq                       0/2     Unknown                  0                142m
+digital-ns                     certification-microservice-7db67bc696-96q7w                       0/2     PodInitializing          2 (96m ago)      109m
+digital-ns                     certification-microservice-7db67bc696-ml8wn                       0/2     Error                    17               100m
+digital-ns                     certification-microservice-7db67bc696-nzm25                       0/2     Error                    19               100m
+digital-ns                     certification-microservice-7db67bc696-nzzr4                       0/2     Unknown                  1                134m
+digital-ns                     certification-microservice-7db67bc696-p5kn7                       0/2     PodInitializing          2 (96m ago)      103m
+digital-ns                     certification-microservice-7db67bc696-q9w45                       0/2     PodInitializing          4 (140m ago)     142m
+digital-ns                     certification-microservice-7db67bc696-rg4b4                       0/2     Unknown                  0                126m
+digital-ns                     certification-microservice-7db67bc696-sdvdn                       0/2     Unknown                  0                103m
+digital-ns                     certification-microservice-7db67bc696-vzc9g                       0/2     Unknown                  0                128m
+digital-ns                     certification-microservice-7db67bc696-wcvm6                       0/2     Unknown                  4                137m
+digital-ns                     certification-microservice-7db67bc696-zjjvc                       0/2     Unknown                  1                105m
+digital-ns                     connect24-microservice-58db8d8fbc-cphqk                           0/2     Error                    20               142m
+digital-ns                     connect24-microservice-58db8d8fbc-mlf2t                           0/2     Error                    21               142m
+digital-ns                     connect24-microservice-58db8d8fbc-prjpk                           0/2     Unknown                  0                46m
+digital-ns                     connection-test-microservice-b7b9d7c5c-ngpzf                      0/2     Unknown                  0                142m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-hmpwr                    0/2     Unknown                  0                142m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-k5w8t                    0/2     PodInitializing          2                142m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-n7kmj                    0/2     Unknown                  0                142m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-rnhxg                    0/2     Unknown                  2                50m
+digital-ns                     contextual-search-microservice-57d97d76b9-cgjsw                   0/2     Init:1/2                 0                142m
+digital-ns                     contextual-search-microservice-57d97d76b9-l9d8g                   0/2     Init:CrashLoopBackOff    12 (4m57s ago)   46m
+digital-ns                     contextual-search-microservice-57d97d76b9-ln2w4                   0/2     Init:CrashLoopBackOff    13 (2m55s ago)   142m
+digital-ns                     crypto-microservice-6f988687cd-2wcpf                              0/2     PodInitializing          2 (141m ago)     142m
+digital-ns                     crypto-microservice-6f988687cd-jxtrc                              0/2     Unknown                  1                142m
+digital-ns                     crypto-microservice-6f988687cd-xrhtn                              0/2     Unknown                  1                142m
+digital-ns                     document-generator-microservice-6b4465f578-kk9hm                  0/2     Unknown                  0                142m
+digital-ns                     document-generator-microservice-6b4465f578-l7bsr                  0/2     PodInitializing          2                142m
+digital-ns                     document-generator-microservice-6b4465f578-zq989                  0/2     Unknown                  0                142m
+digital-ns                     document-microservice-649b686f9c-2zd2h                            0/2     Unknown                  1                142m
+digital-ns                     document-microservice-649b686f9c-8lxkr                            0/2     Unknown                  2                46m
+digital-ns                     document-microservice-649b686f9c-tzqsc                            0/2     Unknown                  0                142m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-6hgf6                     0/2     Error                    21               142m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-bmsfn                     0/2     Error                    20               142m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-r5x8p                     0/2     Unknown                  21               142m
+digital-ns                     fund-transfer-microservice-75594b865d-dcmr2                       0/2     PodInitializing          2                142m
+digital-ns                     fund-transfer-microservice-75594b865d-jszcb                       0/2     Unknown                  1                142m
+digital-ns                     fund-transfer-microservice-75594b865d-rbj62                       0/2     Unknown                  2                142m
+digital-ns                     integrations-microservice-556987f5f8-fs7zw                        0/2     Init:CrashLoopBackOff    13 (2m20s ago)   142m
+digital-ns                     integrations-microservice-556987f5f8-ntf4s                        0/2     Init:CrashLoopBackOff    13 (2m16s ago)   142m
+digital-ns                     integrations-microservice-556987f5f8-r6bln                        0/2     Init:CrashLoopBackOff    12 (5m ago)      142m
+digital-ns                     invest-microservice-cd75fd954-4qjv6                               0/2     PodInitializing          2                142m
+digital-ns                     invest-microservice-cd75fd954-5g8k6                               0/2     Unknown                  1                133m
+digital-ns                     invest-microservice-cd75fd954-76vxt                               0/2     Unknown                  1                142m
+digital-ns                     invest-microservice-cd75fd954-958xk                               0/2     Init:0/2                 0                39m
+digital-ns                     invest-microservice-cd75fd954-cl69p                               0/2     Unknown                  0                128m
+digital-ns                     invest-microservice-cd75fd954-dz9kl                               0/2     Unknown                  0                126m
+digital-ns                     invest-microservice-cd75fd954-fnk7r                               0/2     Error                    24               122m
+digital-ns                     invest-microservice-cd75fd954-gxlvm                               0/2     Unknown                  0                122m
+digital-ns                     invest-microservice-cd75fd954-jgbr9                               0/2     Unknown                  1                142m
+digital-ns                     invest-microservice-cd75fd954-pntfg                               0/2     PodInitializing          4 (96m ago)      139m
+digital-ns                     invest-microservice-cd75fd954-qg74l                               0/2     PodInitializing          2                124m
+digital-ns                     invest-microservice-cd75fd954-r2prg                               0/2     Unknown                  1                46m
+digital-ns                     invest-microservice-cd75fd954-wnlzv                               0/2     Unknown                  1                136m
+digital-ns                     kyc-microservice-5db7bd7f75-99hf9                                 0/2     Init:0/2                 0                39m
+digital-ns                     kyc-microservice-5db7bd7f75-pmvdg                                 0/2     Init:CrashLoopBackOff    12 (5m3s ago)    142m
+digital-ns                     kyc-microservice-5db7bd7f75-vxtnk                                 0/2     Init:CrashLoopBackOff    13 (2m45s ago)   142m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-hvpht                      0/2     Init:CrashLoopBackOff    12 (5m2s ago)    142m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-nqccl                      0/2     Init:CrashLoopBackOff    13 (2m48s ago)   142m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-q4bxk                      0/2     Init:CrashLoopBackOff    12 (4m30s ago)   46m
+digital-ns                     master-microservice-77996d9bdb-98brb                              0/2     PodInitializing          2                142m
+digital-ns                     master-microservice-77996d9bdb-k6ggf                              0/2     Init:0/2                 0                39m
+digital-ns                     master-microservice-77996d9bdb-p28zv                              0/2     PodInitializing          2                150m
+digital-ns                     nginx-test-7b57bc9c9-mk724                                        0/2     Unknown                  0                142m
+digital-ns                     notification-consumer-microservice-58d594b8f5-5dbsd               0/2     Init:1/2                 0                142m
+digital-ns                     notification-consumer-microservice-58d594b8f5-fvtvp               0/2     Init:CrashLoopBackOff    13 (3m15s ago)   142m
+digital-ns                     notification-consumer-microservice-58d594b8f5-m2m6c               0/2     Init:Error               13 (5m15s ago)   142m
+digital-ns                     notification-microservice-5dfc79b4dd-86d67                        0/2     Init:1/2                 0                142m
+digital-ns                     notification-microservice-5dfc79b4dd-rfgb4                        0/2     Init:CrashLoopBackOff    13 (68s ago)     142m
+digital-ns                     notification-microservice-5dfc79b4dd-zgwvc                        0/2     Init:CrashLoopBackOff    12 (5m1s ago)    142m
+digital-ns                     otp-microservice-656b478bc8-6lpdh                                 0/2     Unknown                  0                142m
+digital-ns                     otp-microservice-656b478bc8-t8dch                                 0/2     PodInitializing          2                142m
+digital-ns                     otp-microservice-656b478bc8-xqrzl                                 0/2     Unknown                  0                142m
+digital-ns                     payment-microservice-5f975f45db-56p4l                             0/2     Init:1/2                 0                142m
+digital-ns                     payment-microservice-5f975f45db-gzhhq                             0/2     Init:CrashLoopBackOff    13 (2m57s ago)   142m
+digital-ns                     payment-microservice-5f975f45db-q4f9g                             0/2     Init:CrashLoopBackOff    13 (3m27s ago)   142m
+digital-ns                     platform-admin-microservice-5449578bcc-5qwnq                      0/2     Unknown                  0                142m
+digital-ns                     platform-admin-microservice-5449578bcc-jgrml                      0/2     PodInitializing          2                49m
+digital-ns                     platform-admin-microservice-5449578bcc-p7zfs                      0/2     Unknown                  0                105m
+digital-ns                     platform-admin-microservice-5449578bcc-vhqlb                      0/2     Unknown                  2                139m
+digital-ns                     platform-admin-microservice-5449578bcc-vjmtj                      0/2     Unknown                  0                142m
+digital-ns                     platform-admin-microservice-5449578bcc-wnqfc                      0/2     Unknown                  0                142m
+digital-ns                     platform-admin-microservice-5449578bcc-zvwq4                      0/2     PodInitializing          2                78m
+digital-ns                     preference-microservice-76dc756745-64gf4                          0/2     Unknown                  20               142m
+digital-ns                     preference-microservice-76dc756745-rkw2h                          0/2     Unknown                  0                142m
+digital-ns                     preference-microservice-76dc756745-wvlxb                          0/2     Unknown                  0                142m
+digital-ns                     product-admin-microservice-5645bb748-pq66m                        0/2     Init:0/2                 0                39m
+digital-ns                     product-admin-microservice-5645bb748-q5nsc                        0/2     Unknown                  0                142m
+digital-ns                     product-admin-microservice-5645bb748-z8wnw                        0/2     Unknown                  0                142m
+digital-ns                     profile-microservice-7bfd5d849f-24tnq                             0/2     Unknown                  0                94m
+digital-ns                     profile-microservice-7bfd5d849f-2fbf2                             0/2     Unknown                  0                101m
+digital-ns                     profile-microservice-7bfd5d849f-c9l9v                             0/2     PodInitializing          2 (96m ago)      105m
+digital-ns                     profile-microservice-7bfd5d849f-d2vwl                             0/2     Unknown                  2                46m
+digital-ns                     profile-microservice-7bfd5d849f-gbl8n                             0/2     PodInitializing          2                97m
+digital-ns                     profile-microservice-7bfd5d849f-kvt5f                             0/2     Unknown                  3                138m
+digital-ns                     profile-microservice-7bfd5d849f-kxrkk                             0/2     Unknown                  0                91m
+digital-ns                     profile-microservice-7bfd5d849f-kz4rc                             0/2     PodInitializing          2                135m
+digital-ns                     profile-microservice-7bfd5d849f-q7ng8                             0/2     Unknown                  0                91m
+digital-ns                     profile-microservice-7bfd5d849f-st8k2                             0/2     Unknown                  0                88m
+digital-ns                     profile-microservice-7bfd5d849f-wbq4m                             0/2     Unknown                  0                142m
+digital-ns                     profile-microservice-7bfd5d849f-wks76                             0/2     Unknown                  1                107m
+digital-ns                     profile-microservice-7bfd5d849f-xw2mz                             0/2     Unknown                  0                103m
+digital-ns                     profile-microservice-7bfd5d849f-zsf9q                             0/2     Unknown                  0                142m
+digital-ns                     registration-microservice-584b978886-fwsw8                        0/2     Init:1/2                 0                142m
+digital-ns                     registration-microservice-584b978886-gqcsk                        0/2     Init:CrashLoopBackOff    13 (44s ago)     142m
+digital-ns                     registration-microservice-584b978886-hmj6g                        0/2     Init:CrashLoopBackOff    12 (5m ago)      142m
+digital-ns                     rule-engine-microservice-578b97b7d7-mkh9b                         0/2     Init:0/2                 0                39m
+digital-ns                     rule-engine-microservice-578b97b7d7-qkb9b                         0/2     PodInitializing          2                142m
+digital-ns                     rule-engine-microservice-578b97b7d7-zbcc5                         0/2     Unknown                  0                142m
+digital-ns                     service-discovery-lifecycle-agent-a7cu8-5c6677476-26rxk           0/2     PodInitializing          1                142m
+digital-ns                     service-discovery-lifecycle-agent-fyhto-558f68d99b-dn6f5          0/2     PodInitializing          0                142m
+digital-ns                     service-discovery-lifecycle-agent-jyhv8-8447d55bdd-f4hwr          0/2     PodInitializing          1                142m
+digital-ns                     service-discovery-lifecycle-agent-of2vm-84444c457b-26js8          0/2     PodInitializing          0                142m
+digital-ns                     service-discovery-lifecycle-agent-y8ypx-8576584644-d42dw          0/2     PodInitializing          0                142m
+digital-ns                     servicing-microservice-56c7d98bc5-jgcqk                           0/2     Init:CrashLoopBackOff    13 (3m7s ago)    142m
+digital-ns                     servicing-microservice-56c7d98bc5-ncvl6                           0/2     Init:1/2                 0                142m
+digital-ns                     servicing-microservice-56c7d98bc5-tdqh8                           0/2     Init:CrashLoopBackOff    12 (4m19s ago)   142m
+digital-ns                     statement-microservice-778f9d89f6-22xq9                           0/2     PodInitializing          2 (96m ago)      142m
+digital-ns                     statement-microservice-778f9d89f6-765z9                           0/2     Unknown                  0                46m
+digital-ns                     statement-microservice-778f9d89f6-cp8pb                           0/2     Unknown                  0                74m
+digital-ns                     statement-microservice-778f9d89f6-f7h6s                           0/2     Unknown                  0                109m
+digital-ns                     statement-microservice-778f9d89f6-nxwwn                           0/2     Unknown                  1                104m
+digital-ns                     statement-microservice-778f9d89f6-pj5c6                           0/2     Unknown                  3                142m
+digital-ns                     statement-microservice-778f9d89f6-pqpmj                           0/2     Unknown                  0                142m
+digital-ns                     statement-microservice-778f9d89f6-rmrm9                           0/2     Unknown                  0                106m
+digital-ns                     statement-microservice-778f9d89f6-zfrdr                           0/2     Unknown                  3                138m
+digital-ns                     trading-microservice-5f555cfd9c-5lk95                             0/2     Unknown                  0                142m
+digital-ns                     trading-microservice-5f555cfd9c-d5qr9                             0/2     Unknown                  1                46m
+digital-ns                     trading-microservice-5f555cfd9c-vscsw                             0/2     Unknown                  21               142m
+digital-ns                     transaction-consumer-microservice-d5fb56b-78twz                   0/2     Unknown                  22               142m
+digital-ns                     transaction-consumer-microservice-d5fb56b-gswmk                   0/2     Unknown                  21               142m
+digital-ns                     transaction-consumer-microservice-d5fb56b-t5r9g                   0/2     Unknown                  21               142m
+digital-ns                     travel-and-rewards-microservice-558468c5d-c5z7x                   0/2     Init:CrashLoopBackOff    12 (4m40s ago)   142m
+digital-ns                     travel-and-rewards-microservice-558468c5d-h2bg4                   0/2     Init:CrashLoopBackOff    12 (4m35s ago)   142m
+digital-ns                     travel-and-rewards-microservice-558468c5d-j8x97                   0/2     Init:CrashLoopBackOff    12 (4m59s ago)   142m
+digital-ns                     user-admin-microservice-7b7c4588d9-2p5t6                          0/2     Unknown                  3                142m
+digital-ns                     user-admin-microservice-7b7c4588d9-726mg                          0/2     Unknown                  1                142m
+digital-ns                     user-admin-microservice-7b7c4588d9-nvcjq                          0/2     Unknown                  3                142m
+digitaladmin                   arcot-microservice-5b8b86cd99-5cm6v                               0/2     Init:0/2                 0                163m
+digitaladmin                   arcot-microservice-5b8b86cd99-ccgh4                               0/2     Init:0/2                 0                163m
+digitaladmin                   arcot-microservice-5b8b86cd99-sgzwp                               0/2     Init:0/2                 0                163m
+harness-delegate-chaos         ddci-9b14652de76c4f6f80585aadeb3a7d68-846969b9b4-7bdsz            0/1     Pending                  0                163m
+harness-delegate-chaos         service-discovery-lifecycle-agent-4gt1y-5d7b44766-l5lwh           0/1     InvalidImageName         0                163m
+harness-delegate-chaos         service-discovery-lifecycle-agent-j1mdj-68b9d9687d-vbztw          0/1     InvalidImageName         0                163m
+harness-delegate-chaos         service-discovery-lifecycle-agent-jimjt-7cf99765bb-rvvqx          0/1     ContainerCreating        0                163m
+harness-delegate-chaos         service-discovery-lifecycle-agent-s6nxw-fbb8cc8bb-9d6qs           0/1     InvalidImageName         0                163m
+harness-delegate-chaos         service-discovery-lifecycle-agent-sgozi-78658bb658-zvdhx          0/1     ContainerCreating        0                163m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301840-pwmz5                   0/1     Completed                0                111m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301900-pn6jd                   0/1     Error                    0                51m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301900-v6vl7                   0/1     Completed                0                51m
+harness-delegate-ng            service-discovery-lifecycle-agent-a9don-847c84dc6c-tjsvt          0/1     ContainerCreating        0                163m
+harness-delegate-ng            service-discovery-lifecycle-agent-an95h-86bd984444-gsvtx          0/1     ContainerCreating        0                163m
+harness-delegate-ng            service-discovery-lifecycle-agent-yotiw-75cc864966-6zjmm          0/1     ImagePullBackOff         0                163m
+hce                            ddci-fe58c013ff27415989a340ab62153981-67c8df75bc-n2zd2            0/1     ImagePullBackOff         0                163m
+istio-system                   istio-cni-node-49gr8                                              0/1     ContainerCreating        1                4h39m
+istio-system                   istio-cni-node-jvnkn                                              0/1     ContainerCreating        1                6h40m
+istio-system                   istio-cni-node-q8tkm                                              0/1     ContainerCreating        1                44m
+istio-system                   istio-cni-node-s9fld                                              0/1     ContainerCreating        1                6h39m
+kube-system                    antrea-agent-4s9cz                                                0/2     PodInitializing          2                4h39m
+kube-system                    antrea-agent-7lpbg                                                0/2     PodInitializing          2                44m
+kube-system                    antrea-agent-d6htm                                                0/2     PodInitializing          2                6h39m
+kube-system                    antrea-agent-rqzsf                                                0/2     PodInitializing          2                6h40m
+kube-system                    cluster-autoscaler-6cfc5f4679-8kq4b                               0/1     Pending                  0                51m
+kube-system                    cluster-autoscaler-6cfc5f4679-9jb6w                               0/1     Error                    0                156m
+kube-system                    cluster-autoscaler-6cfc5f4679-jn6xg                               0/1     Error                    0                52m
+kube-system                    docker-registry-dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp     0/1     ContainerCreating        0                44m
+kube-system                    docker-registry-dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf     0/1     ContainerCreating        0                4h39m
+kube-system                    docker-registry-dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf     0/1     ContainerCreating        0                6h40m
+kube-system                    docker-registry-dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h     0/1     ContainerCreating        0                6h39m
+kube-system                    filebeat-2h4vr                                                    0/1     ContainerCreating        1                6h39m
+kube-system                    filebeat-7wnfq                                                    0/1     Evicted                  0                4m48s
+kube-system                    filebeat-9zcpd                                                    0/1     Evicted                  0                4m48s
+kube-system                    filebeat-fbsv7                                                    0/1     ContainerCreating        1                44m
+kube-system                    filebeat-jxgbc                                                    0/1     ContainerCreating        1                6h40m
+kube-system                    filebeat-nl57n                                                    0/1     Evicted                  0                4m48s
+kube-system                    filebeat-s7tpb                                                    0/1     ContainerCreating        1                4h39m
+kube-system                    kube-proxy-9tcd9                                                  0/1     ContainerCreating        1                6h40m
+kube-system                    kube-proxy-kzxm8                                                  0/1     ContainerCreating        1                44m
+kube-system                    kube-proxy-r4zdb                                                  0/1     ContainerCreating        1                4h39m
+kube-system                    kube-proxy-r7dq4                                                  0/1     ContainerCreating        1                6h39m
+kube-system                    snapshot-controller-64fbc6cb44-2qm5w                              0/1     Error                    0                52m
+kube-system                    snapshot-controller-64fbc6cb44-7rgl2                              0/1     Error                    0                163m
+kube-system                    snapshot-controller-64fbc6cb44-c7mxj                              0/1     Pending                  0                51m
+monitoring-dc                  cadvisor-5wj84                                                    0/1     ContainerCreating        1                6h39m
+monitoring-dc                  cadvisor-6q7th                                                    0/1     Evicted                  0                4m47s
+monitoring-dc                  cadvisor-nt94t                                                    0/1     Evicted                  0                4m47s
+monitoring-dc                  cadvisor-rlxbx                                                    0/1     ContainerCreating        1                6h40m
+monitoring-dc                  cadvisor-vtl8m                                                    0/1     ContainerCreating        1                44m
+monitoring-dc                  cadvisor-xkfjc                                                    0/1     Evicted                  0                4m47s
+monitoring-dc                  cadvisor-zhbt4                                                    0/1     ContainerCreating        1                4h39m
+monitoring-dc                  node-exporter-gxmxq                                               0/1     ContainerCreating        1                44m
+monitoring-dc                  node-exporter-kt2p4                                               0/1     ContainerCreating        1                4h39m
+monitoring-dc                  node-exporter-p9p8n                                               0/1     Evicted                  0                4m51s
+monitoring-dc                  node-exporter-pd94g                                               0/1     ContainerCreating        1                6h40m
+monitoring-dc                  node-exporter-rmbft                                               0/1     Evicted                  0                4m51s
+monitoring-dc                  node-exporter-s6mh4                                               0/1     ContainerCreating        1                6h39m
+monitoring-dc                  node-exporter-xqlx4                                               0/1     Evicted                  0                4m51s
+tanzu-system-ingress           envoy-8flc5                                                       0/2     PodInitializing          2                6h40m
+tanzu-system-ingress           envoy-8t6vx                                                       0/2     PodInitializing          2                6h39m
+tanzu-system-ingress           envoy-gfvt2                                                       0/2     PodInitializing          2                4h39m
+tanzu-system-ingress           envoy-nqv6f                                                       0/2     PodInitializing          2                44m
+velero                         app-default-kopia-mr6pz-maintain-job-1758113087732-nq8vj          0/1     Error                    0                67m
+velero                         app-default-kopia-mr6pz-maintain-job-1758113406604-889l9          0/1     Error                    0                61m
+velero                         app-default-kopia-mr6pz-maintain-job-1758113684503-hmncd          0/1     Error                    0                57m
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-17581134136064jh7t   0/1     Error                    0                61m
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758113692506jqpvl   0/1     Error                    0                57m
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758114429331gwtxw   0/1     Error                    0                44m
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758113372503-jglxn    0/1     Error                    0                62m
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758113626115-pzqnl    0/1     Error                    0                58m
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758114437930-mgh5k    0/1     Error                    0                44m
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758113041710-v8n7t   0/1     Error                    0                67m
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758113380504-8sk4m   0/1     Error                    0                62m
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758113634204-prcmm   0/1     Error                    0                58m
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811305080z5l2f   0/1     Error                    0                67m
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811332611jvhpl   0/1     Error                    0                63m
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811364120jhmd8   0/1     Error                    0                57m
+velero                         kube-system-default-kopia-282vg-maintain-job-1758113335403fbqxx   0/1     Error                    0                63m
+velero                         kube-system-default-kopia-282vg-maintain-job-1758113648404hh8f6   0/1     Error                    0                57m
+velero                         kube-system-default-kopia-282vg-maintain-job-1758114445937hndmw   0/1     Error                    0                44m
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758113386503-25j46     0/1     Error                    0                62m
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758113702404-5v9lh     0/1     Error                    0                56m
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758114460430-47t7c     0/1     ContainerStatusUnknown   1                44m
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581130647v6gfl   0/1     Error                    0                67m
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581133424t7q8d   0/1     Error                    0                62m
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-175811365548bf8s   0/1     Error                    0                57m
+velero                         node-agent-6zqhj                                                  0/1     ContainerCreating        1                6h39m
+velero                         node-agent-bkj7n                                                  0/1     Evicted                  0                4m50s
+velero                         node-agent-hcbtn                                                  0/1     Evicted                  0                4m50s
+velero                         node-agent-r4wlg                                                  0/1     Evicted                  0                4m50s
+velero                         node-agent-wd54q                                                  0/1     ContainerCreating        1                4h39m
+velero                         node-agent-xblvh                                                  0/1     ContainerCreating        1                6h40m
+velero                         node-agent-xlh4g                                                  0/1     ContainerCreating        1                44m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758113111803-z7rbd   0/1     Error                    0                66m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758113392508-8wl5m   0/1     Error                    0                62m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758113708404-9lpbx   0/1     Error                    0                56m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758114535940-lg8jm   0/1     ContainerCreating        0                43m
+velero                         repo-maintain-job-1758113350403-lksrd                             0/1     Error                    0                62m
+velero                         repo-maintain-job-1758113399604-q5cq6                             0/1     Error                    0                61m
+velero                         repo-maintain-job-1758113662410-hk8z5                             0/1     Error                    0                57m
+velero                         repo-maintain-job-1758113715604-hflbk                             0/1     Error                    0                56m
+velero                         repo-maintain-job-1758113928707-pj9lc                             0/1     Error                    0                52m
+velero                         repo-maintain-job-1758114422328-rgk29                             0/1     Error                    0                44m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758113078710-ps77k   0/1     Error                    0                67m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758113357403-dtrlw   0/1     Error                    0                62m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758113671439-8lwx8   0/1     Error                    0                57m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758114044005-7gg7z   0/1     Error                    0                51m
+velero                         velero-default-kopia-64q52-maintain-job-1758113026114-gcksc       0/1     Error                    0                68m
+velero                         velero-default-kopia-64q52-maintain-job-1758113364428-5xvl2       0/1     Error                    0                62m
+velero                         velero-default-kopia-64q52-maintain-job-1758113677504-fst86       0/1     Error                    0                57m
+vmware-system-csi              vsphere-csi-node-52bnx                                            0/3     ContainerCreating        3                44m
+vmware-system-csi              vsphere-csi-node-hpxxw                                            0/3     ContainerCreating        3                4h39m
+vmware-system-csi              vsphere-csi-node-mvq7z                                            0/3     ContainerCreating        3                6h39m
+vmware-system-csi              vsphere-csi-node-vqvk4                                            0/3     ContainerCreating        3                6h40m
+root@dapmtnzwcxx0001-slcvq-6h9r8 [ ~ ]#
+
+
+[devops@DAPMTNZBTXX0001 ~]$ k get all -n tanzu-system-ingress
+NAME                           READY   STATUS            RESTARTS      AGE
+pod/contour-5f78c7c845-cpzkw   1/1     Running           5 (56m ago)   27h
+pod/contour-5f78c7c845-fnx8n   1/1     Running           5 (56m ago)   27h
+pod/envoy-24vgb                2/2     Running           2 (52m ago)   6h50m
+pod/envoy-5l6k6                2/2     Running           2 (52m ago)   5h36m
+pod/envoy-8flc5                0/2     PodInitializing   2             6h49m
+pod/envoy-8t6vx                0/2     PodInitializing   2             6h49m
+pod/envoy-8xbh7                2/2     Running           2 (52m ago)   6h50m
+pod/envoy-bntgp                2/2     Running           2 (52m ago)   5h36m
+pod/envoy-cbrtd                2/2     Running           2 (52m ago)   6h50m
+pod/envoy-cr2x4                2/2     Running           2 (55m ago)   6h50m
+pod/envoy-gfvt2                0/2     PodInitializing   2             4h49m
+pod/envoy-gx49r                2/2     Running           2 (55m ago)   6h49m
+pod/envoy-jbfqh                2/2     Running           2 (52m ago)   4h48m
+pod/envoy-n65jx                2/2     Running           2 (53m ago)   5h36m
+pod/envoy-nqv6f                0/2     PodInitializing   2             54m
+pod/envoy-qlnjw                2/2     Running           2 (56m ago)   6h52m
+pod/envoy-rbsd7                2/2     Running           2 (55m ago)   6h50m
+pod/envoy-rnqr7                2/2     Running           2 (55m ago)   5h36m
+pod/envoy-szpkq                2/2     Running           2 (55m ago)   6h51m
+pod/envoy-w2vjz                2/2     Running           0             46m
+
+NAME              TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE
+service/contour   ClusterIP      198.62.14.192   <none>           8001/TCP                     140d
+service/envoy     LoadBalancer   198.56.47.233   172.16.153.136   80:31566/TCP,443:30906/TCP   140d
+
+NAME                   DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/envoy   18        18        14      18           14          <none>          140d
+
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/contour   2/2     2            2           140d
+
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/contour-5f78c7c845   2         2         2       135d
+replicaset.apps/contour-9df49b858    0         0         0       140d
+[devops@DAPMTNZBTXX0001 ~]$
+
+
+[devops@DAPMTNZBTXX0001 ~]$ kubectl get po -A -o wide| grep csi
+vmware-system-csi              vsphere-csi-controller-6687b65c5d-n647h                           7/7     Running                  20 (76m ago)     57d     192.101.19.3    dapmtnzwcxx0001-slcvq-szr5k                     <none>           <none>
+vmware-system-csi              vsphere-csi-node-4zbfv                                            3/3     Running                  4 (68m ago)      7h4m    172.16.153.6    dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   <none>           <none>
+vmware-system-csi              vsphere-csi-node-52bnx                                            0/3     ContainerCreating        3                68m     172.16.153.24   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp   <none>           <none>
+vmware-system-csi              vsphere-csi-node-6tpsb                                            3/3     Running                  4 (65m ago)      7h5m    172.16.153.28   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   <none>           <none>
+vmware-system-csi              vsphere-csi-node-9p72c                                            3/3     Running                  4 (69m ago)      7h6m    172.16.153.14   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   <none>           <none>
+vmware-system-csi              vsphere-csi-node-9xlnx                                            3/3     Running                  4 (69m ago)      7h6m    172.16.153.26   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   <none>           <none>
+vmware-system-csi              vsphere-csi-node-bg7n2                                            3/3     Running                  4 (66m ago)      5h51m   172.16.153.16   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   <none>           <none>
+vmware-system-csi              vsphere-csi-node-btwmr                                            3/3     Running                  4 (69m ago)      7h4m    172.16.153.31   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   <none>           <none>
+vmware-system-csi              vsphere-csi-node-f45qv                                            3/3     Running                  4 (69m ago)      5h50m   172.16.153.13   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   <none>           <none>
+vmware-system-csi              vsphere-csi-node-f5qcv                                            3/3     Running                  588 (76m ago)    57d     172.16.153.30   dapmtnzwcxx0001-slcvq-fgbn4                     <none>           <none>
+vmware-system-csi              vsphere-csi-node-ffn4t                                            3/3     Running                  4 (66m ago)      7h4m    172.16.153.27   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   <none>           <none>
+vmware-system-csi              vsphere-csi-node-hhjfj                                            3/3     Running                  4 (69m ago)      7h4m    172.16.153.20   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   <none>           <none>
+vmware-system-csi              vsphere-csi-node-hpxxw                                            0/3     ContainerCreating        3                5h3m    172.16.153.19   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   <none>           <none>
+vmware-system-csi              vsphere-csi-node-j4qbb                                            3/3     Running                  593 (76m ago)    57d     172.16.153.29   dapmtnzwcxx0001-slcvq-6h9r8                     <none>           <none>
+vmware-system-csi              vsphere-csi-node-jcw2c                                            3/3     Running                  0                60m     172.16.153.18   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-q5jd5   <none>           <none>
+vmware-system-csi              vsphere-csi-node-mvq7z                                            0/3     ContainerCreating        3                7h3m    172.16.153.10   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   <none>           <none>
+vmware-system-csi              vsphere-csi-node-pfk64                                            3/3     Running                  4 (66m ago)      7h4m    172.16.153.9    dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   <none>           <none>
+vmware-system-csi              vsphere-csi-node-pzlhl                                            3/3     Running                  588 (75m ago)    57d     172.16.153.17   dapmtnzwcxx0001-slcvq-szr5k                     <none>           <none>
+vmware-system-csi              vsphere-csi-node-q4jqg                                            3/3     Running                  4 (65m ago)      5h3m    172.16.153.25   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   <none>           <none>
+vmware-system-csi              vsphere-csi-node-vqvk4                                            0/3     ContainerCreating        3                7h4m    172.16.153.15   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   <none>           <none>
+vmware-system-csi              vsphere-csi-node-xncjl                                            3/3     Running                  4 (65m ago)      5h50m   172.16.153.33   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   <none>           <none>
+vmware-system-csi              vsphere-csi-node-zqcqn                                            3/3     Running                  4 (67m ago)      5h50m   172.16.153.32   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   <none>           <none>
+[devops@DAPMTNZBTXX0001 ~]$
+
+
+
+[devops@DAPMTNZBTXX0001 ~]$ k get po -A -o wide| grep ant
+kube-system                    antrea-agent-5lbrk                                                2/2     Running                  327 (74m ago)    57d     172.16.153.17   dapmtnzwcxx0001-slcvq-szr5k                     <none>           <none>
+kube-system                    antrea-agent-cp2pr                                                2/2     Running                  2 (64m ago)      5h49m   172.16.153.16   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   <none>           <none>
+kube-system                    antrea-agent-f97jb                                                2/2     Running                  2 (67m ago)      7h2m    172.16.153.31   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   <none>           <none>
+kube-system                    antrea-agent-h9swp                                                2/2     Running                  2 (64m ago)      5h48m   172.16.153.33   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   <none>           <none>
+kube-system                    antrea-agent-hfknq                                                2/2     Running                  2 (68m ago)      7h3m    172.16.153.26   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   <none>           <none>
+kube-system                    antrea-agent-j5qww                                                2/2     Running                  2 (68m ago)      7h4m    172.16.153.14   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   <none>           <none>
+kube-system                    antrea-agent-j6ckb                                                0/2     Init:0/2                 0                60s     172.16.153.24   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp   <none>           <none>
+kube-system                    antrea-agent-jpztk                                                2/2     Running                  341 (74m ago)    57d     172.16.153.29   dapmtnzwcxx0001-slcvq-6h9r8                     <none>           <none>
+kube-system                    antrea-agent-krh5g                                                2/2     Running                  2 (65m ago)      7h2m    172.16.153.27   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   <none>           <none>
+kube-system                    antrea-agent-m6vwb                                                0/2     Init:0/2                 0                60s     172.16.153.10   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   <none>           <none>
+kube-system                    antrea-agent-m9nz7                                                2/2     Running                  2 (67m ago)      7h2m    172.16.153.6    dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   <none>           <none>
+kube-system                    antrea-agent-n7std                                                2/2     Running                  2 (68m ago)      5h48m   172.16.153.13   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   <none>           <none>
+kube-system                    antrea-agent-q29z5                                                0/2     Init:0/2                 0                93s     172.16.153.19   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   <none>           <none>
+kube-system                    antrea-agent-t82r8                                                2/2     Running                  2 (65m ago)      7h2m    172.16.153.9    dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   <none>           <none>
+kube-system                    antrea-agent-tcg5b                                                2/2     Running                  0                58m     172.16.153.18   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-q5jd5   <none>           <none>
+kube-system                    antrea-agent-wcr4g                                                2/2     Running                  2 (65m ago)      5h48m   172.16.153.32   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   <none>           <none>
+kube-system                    antrea-agent-x2hdt                                                2/2     Running                  340 (75m ago)    57d     172.16.153.30   dapmtnzwcxx0001-slcvq-fgbn4                     <none>           <none>
+kube-system                    antrea-agent-xsv79                                                2/2     Running                  2 (64m ago)      5h1m    172.16.153.25   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   <none>           <none>
+kube-system                    antrea-agent-xt26f                                                0/2     Init:0/2                 0                60s     172.16.153.15   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   <none>           <none>
+kube-system                    antrea-agent-z6msx                                                2/2     Running                  2 (67m ago)      7h2m    172.16.153.20   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   <none>           <none>
+kube-system                    antrea-agent-zlthr                                                2/2     Running                  2 (64m ago)      7h3m    172.16.153.28   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   <none>           <none>
+kube-system                    antrea-controller-6cd665448b-qqj2w                                1/1     Running                  373 (73m ago)    57d     172.16.153.17   dapmtnzwcxx0001-slcvq-szr5k                     <none>           <none>
+[devops@DAPMTNZBTXX0001 ~]$
+
+
+
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf
+
+
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# k delete machines dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp -n dapmtnznsxx0001
+machine.cluster.x-k8s.io "dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-5f2dp" deleted
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# kubectl get machines -A
+
+
+
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]# kubectl get machines -A
+NAMESPACE         NAME                                            CLUSTER           NODENAME                                        PROVIDERID                                       PHASE         AGE     VERSION
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-7p2gt   vsphere://4232a58c-92d6-0aa2-67cd-faf12f69cbcd   Running       7h28m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-97vbd   vsphere://423230c0-d779-b6d0-90e2-5111da6a390c   Running       7h28m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-bhwqr   vsphere://4232201b-472c-bbac-6f11-5c5c6a018f1e   Running       6h13m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-chqkz   vsphere://4232c48d-468f-2457-5284-5c04adcffbdd   Running       5h26m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-dfhcx   vsphere://42327fe4-31b3-be13-4a64-b7708447ad70   Running       7h28m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kjkvd   vsphere://42327c65-3915-6e75-5ada-56644420ef8b   Running       6h14m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-kv2pf   vsphere://42329db4-e69c-d015-b3a7-bcad47e390d3   Running       5h26m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-m6x7l   vsphere://4232f800-2a27-3412-bb63-17db684591ae   Running       6h14m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-mk7hf   vsphere://42328c45-fd56-26d2-7e67-c431f03f281e   Running       7h27m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ndd4b   dapmtnzwcxx0001                                                   vsphere://4232c6b3-02b1-7495-3431-8bbba4ef1af1   Provisioned   106s    v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-pph7h   vsphere://42329711-e5ae-f610-6199-29351635a3af   Running       7h26m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-q5jd5   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-q5jd5   vsphere://42321acc-8167-e700-886c-6ecb029b7b82   Running       83m     v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-spjhs   vsphere://42321b8b-d122-76a6-58a3-3497ed075d38   Running       7h27m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-t2lg9   vsphere://4232fe1e-6371-afde-ad33-609e753fc5b8   Running       7h28m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ttg5k   vsphere://42325c40-ca54-2a8c-a31e-32fca1a04039   Running       7h27m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wkhs9   vsphere://42320a48-af0b-dce6-a64c-0df645b4e716   Running       7h29m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-wxt5v   vsphere://4232061c-71be-bada-5a61-bd4afff34eeb   Running       6h14m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   dapmtnzwcxx0001   dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-xthtf   vsphere://4232d336-fe37-427f-aceb-2f11738a9623   Running       7h29m   v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-6h9r8                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-6h9r8                     vsphere://42323f6b-95cc-6ad4-1892-440caf7ad40d   Running       57d     v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-fgbn4                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-fgbn4                     vsphere://4232c949-dbaf-e4ea-deff-4d5eee52db90   Running       57d     v1.31.7+vmware.1-fips
+dapmtnznsxx0001   dapmtnzwcxx0001-slcvq-szr5k                     dapmtnzwcxx0001   dapmtnzwcxx0001-slcvq-szr5k                     vsphere://423203df-b16d-6a79-17f5-e0f02760eab5   Running       57d     v1.31.7+vmware.1-fips
+root@423205815ea7a300bb08cd499315a1fc [ ~ ]#
+
+
+Delete old node and got new node is Provisioned 
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-ndd4b
+
+dapmtnzwcxx0001-node-pool-1-ffv88-2l7hg-4hlks
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================
+
+
+[devops@DAPMTNZBTXX0001 ~]$ k get pods -A|grep -iv run
+
+NAMESPACE                      NAME                                                              READY   STATUS                            RESTARTS         AGE
+app                            application-cpu-759c64d7dc-bctld                                  0/3     Unknown                           0                6h20m
+ct-next-gen                    ip-threat-lookup-job-29302010-zjzjv                               0/1     CrashLoopBackOff                  4 (26s ago)      112s
+ct-system                      collector-5b998b5799-4sws9                                        0/1     Init:0/1                          0                3h44m
+ct-system                      collector-5b998b5799-bn88t                                        0/1     Init:0/1                          0                3h44m
+ct-system                      collector-5b998b5799-wtpdl                                        0/1     Init:0/1                          0                3h44m
+digital-admin                  arcot-microservice-b9446b996-8xpfs                                0/2     Unknown                           1                6h19m
+digital-admin                  arcot-microservice-b9446b996-b84gm                                0/2     Unknown                           1                6h19m
+digital-ns                     account-microservice-6cc78f87db-bv8dv                             0/2     Init:CrashLoopBackOff             24 (2m11s ago)   3h22m
+digital-ns                     account-microservice-6cc78f87db-lmb9j                             0/2     Init:CrashLoopBackOff             10 (109s ago)    106m
+digital-ns                     account-microservice-6cc78f87db-pwhcc                             0/2     Init:CrashLoopBackOff             24 (3m48s ago)   3h22m
+digital-ns                     admin-cbs-master-microservice-746674f858-28z6s                    0/2     Unknown                           0                3h22m
+digital-ns                     admin-cbs-master-microservice-746674f858-9pz6m                    0/2     Unknown                           0                3h22m
+digital-ns                     admin-cbs-master-microservice-746674f858-p4wbc                    0/2     Unknown                           0                3h22m
+digital-ns                     admin-cbs-master-microservice-746674f858-r4tv5                    0/2     Unknown                           0                110m
+digital-ns                     admin-cbs-master-microservice-746674f858-sjshc                    0/2     Unknown                           0                167m
+digital-ns                     admin-document-generator-microservice-78f9c89644-58dmz            0/2     Unknown                           0                3h22m
+digital-ns                     admin-document-generator-microservice-78f9c89644-dw8v8            0/2     Unknown                           0                3h22m
+digital-ns                     admin-document-generator-microservice-78f9c89644-ztkgd            0/2     Unknown                           0                3h22m
+digital-ns                     administration-microservice-595659677-db47j                       0/2     Unknown                           2                3h22m
+digital-ns                     administration-microservice-595659677-sb5fq                       0/2     Unknown                           0                3h22m
+digital-ns                     async-consumer-microservice-74595cb8f5-f22lz                      0/2     Init:CrashLoopBackOff             24 (2m39s ago)   3h22m
+digital-ns                     async-consumer-microservice-74595cb8f5-lt9sp                      0/2     Init:CrashLoopBackOff             24 (116s ago)    3h22m
+digital-ns                     async-consumer-microservice-74595cb8f5-rr5g5                      0/2     Init:CreateContainerConfigError   0                10m
+digital-ns                     audit-consumer-microservice-5774b6c467-76glz                      0/2     Unknown                           1                3h22m
+digital-ns                     audit-consumer-microservice-5774b6c467-9b58z                      0/2     Unknown                           4                3h22m
+digital-ns                     audit-consumer-microservice-5774b6c467-9cfz2                      0/2     Unknown                           1                3h22m
+digital-ns                     authentication-microservice-8698db7789-cfw9w                      0/2     Unknown                           0                3h22m
+digital-ns                     authentication-microservice-8698db7789-lqb4c                      0/2     Unknown                           0                3h22m
+digital-ns                     balance-microservice-5965948c4b-fjnn4                             0/2     Unknown                           0                3h22m
+digital-ns                     balance-microservice-5965948c4b-k582s                             0/2     Unknown                           0                3h22m
+digital-ns                     batch-checker-6586dc585f-755vv                                    0/2     Unknown                           1                3h22m
+digital-ns                     batch-checker-6586dc585f-gmp6k                                    0/2     Unknown                           2                3h22m
+digital-ns                     batch-checker-6586dc585f-xw9fn                                    0/2     Unknown                           0                3h22m
+digital-ns                     batch-manager-7bdcb8d6df-cb4ms                                    0/2     Error                             19               3h22m
+digital-ns                     batch-manager-7bdcb8d6df-glfjd                                    0/2     Unknown                           0                3h22m
+digital-ns                     batch-manager-7bdcb8d6df-qnhvw                                    0/2     Unknown                           0                3h22m
+digital-ns                     batch-workers-5449657c74-978br                                    0/2     Unknown                           0                3h22m
+digital-ns                     batch-workers-5449657c74-fdjzw                                    0/2     Unknown                           0                106m
+digital-ns                     batch-workers-5449657c74-t77f4                                    0/2     Unknown                           1                3h22m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-7nzfk               0/2     Unknown                           0                3h19m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-7z8wm               0/2     Unknown                           0                3h22m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-g6w4r               0/2     Unknown                           0                3h22m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-j6z5x               0/2     Error                             34               3h17m
+digital-ns                     beneficiary-management-microservice-bb8599c5d-xmw6t               0/2     Unknown                           0                3h22m
+digital-ns                     callback-microservice-64cb9c7db5-7tc68                            0/2     Init:CrashLoopBackOff             24 (3m2s ago)    3h22m
+digital-ns                     callback-microservice-64cb9c7db5-kbxw2                            0/2     Init:CrashLoopBackOff             24 (3m35s ago)   3h22m
+digital-ns                     callback-microservice-64cb9c7db5-klfsb                            0/2     Init:CrashLoopBackOff             24 (4m51s ago)   3h22m
+digital-ns                     card-microservice-f489f4bcd-b8s2q                                 0/2     Unknown                           1                3h22m
+digital-ns                     card-microservice-f489f4bcd-dl5x5                                 0/2     Unknown                           1                168m
+digital-ns                     card-microservice-f489f4bcd-l7ppr                                 0/2     Error                             17               153m
+digital-ns                     card-microservice-f489f4bcd-n9hp7                                 0/2     Unknown                           1                3h22m
+digital-ns                     card-microservice-f489f4bcd-t8qc7                                 0/2     Unknown                           0                3h22m
+digital-ns                     certification-microservice-7db67bc696-4b6q4                       0/2     Unknown                           2                3h22m
+digital-ns                     certification-microservice-7db67bc696-6hcbm                       0/2     Unknown                           0                3h11m
+digital-ns                     certification-microservice-7db67bc696-6x8pj                       0/2     Unknown                           2                106m
+digital-ns                     certification-microservice-7db67bc696-7xprq                       0/2     Unknown                           0                3h22m
+digital-ns                     certification-microservice-7db67bc696-ml8wn                       0/2     Error                             17               160m
+digital-ns                     certification-microservice-7db67bc696-nzm25                       0/2     Error                             19               160m
+digital-ns                     certification-microservice-7db67bc696-nzzr4                       0/2     Unknown                           1                3h14m
+digital-ns                     certification-microservice-7db67bc696-p5kn7                       0/2     Unknown                           1                163m
+digital-ns                     certification-microservice-7db67bc696-q9w45                       0/2     Unknown                           3                3h22m
+digital-ns                     certification-microservice-7db67bc696-rg4b4                       0/2     Unknown                           0                3h6m
+digital-ns                     certification-microservice-7db67bc696-sdvdn                       0/2     Unknown                           0                163m
+digital-ns                     certification-microservice-7db67bc696-vzc9g                       0/2     Unknown                           0                3h8m
+digital-ns                     certification-microservice-7db67bc696-wcvm6                       0/2     Unknown                           4                3h17m
+digital-ns                     certification-microservice-7db67bc696-z2bjn                       0/2     CrashLoopBackOff                  6 (34s ago)      10m
+digital-ns                     certification-microservice-7db67bc696-zjjvc                       0/2     Unknown                           1                165m
+digital-ns                     connect24-microservice-58db8d8fbc-cphqk                           0/2     Error                             20               3h22m
+digital-ns                     connect24-microservice-58db8d8fbc-mlf2t                           0/2     Error                             21               3h22m
+digital-ns                     connect24-microservice-58db8d8fbc-prjpk                           0/2     Unknown                           0                106m
+digital-ns                     connection-test-microservice-b7b9d7c5c-ngpzf                      0/2     Unknown                           0                3h22m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-5rs4s                    0/2     CrashLoopBackOff                  6 (76s ago)      10m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-hmpwr                    0/2     Unknown                           0                3h22m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-n7kmj                    0/2     Unknown                           0                3h22m
+digital-ns                     consent-consumer-microservice-58b6b8d4bd-rnhxg                    0/2     Unknown                           2                110m
+digital-ns                     contextual-search-microservice-57d97d76b9-cgjsw                   0/2     Init:CrashLoopBackOff             9 (4m37s ago)    3h22m
+digital-ns                     contextual-search-microservice-57d97d76b9-l9d8g                   0/2     Init:CrashLoopBackOff             24 (2m15s ago)   106m
+digital-ns                     contextual-search-microservice-57d97d76b9-ln2w4                   0/2     Init:CrashLoopBackOff             25 (30s ago)     3h22m
+digital-ns                     crypto-microservice-6f988687cd-2wcpf                              0/2     Unknown                           1                3h22m
+digital-ns                     crypto-microservice-6f988687cd-jxtrc                              0/2     Unknown                           1                3h22m
+digital-ns                     crypto-microservice-6f988687cd-xrhtn                              0/2     Unknown                           1                3h22m
+digital-ns                     document-generator-microservice-6b4465f578-kk9hm                  0/2     Unknown                           0                3h22m
+digital-ns                     document-generator-microservice-6b4465f578-zq989                  0/2     Unknown                           0                3h22m
+digital-ns                     document-microservice-649b686f9c-2zd2h                            0/2     Unknown                           1                3h22m
+digital-ns                     document-microservice-649b686f9c-8lxkr                            0/2     Unknown                           2                106m
+digital-ns                     document-microservice-649b686f9c-tzqsc                            0/2     Unknown                           0                3h22m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-6hgf6                     0/2     Error                             21               3h22m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-bmsfn                     0/2     Error                             20               3h22m
+digital-ns                     fincore-wrapper-microservice-66cd45787d-r5x8p                     0/2     Unknown                           21               3h22m
+digital-ns                     fund-transfer-microservice-75594b865d-4nr6d                       0/2     CrashLoopBackOff                  6 (62s ago)      10m
+digital-ns                     fund-transfer-microservice-75594b865d-jszcb                       0/2     Unknown                           1                3h22m
+digital-ns                     fund-transfer-microservice-75594b865d-rbj62                       0/2     Unknown                           2                3h22m
+digital-ns                     integrations-microservice-556987f5f8-fs7zw                        0/2     Init:CrashLoopBackOff             24 (4m55s ago)   3h22m
+digital-ns                     integrations-microservice-556987f5f8-ntf4s                        0/2     Init:CrashLoopBackOff             24 (5m3s ago)    3h22m
+digital-ns                     integrations-microservice-556987f5f8-r6bln                        0/2     Init:CrashLoopBackOff             24 (2m53s ago)   3h22m
+digital-ns                     invest-microservice-cd75fd954-5g8k6                               0/2     Unknown                           1                3h13m
+digital-ns                     invest-microservice-cd75fd954-76vxt                               0/2     Unknown                           1                3h22m
+digital-ns                     invest-microservice-cd75fd954-c64t7                               0/2     CrashLoopBackOff                  6 (51s ago)      10m
+digital-ns                     invest-microservice-cd75fd954-cl69p                               0/2     Unknown                           0                3h8m
+digital-ns                     invest-microservice-cd75fd954-dz9kl                               0/2     Unknown                           0                3h6m
+digital-ns                     invest-microservice-cd75fd954-fnk7r                               0/2     Error                             24               3h2m
+digital-ns                     invest-microservice-cd75fd954-gxlvm                               0/2     Unknown                           0                3h2m
+digital-ns                     invest-microservice-cd75fd954-jgbr9                               0/2     Unknown                           1                3h22m
+digital-ns                     invest-microservice-cd75fd954-pntfg                               0/2     Unknown                           3                3h19m
+digital-ns                     invest-microservice-cd75fd954-qg74l                               0/2     Unknown                           0                3h4m
+digital-ns                     invest-microservice-cd75fd954-r2prg                               0/2     Unknown                           1                106m
+digital-ns                     invest-microservice-cd75fd954-wnlzv                               0/2     Unknown                           1                3h16m
+digital-ns                     kyc-microservice-5db7bd7f75-8bfgw                                 0/2     Init:CreateContainerConfigError   0                16m
+digital-ns                     kyc-microservice-5db7bd7f75-pmvdg                                 0/2     Init:CrashLoopBackOff             24 (2m43s ago)   3h22m
+digital-ns                     kyc-microservice-5db7bd7f75-vxtnk                                 0/2     Init:CrashLoopBackOff             25 (17s ago)     3h22m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-hvpht                      0/2     Init:CrashLoopBackOff             24 (2m45s ago)   3h22m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-nqccl                      0/2     Init:Error                        25 (5m23s ago)   3h22m
+digital-ns                     legacy-wrapper-microservice-75bc54d795-q4bxk                      0/2     Init:CrashLoopBackOff             24 (2m9s ago)    106m
+digital-ns                     master-microservice-77996d9bdb-8xrlw                              0/2     CrashLoopBackOff                  7 (18s ago)      10m
+digital-ns                     master-microservice-77996d9bdb-98brb                              0/2     Unknown                           0                3h22m
+digital-ns                     nginx-test-7b57bc9c9-mk724                                        0/2     Unknown                           0                3h22m
+digital-ns                     notification-consumer-microservice-58d594b8f5-fvtvp               0/2     Init:CrashLoopBackOff             25 (69s ago)     3h22m
+digital-ns                     notification-consumer-microservice-58d594b8f5-h2v6p               0/2     Init:CreateContainerConfigError   0                10m
+digital-ns                     notification-consumer-microservice-58d594b8f5-m2m6c               0/2     Init:CrashLoopBackOff             24 (2m56s ago)   3h22m
+digital-ns                     notification-microservice-5dfc79b4dd-86d67                        0/2     Init:Error                        10 (5m14s ago)   3h22m
+digital-ns                     notification-microservice-5dfc79b4dd-rfgb4                        0/2     Init:CrashLoopBackOff             24 (3m48s ago)   3h22m
+digital-ns                     notification-microservice-5dfc79b4dd-zgwvc                        0/2     Init:CrashLoopBackOff             24 (2m35s ago)   3h22m
+digital-ns                     otp-microservice-656b478bc8-6lpdh                                 0/2     Unknown                           0                3h22m
+digital-ns                     otp-microservice-656b478bc8-c7frr                                 0/2     CrashLoopBackOff                  6 (38s ago)      10m
+digital-ns                     otp-microservice-656b478bc8-xqrzl                                 0/2     Unknown                           0                3h22m
+digital-ns                     payment-microservice-5f975f45db-56p4l                             0/2     Init:CrashLoopBackOff             9 (5m1s ago)     3h22m
+digital-ns                     payment-microservice-5f975f45db-gzhhq                             0/2     Init:CrashLoopBackOff             25 (16s ago)     3h22m
+digital-ns                     payment-microservice-5f975f45db-q4f9g                             0/2     Init:CrashLoopBackOff             25 (74s ago)     3h22m
+digital-ns                     platform-admin-microservice-5449578bcc-5qwnq                      0/2     Unknown                           0                3h22m
+digital-ns                     platform-admin-microservice-5449578bcc-jgrml                      0/2     Unknown                           0                109m
+digital-ns                     platform-admin-microservice-5449578bcc-p7zfs                      0/2     Unknown                           0                165m
+digital-ns                     platform-admin-microservice-5449578bcc-vhqlb                      0/2     Unknown                           2                3h19m
+digital-ns                     platform-admin-microservice-5449578bcc-vjmtj                      0/2     Unknown                           0                3h22m
+digital-ns                     platform-admin-microservice-5449578bcc-wnqfc                      0/2     Unknown                           0                3h22m
+digital-ns                     preference-microservice-76dc756745-64gf4                          0/2     Unknown                           20               3h22m
+digital-ns                     preference-microservice-76dc756745-rkw2h                          0/2     Unknown                           0                3h22m
+digital-ns                     preference-microservice-76dc756745-wvlxb                          0/2     Unknown                           0                3h22m
+digital-ns                     product-admin-microservice-5645bb748-q5nsc                        0/2     Unknown                           0                3h22m
+digital-ns                     product-admin-microservice-5645bb748-z8wnw                        0/2     Unknown                           0                3h22m
+digital-ns                     profile-microservice-7bfd5d849f-24tnq                             0/2     Unknown                           0                154m
+digital-ns                     profile-microservice-7bfd5d849f-2fbf2                             0/2     Unknown                           0                161m
+digital-ns                     profile-microservice-7bfd5d849f-c9l9v                             0/2     Unknown                           1                165m
+digital-ns                     profile-microservice-7bfd5d849f-d2vwl                             0/2     Unknown                           2                106m
+digital-ns                     profile-microservice-7bfd5d849f-kvt5f                             0/2     Unknown                           3                3h18m
+digital-ns                     profile-microservice-7bfd5d849f-kxrkk                             0/2     Unknown                           0                151m
+digital-ns                     profile-microservice-7bfd5d849f-kz4rc                             0/2     Unknown                           0                3h15m
+digital-ns                     profile-microservice-7bfd5d849f-q7ng8                             0/2     Unknown                           0                151m
+digital-ns                     profile-microservice-7bfd5d849f-st8k2                             0/2     Unknown                           0                148m
+digital-ns                     profile-microservice-7bfd5d849f-wbq4m                             0/2     Unknown                           0                3h22m
+digital-ns                     profile-microservice-7bfd5d849f-wks76                             0/2     Unknown                           1                167m
+digital-ns                     profile-microservice-7bfd5d849f-xw2mz                             0/2     Unknown                           0                163m
+digital-ns                     profile-microservice-7bfd5d849f-zsf9q                             0/2     Unknown                           0                3h22m
+digital-ns                     registration-microservice-584b978886-fwsw8                        0/2     Init:CrashLoopBackOff             10 (112s ago)    3h22m
+digital-ns                     registration-microservice-584b978886-gqcsk                        0/2     Init:CrashLoopBackOff             24 (3m41s ago)   3h22m
+digital-ns                     registration-microservice-584b978886-hmj6g                        0/2     Init:CrashLoopBackOff             24 (2m34s ago)   3h22m
+digital-ns                     rule-engine-microservice-578b97b7d7-qkb9b                         0/2     Unknown                           0                3h22m
+digital-ns                     rule-engine-microservice-578b97b7d7-zbcc5                         0/2     Unknown                           0                3h22m
+digital-ns                     service-discovery-lifecycle-agent-a7cu8-5c6677476-26rxk           0/2     PodInitializing                   0                3h22m
+digital-ns                     service-discovery-lifecycle-agent-fyhto-558f68d99b-dn6f5          0/2     PodInitializing                   0                3h22m
+digital-ns                     service-discovery-lifecycle-agent-jyhv8-8447d55bdd-f4hwr          0/2     PodInitializing                   0                3h22m
+digital-ns                     service-discovery-lifecycle-agent-of2vm-84444c457b-26js8          0/2     PodInitializing                   0                3h22m
+digital-ns                     service-discovery-lifecycle-agent-y8ypx-8576584644-d42dw          0/2     PodInitializing                   0                3h22m
+digital-ns                     servicing-microservice-56c7d98bc5-jgcqk                           0/2     Init:CrashLoopBackOff             25 (55s ago)     3h22m
+digital-ns                     servicing-microservice-56c7d98bc5-ncvl6                           0/2     Init:CrashLoopBackOff             10 (119s ago)    3h22m
+digital-ns                     servicing-microservice-56c7d98bc5-tdqh8                           0/2     Init:CrashLoopBackOff             24 (105s ago)    3h22m
+digital-ns                     statement-microservice-778f9d89f6-25gcg                           0/2     CrashLoopBackOff                  6 (35s ago)      10m
+digital-ns                     statement-microservice-778f9d89f6-765z9                           0/2     Unknown                           0                106m
+digital-ns                     statement-microservice-778f9d89f6-cp8pb                           0/2     Unknown                           0                134m
+digital-ns                     statement-microservice-778f9d89f6-f7h6s                           0/2     Unknown                           0                169m
+digital-ns                     statement-microservice-778f9d89f6-nxwwn                           0/2     Unknown                           1                164m
+digital-ns                     statement-microservice-778f9d89f6-pj5c6                           0/2     Unknown                           3                3h22m
+digital-ns                     statement-microservice-778f9d89f6-pqpmj                           0/2     Unknown                           0                3h22m
+digital-ns                     statement-microservice-778f9d89f6-rmrm9                           0/2     Unknown                           0                166m
+digital-ns                     statement-microservice-778f9d89f6-zfrdr                           0/2     Unknown                           3                3h18m
+digital-ns                     trading-microservice-5f555cfd9c-5lk95                             0/2     Unknown                           0                3h22m
+digital-ns                     trading-microservice-5f555cfd9c-d5qr9                             0/2     Unknown                           1                106m
+digital-ns                     trading-microservice-5f555cfd9c-vscsw                             0/2     Unknown                           21               3h22m
+digital-ns                     transaction-consumer-microservice-d5fb56b-78twz                   0/2     Unknown                           22               3h22m
+digital-ns                     transaction-consumer-microservice-d5fb56b-gswmk                   0/2     Unknown                           21               3h22m
+digital-ns                     transaction-consumer-microservice-d5fb56b-t5r9g                   0/2     Unknown                           21               3h22m
+digital-ns                     travel-and-rewards-microservice-558468c5d-c5z7x                   0/2     Init:CrashLoopBackOff             24 (2m41s ago)   3h22m
+digital-ns                     travel-and-rewards-microservice-558468c5d-h2bg4                   0/2     Init:CrashLoopBackOff             24 (2m3s ago)    3h22m
+digital-ns                     travel-and-rewards-microservice-558468c5d-j8x97                   0/2     Init:CrashLoopBackOff             24 (2m34s ago)   3h22m
+digital-ns                     user-admin-microservice-7b7c4588d9-2p5t6                          0/2     Unknown                           3                3h22m
+digital-ns                     user-admin-microservice-7b7c4588d9-726mg                          0/2     Unknown                           1                3h22m
+digital-ns                     user-admin-microservice-7b7c4588d9-nvcjq                          0/2     Unknown                           3                3h22m
+digitaladmin                   arcot-microservice-5b8b86cd99-5cm6v                               0/2     Init:0/2                          0                3h43m
+digitaladmin                   arcot-microservice-5b8b86cd99-ccgh4                               0/2     Init:0/2                          0                3h43m
+digitaladmin                   arcot-microservice-5b8b86cd99-sgzwp                               0/2     Init:0/2                          0                3h43m
+harness-delegate-chaos         ddci-9b14652de76c4f6f80585aadeb3a7d68-846969b9b4-7bdsz            0/1     Pending                           0                3h43m
+harness-delegate-chaos         service-discovery-lifecycle-agent-4gt1y-5d7b44766-l5lwh           0/1     InvalidImageName                  0                3h43m
+harness-delegate-chaos         service-discovery-lifecycle-agent-j1mdj-68b9d9687d-vbztw          0/1     InvalidImageName                  0                3h43m
+harness-delegate-chaos         service-discovery-lifecycle-agent-jimjt-7cf99765bb-rvvqx          0/1     InvalidImageName                  0                3h43m
+harness-delegate-chaos         service-discovery-lifecycle-agent-s6nxw-fbb8cc8bb-9d6qs           0/1     InvalidImageName                  0                3h43m
+harness-delegate-chaos         service-discovery-lifecycle-agent-sgozi-78658bb658-zvdhx          0/1     InvalidImageName                  0                3h43m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301840-pwmz5                   0/1     Completed                         0                171m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301900-pn6jd                   0/1     Error                             0                111m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301900-v6vl7                   0/1     Completed                         0                111m
+harness-delegate-ng            kubernetes-delegate-upgrader-job-29301960-jklk7                   0/1     Completed                         0                51m
+harness-delegate-ng            service-discovery-lifecycle-agent-a9don-847c84dc6c-tjsvt          0/1     InvalidImageName                  0                3h43m
+harness-delegate-ng            service-discovery-lifecycle-agent-an95h-86bd984444-gsvtx          0/1     ImagePullBackOff                  0                3h43m
+harness-delegate-ng            service-discovery-lifecycle-agent-yotiw-75cc864966-6zjmm          0/1     ImagePullBackOff                  0                3h43m
+hce                            ddci-fe58c013ff27415989a340ab62153981-67c8df75bc-n2zd2            0/1     ImagePullBackOff                  0                3h43m
+kube-system                    cluster-autoscaler-6cfc5f4679-v76n5                               0/1     Pending                           0                3m32s
+kube-system                    filebeat-4k496                                                    0/1     Evicted                           0                4m47s
+kube-system                    filebeat-gkxb8                                                    0/1     Evicted                           0                4m47s
+kube-system                    filebeat-h6vpm                                                    0/1     Evicted                           0                4m47s
+kube-system                    snapshot-controller-64fbc6cb44-2qm5w                              0/1     Error                             0                112m
+kube-system                    snapshot-controller-64fbc6cb44-7rgl2                              0/1     Error                             0                3h43m
+kube-system                    snapshot-controller-64fbc6cb44-c7mxj                              0/1     Pending                           0                111m
+monitoring-dc                  cadvisor-7nmrg                                                    0/1     Evicted                           0                4m46s
+monitoring-dc                  cadvisor-ml77k                                                    0/1     Evicted                           0                4m46s
+monitoring-dc                  cadvisor-w67vm                                                    0/1     Evicted                           0                4m46s
+monitoring-dc                  node-exporter-6c7nc                                               0/1     Evicted                           0                4m50s
+monitoring-dc                  node-exporter-7h74g                                               0/1     Evicted                           0                4m50s
+monitoring-dc                  node-exporter-ns4fj                                               0/1     Evicted                           0                4m50s
+velero                         app-default-kopia-mr6pz-maintain-job-1758119919830-9ns69          0/1     Error                             0                13m
+velero                         app-default-kopia-mr6pz-maintain-job-1758120122025-m52wd          0/1     Error                             0                9m53s
+velero                         app-default-kopia-mr6pz-maintain-job-1758120474231-2hdbl          0/1     Error                             0                4m1s
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758119866931whx7w   0/1     Error                             0                14m
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-17581201715329bdst   0/1     Error                             0                9m4s
+velero                         ct-next-gen-default-kopia-6t68p-maintain-job-1758120422025p5srm   0/1     Error                             0                4m53s
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758119845297-n9x59    0/1     Error                             0                14m
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758120179533-pszj5    0/1     Error                             0                8m56s
+velero                         ct-system-default-kopia-l2q56-maintain-job-1758120430129-2gpfv    0/1     Error                             0                4m45s
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758119874931-bps2q   0/1     Error                             0                14m
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758120131330-7glsp   0/1     Error                             0                9m44s
+velero                         digital-ns-default-kopia-b7cqz-maintain-job-1758120481240-9dtl9   0/1     Error                             0                3m54s
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175811988774894pw   0/1     Error                             0                13m
+velero                         istio-system-default-kopia-l9gjv-maintain-job-175812013933zpl6w   0/1     Error                             0                9m36s
+velero                         istio-system-default-kopia-l9gjv-maintain-job-1758120488258h9kv   0/1     Error                             0                3m47s
+velero                         kube-system-default-kopia-282vg-maintain-job-1758119926839n5mjh   0/1     Error                             0                13m
+velero                         kube-system-default-kopia-282vg-maintain-job-17581201885309kkjp   0/1     Error                             0                8m47s
+velero                         kube-system-default-kopia-282vg-maintain-job-175812043713954f7s   0/1     Error                             0                4m38s
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758119825830-25sg5     0/1     Error                             0                14m
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758120195534-f86qv     0/1     Error                             0                8m40s
+velero                         kubeseal-default-kopia-gtqpc-maintain-job-1758120444159-jt567     0/1     Error                             0                4m31s
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581198958w76nl   0/1     Error                             0                13m
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-17581201473fwvss   0/1     Error                             0                9m28s
+velero                         monitoring-np-default-kopia-kclp5-maintain-job-175812049535qbsl   0/1     Error                             0                3m40s
+velero                         node-agent-2d64l                                                  0/1     Evicted                           0                4m48s
+velero                         node-agent-7sv8m                                                  0/1     Evicted                           0                4m48s
+velero                         node-agent-gpmsj                                                  0/1     Evicted                           0                4m48s
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758119834830-qwbt6   0/1     Error                             0                14m
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758120202631-mgg64   0/1     Error                             0                8m33s
+velero                         prometheus-default-kopia-2v4hm-maintain-job-1758120453231-phn9x   0/1     Error                             0                4m22s
+velero                         repo-maintain-job-1758119859932-5hprh                             0/1     Error                             0                14m
+velero                         repo-maintain-job-1758119903830-z44x6                             0/1     Error                             0                13m
+velero                         repo-maintain-job-1758120154434-66zbm                             0/1     Error                             0                9m21s
+velero                         repo-maintain-job-1758120222747-jvvx5                             0/1     Error                             0                8m13s
+velero                         repo-maintain-job-1758120468231-hmskz                             0/1     Error                             0                4m7s
+velero                         repo-maintain-job-1758120501330-sr5ls                             0/1     Error                             0                3m34s
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758119851842-mvw58   0/1     Error                             0                14m
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758120209630-r48kd   0/1     Error                             0                8m26s
+velero                         tkg-system-default-kopia-vzgwj-maintain-job-1758120460230-x2vnp   0/1     Error                             0                4m15s
+velero                         velero-default-kopia-64q52-maintain-job-1758119910830-tvtpl       0/1     Error                             0                13m
+velero                         velero-default-kopia-64q52-maintain-job-1758120163431-klppq       0/1     Error                             0                9m12s
+velero                         velero-default-kopia-64q52-maintain-job-1758120507330-8ksmn       0/1     Error                             0                3m28s
+[devops@DAPMTNZBTXX0001 ~]$
 
 
 
